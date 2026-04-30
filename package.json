@@ -1,14 +1,16 @@
 {
   "name": "@synapse-network/mcp-server",
   "version": "0.1.0",
-  "description": "Stateless MCP server for SynapseNetwork agent runtime payments.",
+  "description": "Official stateless MCP server for SynapseNetwork agent payments.",
   "type": "module",
   "bin": {
     "synapse-mcp-server": "./dist/index.js"
   },
   "files": [
     "dist",
+    "assets",
     "README.md",
+    "LICENSE",
     "llms.txt",
     "llm-instructions.md",
     "server.json"
@@ -32,8 +34,16 @@
     "mcp",
     "model-context-protocol",
     "synapse-network",
+    "synapsenetwork",
+    "agentpay",
     "agent-payments",
-    "usdc"
+    "ai-agent-payments",
+    "crypto-micropayments",
+    "usdc",
+    "cursor",
+    "claude-desktop",
+    "devin",
+    "llms-txt"
   ],
   "license": "MIT",
   "author": "SynapseNetwork",
@@ -55,5 +65,12 @@
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "mcpName": "io.github.cliff-personal/synapse-network-mcp-server"
+  "mcpName": "io.github.cliff-personal/synapse-network-mcp-server",
+  "homepage": "https://synapse-network.ai/",
+  "bugs": {
+    "url": "https://github.com/cliff-personal/Synapse-Network-MCP-Server/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }

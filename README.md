@@ -1,96 +1,72 @@
+<p align="center">
+  <a href="https://synapse-network.ai/">
+    <img src="assets/synapse-network-logo.svg" alt="SynapseNetwork" width="520">
+  </a>
+</p>
+
 # SynapseNetwork MCP Server
 
-Stateless MCP stdio server for giving Cursor, Claude Desktop, Devin, and agent frameworks access to SynapseNetwork service discovery, paid invocation, and receipts.
+[![CI](https://github.com/cliff-personal/Synapse-Network-MCP-Server/actions/workflows/ci.yml/badge.svg)](https://github.com/cliff-personal/Synapse-Network-MCP-Server/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![MCP](https://img.shields.io/badge/MCP-stdio-0f766e.svg)](server.json)
 
-The server is intentionally thin:
+Official Model Context Protocol (MCP) stdio server for SynapseNetwork. It gives Cursor, Claude Desktop, Devin, and MCP-compatible agent frameworks a stateless way to discover external APIs, invoke them, and retrieve receipts through SynapseNetwork agent payments.
+
+Website: [https://synapse-network.ai/](https://synapse-network.ai/)
+
+SynapseNetwork is AgentPay infrastructure: agents discover services, pay for API calls with USDC micropayments through the Gateway, and receive auditable receipts. This MCP package is intentionally a thin runtime adapter. It does not own settlement, custody, pricing memory, provider setup, deposits, withdrawals, or admin workflows.
+
+## Why This Exists
+
+Agents should not need to memorize SDK code, pricing rules, or HTTP routes. Humans configure this MCP server once, then agents get three tools:
+
+```text
+discover_services -> invoke_and_pay -> get_receipt
+```
+
+The server is intentionally small and stateless:
 
 - No in-memory discovery cache.
 - No local persistence.
-- No owner/admin/provider control-plane tools.
 - No Synapse SDK import.
+- No owner, admin, or provider control-plane tools.
 - Direct Gateway HTTP calls with native `fetch`.
-- Money values stay decimal strings.
+- Money values stay decimal strings at every boundary.
 
-## Tools
+## Quick Start
 
-### `discover_services`
-
-Searches SynapseNetwork services through:
-
-```text
-POST /api/v1/agent/discovery/search
-```
-
-Inputs:
-
-- `query` optional natural-language intent.
-- `tags` optional tag filter.
-- `limit` optional result limit, max 50.
-- `sort` optional: `best_match`, `lowest_price`, `fastest`, `highest_reliability`.
-
-### `invoke_and_pay`
-
-Invokes a service through:
-
-```text
-POST /api/v1/agent/invoke
-```
-
-Inputs:
-
-- `service_id` required service id from `discover_services`.
-- `payload` required JSON payload for the provider service.
-- `costUsdc` USDC decimal string copied from discovery for fixed-price APIs, for example `"0.050000"`.
-- `idempotencyKey` optional but strongly recommended stable task-level key.
-- `maxCostUsdc` optional decimal string cap for token-metered or LLM services.
-- `requestId` optional trace id.
-- `responseMode` optional, default `sync`.
-
-For fixed-price APIs, `costUsdc` must match the discovered price. If it is stale or wrong, Gateway returns `PRICE_MISMATCH`; rediscover and retry with the current price. For token-metered LLM services, omit `costUsdc` and pass `maxCostUsdc` when a budget cap is needed. The MCP server never caches or fills prices.
-
-### `get_receipt`
-
-Fetches invocation status and receipt through:
-
-```text
-GET /api/v1/agent/invocations/{invocation_id}
-```
-
-Gateway enforces that the receipt belongs to the configured Agent Key.
-
-## Install
-
-```bash
-npm install -g @synapse-network/mcp-server
-```
-
-Or use `npx` from an MCP client:
+Use `npx` from an MCP client:
 
 ```bash
 npx -y @synapse-network/mcp-server
 ```
 
-## Configuration
+Or install globally for manual testing:
 
-Required:
+```bash
+npm install -g @synapse-network/mcp-server
+synapse-mcp-server --help
+```
+
+Required credential:
 
 ```bash
 export SYNAPSE_AGENT_KEY=agt_xxx
 ```
 
-Optional:
+Optional runtime settings:
 
 ```bash
 export SYNAPSE_ENV=staging        # staging | prod, default staging
-export SYNAPSE_GATEWAY_URL=...    # overrides SYNAPSE_ENV
+export SYNAPSE_GATEWAY_URL=...    # advanced custom Gateway override
 export SYNAPSE_TIMEOUT_MS=30000
 ```
 
-Credential aliases are accepted for compatibility: `SYNAPSE_API_KEY` and `SYNAPSE_AGENT_TOKEN`.
-
-This server never needs owner private keys, owner JWTs, provider secrets, admin credentials, deposit permissions, withdrawal permissions, or provider setup permissions.
+Credential aliases are accepted for compatibility: `SYNAPSE_API_KEY` and `SYNAPSE_AGENT_TOKEN`. New integrations should use `SYNAPSE_AGENT_KEY`.
 
 ## Claude Desktop
+
+Add the server to `claude_desktop_config.json`:
 
 ```json
 {
@@ -107,6 +83,8 @@ This server never needs owner private keys, owner JWTs, provider secrets, admin 
 }
 ```
 
+Restart Claude Desktop. The agent should then see `discover_services`, `invoke_and_pay`, and `get_receipt`.
+
 ## Cursor
 
 Add an MCP server with the same command and environment:
@@ -122,48 +100,95 @@ Add an MCP server with the same command and environment:
 }
 ```
 
+Once configured, ask Cursor to discover Synapse services before invoking paid APIs.
+
+## MCP Tools
+
+### `discover_services`
+
+Searches SynapseNetwork services through:
+
+```text
+POST /api/v1/agent/discovery/search
+```
+
+Inputs:
+
+- `query` optional natural-language service intent.
+- `tags` optional tag filters.
+- `limit` optional result limit, max 50.
+- `sort` optional: `best_match`, `lowest_price`, `fastest`, `highest_reliability`.
+
+Outputs include agent-facing service metadata, schemas, health, and pricing fields such as `priceUsdc` for fixed-price APIs or token-metered pricing fields for LLM services. Provider payout, ledger, internal routing, and settlement internals are not exposed.
+
+### `invoke_and_pay`
+
+Invokes a service through:
+
+```text
+POST /api/v1/agent/invoke
+```
+
+Inputs:
+
+- `service_id` required service id from `discover_services`.
+- `payload` required JSON payload for the provider service.
+- `costUsdc` fixed-price USDC decimal string copied exactly from discovery.
+- `idempotencyKey` stable task-level idempotency key.
+- `maxCostUsdc` optional decimal string cap for token-metered or LLM services.
+- `requestId` optional trace id.
+- `responseMode` optional, usually `sync`.
+
+For fixed-price APIs, `costUsdc` must match the discovered price. If the price is stale or copied incorrectly, Gateway returns `PRICE_MISMATCH`; rediscover and retry only if the user or task permits the current price.
+
+For token-metered LLM services, omit `costUsdc` and pass `maxCostUsdc` when a budget cap is needed. Gateway remains the source of truth for holds, charges, risk, settlement, and receipts.
+
+### `get_receipt`
+
+Fetches invocation status and receipt through:
+
+```text
+GET /api/v1/agent/invocations/{invocation_id}
+```
+
+Input:
+
+- `invocation_id` returned by `invoke_and_pay`.
+
+Gateway enforces that the receipt belongs to the configured Agent Key.
+
 ## Agent Usage Rules
 
 1. Call `discover_services` before `invoke_and_pay`.
-2. For fixed-price APIs, copy the observed service price into `costUsdc` exactly as a string.
-3. Provide a stable `idempotencyKey` for each task when possible.
-4. After invocation, call `get_receipt` and inspect `status` and `chargedUsdc`.
-5. On `PRICE_MISMATCH`, rediscover and retry with the updated price.
-6. On budget or balance errors, stop and ask the owner to fund or adjust the Agent Key budget.
+2. For fixed-price APIs, copy the observed price into `costUsdc` exactly as a string.
+3. Never convert USDC values to JavaScript numbers or floating-point values for business logic.
+4. Provide a stable `idempotencyKey` for each task when possible.
+5. After invocation, call `get_receipt` and inspect `status` and charged amount fields.
+6. On `PRICE_MISMATCH`, rediscover and retry with the updated price only if permitted.
+7. On balance, budget, credential, or forbidden errors, stop and ask the owner to fix Agent Key state.
+8. Treat this MCP server as stateless across process restarts.
 
-## Development
+## Security Boundary
+
+This package uses only an Agent Key:
 
 ```bash
-npm install
-npm run typecheck
-npm test
-npm run build
-npm run test:e2e:mock
-npm run ci:quality
-npm pack --dry-run
+SYNAPSE_AGENT_KEY=agt_xxx
 ```
 
-## Quality Gates
+It must never request, store, log, document, or generate code that asks for:
 
-CI runs `npm run verify:mcp`, `npm run smoke:cli`, `npm run ci:quality`, and `npm pack --dry-run`.
+- Owner private keys or seed phrases.
+- Owner JWTs or wallet signing authority.
+- Provider secrets or provider setup permissions.
+- Admin credentials or internal service tokens.
+- Deposit, withdrawal, refund, or settlement permissions.
 
-`npm run ci:source-quality` enforces public object contracts:
-
-- Public functions and methods must not return raw maps such as `dict`, `Dict[str, Any]`, `Record<string, unknown>`, or `Promise<Record<string, unknown>>`.
-- Return named objects instead, such as TypeScript interfaces/types or Python dataclasses/Pydantic models.
-- Raw maps remain allowed for private helpers, request bodies, patch inputs, schema/payload fields, and external JSON parsing boundaries.
-
-`npm run ci:quality-budget` keeps the package small and maintainable:
-
-- Production source files have a 500 effective-line budget; support files and tests have a 350 effective-line budget.
-- Production functions have an 80 effective-line budget; support/test functions have a 120 effective-line budget.
-- Cyclomatic complexity budget is 12.
-- Obvious duplicated code blocks fail and should be extracted into shared helpers.
-- Suppression comments such as `@ts-ignore`, `@ts-expect-error`, `eslint-disable`, `noqa`, or `type: ignore` must include `quality-disable-reason: ...`.
+If an issue, PR, prompt, or generated snippet asks for any of those capabilities, treat it as out of scope for this MCP server.
 
 ## E2E Verification
 
-The open-source MCP server is staging-first. Developers do not need to run a local Synapse Gateway to verify MCP compatibility.
+The open-source MCP server is staging-first. Developers do not need to run a Synapse Gateway to verify MCP compatibility.
 
 Protocol-only E2E with a mock Gateway:
 
@@ -186,7 +211,7 @@ export SYNAPSE_ENV=staging
 npm run test:e2e:staging
 ```
 
-By default, staging E2E performs broad discovery with `sort=lowest_price`, then selects a free fixed-price service by inspecting price fields. `SYNAPSE_E2E_QUERY` is optional and should be a real service intent such as `oss`, `weather`, or `sentiment`, not a price filter. Legacy price-only values such as `free` are treated as broad discovery for compatibility. The script refuses paid invokes unless explicitly allowed.
+By default, staging E2E performs broad discovery with `sort=lowest_price`, then selects a free fixed-price service by inspecting price fields. `SYNAPSE_E2E_QUERY` is optional and should be a real service intent such as `oss`, `weather`, or `sentiment`, not a price filter. The script refuses paid invokes unless explicitly allowed.
 
 Specified staging service:
 
@@ -212,7 +237,7 @@ export SYNAPSE_E2E_MAX_COST_USDC='0.100000'
 npm run test:e2e:staging
 ```
 
-Future production E2E is available only as an explicit command after prod is ready:
+Production E2E is explicit-only and must not run in default CI:
 
 ```bash
 export SYNAPSE_AGENT_KEY=agt_prod_xxx
@@ -223,7 +248,46 @@ export SYNAPSE_E2E_COST_USDC='0.000000'
 npm run test:e2e:prod
 ```
 
-## Registry Publishing
+## Troubleshooting
+
+`Missing Synapse agent key`: set `SYNAPSE_AGENT_KEY=agt_xxx` in the MCP client environment.
+
+`SYNAPSE_AGENT_KEY must start with agt_`: use an Agent runtime credential, not an owner token or wallet secret.
+
+`PRICE_MISMATCH`: call `discover_services` again and copy the current price string into `costUsdc`.
+
+`INSUFFICIENT_BALANCE`, budget, or credential errors: stop and ask the owner to adjust funding, budget, or Agent Key settings.
+
+No services in staging discovery: confirm the Agent Key can access staging and try a broader query or no query.
+
+Tool does not appear in the MCP client: run `npm run build`, restart the MCP client, and confirm the configured command uses `npx -y @synapse-network/mcp-server` or the built `dist/index.js`.
+
+## Development
+
+```bash
+npm install
+npm run typecheck
+npm test
+npm run build
+npm run test:e2e:mock
+npm run ci:quality
+npm pack --dry-run
+```
+
+CI runs `npm run verify:mcp`, `npm run smoke:cli`, `npm run ci:quality`, and `npm pack --dry-run`.
+
+Quality gates enforce named public object return contracts, size budgets, complexity budgets, duplicate-code detection, and justified suppression comments. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contributor workflow.
+
+## Open Source Community
+
+- Contributing: [CONTRIBUTING.md](CONTRIBUTING.md)
+- Security policy: [SECURITY.md](SECURITY.md)
+- Support: [SUPPORT.md](SUPPORT.md)
+- Code of conduct: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- Changelog: [CHANGELOG.md](CHANGELOG.md)
+- License: [MIT](LICENSE)
+
+## MCP Registry Publishing
 
 The repo includes `server.json` for the MCP Registry publisher flow. After publishing the npm package:
 
@@ -232,4 +296,4 @@ mcp-publisher login github
 mcp-publisher publish
 ```
 
-The registry only hosts metadata; npm hosts the package artifact.
+The registry hosts metadata; npm hosts the package artifact.

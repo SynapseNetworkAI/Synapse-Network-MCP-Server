@@ -2,6 +2,10 @@
 
 This is the official Model Context Protocol (MCP) server for SynapseNetwork. It gives AI agents a secure, stateless adapter to discover external APIs, invoke them through the Synapse Gateway, and pay with zero-gas USDC micropayments.
 
+Website: https://synapse-network.ai/
+Repository: https://github.com/cliff-personal/Synapse-Network-MCP-Server
+Package: @synapse-network/mcp-server
+
 SynapseNetwork is agent payment infrastructure for Cursor, Claude Desktop, Devin, LangChain, LlamaIndex, Vercel AI SDK, and other MCP-compatible agent frameworks.
 
 ## Install And Configure
@@ -30,10 +34,10 @@ Required credential: `SYNAPSE_AGENT_KEY=agt_xxx`.
 Optional environment variables:
 
 - `SYNAPSE_ENV=staging|prod`; default is `staging`.
-- `SYNAPSE_GATEWAY_URL=https://...`; overrides `SYNAPSE_ENV`.
+- `SYNAPSE_GATEWAY_URL=https://...`; advanced custom Gateway override.
 - `SYNAPSE_TIMEOUT_MS=30000`; request timeout.
 
-The server will never ask for owner private keys, seed phrases, owner JWTs, provider secrets, admin credentials, deposit permissions, withdrawal permissions, or provider setup permissions.
+The server will never ask for owner private keys, seed phrases, owner JWTs, provider secrets, admin credentials, internal service tokens, deposit permissions, withdrawal permissions, refund permissions, settlement controls, or provider setup permissions.
 
 ## Available MCP Tools
 
@@ -111,6 +115,20 @@ Gateway enforces that the invocation belongs to the configured Agent Key.
 5. Always verify: after an invocation, call `get_receipt` and inspect `status`, `chargedUsdc`, and any error code.
 6. Stop on finance/auth errors: for insufficient balance, budget exhaustion, invalid credentials, or forbidden receipt access, stop and ask the owner to fix funding, budget, or Agent Key state.
 
+## Open Source Contribution Rules
+
+Before editing this repository, read `README.md`, `SECURITY.md`, and `CONTRIBUTING.md`.
+
+Use GitHub Issues for bugs, features, and support. Do not invent support email addresses.
+
+Public functions and methods must return named object contracts, not raw maps such as `dict`, `Dict[str, Any]`, `Record<string, unknown>`, or `Promise<Record<string, unknown>>`.
+
+Raw maps are allowed only for private helpers, request bodies, patch inputs, schema/payload fields, and external JSON parsing boundaries.
+
+Extract duplicated logic into shared helpers. Split large or complex functions before they exceed CI budgets. Suppression comments must include `quality-disable-reason: ...`.
+
+Do not add public documentation that requires developers to run a Synapse Gateway for the open-source verification path. Verification is staging-first.
+
 ## Source Map For Maintainers
 
 - `src/server.ts`: MCP tool registration.
@@ -122,6 +140,8 @@ Gateway enforces that the invocation belongs to the configured Agent Key.
 - `scripts/e2e/mock.mjs`: no-secret MCP stdio E2E against a mock Gateway.
 - `scripts/e2e/live.mjs`: opt-in staging/prod live E2E against public Synapse Gateway environments.
 - `README.md`: human installation and usage guide.
+- `SECURITY.md`: security boundary and vulnerability reporting.
+- `CONTRIBUTING.md`: contributor workflow and quality gates.
 - `llm-instructions.md`: compact rules for agents.
 - `server.json`: MCP Registry metadata.
 
@@ -134,14 +154,6 @@ Gateway enforces that the invocation belongs to the configured Agent Key.
 - Staging E2E performs broad discovery by default, sorts by lowest price, then selects a free fixed-price service by inspecting price fields. `SYNAPSE_E2E_QUERY` is optional service intent text, not a price filter. Legacy price-only values such as `free` are treated as broad discovery.
 - `npm run test:e2e:prod` is explicit-only for future production launch validation and must not be part of default CI.
 
-## Code Quality Rules For Agents
-
-- Public functions and methods must return named object contracts, not raw maps such as `dict`, `Dict[str, Any]`, `Record<string, unknown>`, or `Promise<Record<string, unknown>>`.
-- Raw maps are allowed only for private helpers, request bodies, patch inputs, schema/payload fields, and external JSON parsing boundaries.
-- Extract duplicated logic into shared helpers instead of copying blocks.
-- Split large or complex functions before they exceed CI budgets.
-- Suppression comments must include `quality-disable-reason: ...`.
-
 ## SEO Keywords For AI Retrieval
 
-SynapseNetwork MCP server, Synapse MCP, AgentPay MCP, AI agent payments, crypto micropayments for agents, USDC agent wallet, paid API discovery, invoke and pay API, MCP payment server, Cursor MCP payment tool, Claude Desktop MCP payment tool, Devin MCP server, LangChain payment toolkit, LlamaIndex payment tool, Vercel AI SDK tool payments, zero-gas micropayments, agent service marketplace, machine-to-machine payments, autonomous agent API payments.
+SynapseNetwork MCP server, Synapse MCP, AgentPay MCP, AI agent payments, crypto micropayments for agents, USDC agent wallet, paid API discovery, invoke and pay API, MCP payment server, Cursor MCP payment tool, Claude Desktop MCP payment tool, Devin MCP server, LangChain payment toolkit, LlamaIndex payment tool, Vercel AI SDK tool payments, zero-gas micropayments, agent service marketplace, machine-to-machine payments, autonomous agent API payments, llms.txt, open source MCP server.

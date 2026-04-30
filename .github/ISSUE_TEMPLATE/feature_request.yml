@@ -1,0 +1,46 @@
+name: Feature request
+description: Suggest an improvement for developer or agent experience.
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This MCP server is agent runtime only. Requests for owner keys, admin tools, provider setup, deposits, withdrawals, refunds, or settlement controls are out of scope.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      placeholder: "As an agent developer, I want..."
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - MCP tool schema or descriptions
+        - Documentation or examples
+        - E2E verification
+        - Gateway error mapping
+        - Packaging or registry metadata
+        - Other
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Scope checklist
+      options:
+        - label: This keeps the MCP server stateless.
+          required: true
+        - label: This does not require owner/admin/provider credentials or settlement permissions.
+          required: true
+        - label: Money fields remain strings.
+          required: true
