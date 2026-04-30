@@ -57,12 +57,12 @@ export SYNAPSE_AGENT_KEY=agt_xxx
 Optional runtime settings:
 
 ```bash
-export SYNAPSE_ENV=staging        # staging | prod, default staging
+export SYNAPSE_ENV=prod           # prod for production workflows; staging is for preview/E2E
 export SYNAPSE_GATEWAY_URL=...    # advanced custom Gateway override
 export SYNAPSE_TIMEOUT_MS=30000
 ```
 
-Credential aliases are accepted for compatibility: `SYNAPSE_API_KEY` and `SYNAPSE_AGENT_TOKEN`. New integrations should use `SYNAPSE_AGENT_KEY`.
+Credential aliases are accepted for compatibility: `SYNAPSE_API_KEY` and `SYNAPSE_AGENT_TOKEN`. New integrations should use `SYNAPSE_AGENT_KEY`. Use `SYNAPSE_ENV=prod` for production Agent workflows. Use staging only for preview validation and live smoke tests.
 
 ## Claude Desktop
 
@@ -76,7 +76,7 @@ Add the server to `claude_desktop_config.json`:
       "args": ["-y", "@synapse-network/mcp-server"],
       "env": {
         "SYNAPSE_AGENT_KEY": "agt_xxx",
-        "SYNAPSE_ENV": "staging"
+        "SYNAPSE_ENV": "prod"
       }
     }
   }
@@ -95,7 +95,7 @@ Add an MCP server with the same command and environment:
   "args": ["-y", "@synapse-network/mcp-server"],
   "env": {
     "SYNAPSE_AGENT_KEY": "agt_xxx",
-    "SYNAPSE_ENV": "staging"
+    "SYNAPSE_ENV": "prod"
   }
 }
 ```
@@ -188,7 +188,7 @@ If an issue, PR, prompt, or generated snippet asks for any of those capabilities
 
 ## E2E Verification
 
-The open-source MCP server is staging-first. Developers do not need to run a Synapse Gateway to verify MCP compatibility.
+The default open-source verification path does not require credentials or a Synapse Gateway.
 
 Protocol-only E2E with a mock Gateway:
 
@@ -202,7 +202,9 @@ This checks type safety, unit tests, build output, MCP stdio tool discovery, and
 discover_services -> invoke_and_pay -> get_receipt
 ```
 
-Live staging E2E:
+### Preview And Staging E2E
+
+Use staging only for preview validation and live E2E smoke tests. Do not use staging for production Agent workflows.
 
 ```bash
 export SYNAPSE_AGENT_KEY=agt_xxx
@@ -237,7 +239,9 @@ export SYNAPSE_E2E_MAX_COST_USDC='0.100000'
 npm run test:e2e:staging
 ```
 
-Production E2E is explicit-only and must not run in default CI:
+### Production E2E
+
+Production E2E requires a production Agent Key, must be run intentionally, and must not run in default CI.
 
 ```bash
 export SYNAPSE_AGENT_KEY=agt_prod_xxx
@@ -258,7 +262,7 @@ npm run test:e2e:prod
 
 `INSUFFICIENT_BALANCE`, budget, or credential errors: stop and ask the owner to adjust funding, budget, or Agent Key settings.
 
-No services in staging discovery: confirm the Agent Key can access staging and try a broader query or no query.
+No services in staging discovery during preview testing: confirm the Agent Key can access staging and try a broader query or no query.
 
 Tool does not appear in the MCP client: run `npm run build`, restart the MCP client, and confirm the configured command uses `npx -y @synapse-network/mcp-server` or the built `dist/index.js`.
 

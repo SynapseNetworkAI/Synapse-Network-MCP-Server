@@ -25,7 +25,7 @@
         },
         {
           "name": "SYNAPSE_ENV",
-          "description": "Gateway environment preset: staging or prod. Defaults to staging.",
+          "description": "Gateway environment preset: prod or staging. Use prod for production workflows; staging is for preview and E2E validation.",
           "isRequired": false,
           "format": "string",
           "isSecret": false

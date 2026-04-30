@@ -27,7 +27,7 @@ Critical contribution rules:
 3. Do not copy large code blocks. Extract shared helpers when logic repeats.
 4. Split large or complex functions before they hit CI quality budgets.
 5. Any suppression comment must include `quality-disable-reason: ...`.
-6. Do not add public documentation that requires developers to run a Synapse Gateway for the open-source verification path. Use staging-first verification.
+6. Do not add public documentation that requires developers to run a Synapse Gateway for the open-source verification path. Use `SYNAPSE_ENV=prod` for production Agent workflows; use staging only for preview/E2E validation.
 
 Recommended flow:
 
@@ -37,12 +37,13 @@ invoke_and_pay({ service_id, payload, costUsdc, idempotencyKey })
 get_receipt({ invocation_id })
 ```
 
-E2E verification:
+E2E verification and production configuration:
 
 ```bash
 npm run verify:mcp
 npm run ci:quality
+SYNAPSE_ENV=prod npx -y @synapse-network/mcp-server --help
 SYNAPSE_AGENT_KEY=agt_xxx SYNAPSE_ENV=staging npm run test:e2e:staging
 ```
 
-The MCP server is a pure adapter over Synapse Gateway. Gateway remains the source of truth for price validation, risk, budget, settlement, and receipts.
+The MCP server is a pure adapter over Synapse Gateway. Gateway remains the source of truth for price validation, risk, budget, settlement, and receipts. Do not generate staging configuration when the user asks for production setup.
