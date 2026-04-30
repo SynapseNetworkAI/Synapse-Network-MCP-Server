@@ -1,0 +1,70 @@
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+
+export const EXPECTED_TOOLS = ["discover_services", "get_receipt", "invoke_and_pay"];
+
+export async function withMcpClient(env, fn) {
+  const transport = new StdioClientTransport({
+    command: process.execPath,
+    args: ["dist/index.js"],
+    env: { ...process.env, ...env },
+    stderr: "pipe"
+  });
+  const client = new Client({ name: "synapse-e2e-client", version: "0.1.0" });
+  let stderr = "";
+  transport.stderr?.on("data", (chunk) => {
+    stderr += String(chunk);
+  });
+
+  try {
+    await client.connect(transport);
+    return await fn(client);
+  } catch (error) {
+    if (stderr.trim()) {
+      console.error("\n[MCP server stderr]");
+      console.error(stderr.trim());
+    }
+    throw error;
+  } finally {
+    await client.close().catch(() => undefined);
+  }
+}
+
+export async function assertToolList(client) {
+  const tools = await client.listTools();
+  const names = tools.tools.map((tool) => tool.name).sort();
+  assertDeepEqual(names, EXPECTED_TOOLS, `Expected MCP tools ${EXPECTED_TOOLS.join(", ")} but got ${names.join(", ")}`);
+  return tools;
+}
+
+export async function callToolData(client, name, args) {
+  const result = await client.callTool({ name, arguments: args });
+  if (result.isError) {
+    throw new Error(`Tool ${name} returned error: ${JSON.stringify(result.structuredContent ?? result.content, null, 2)}`);
+  }
+  if (result.structuredContent && Object.prototype.hasOwnProperty.call(result.structuredContent, "data")) {
+    return result.structuredContent.data;
+  }
+  const text = result.content?.find((item) => item.type === "text")?.text;
+  if (!text) throw new Error(`Tool ${name} did not return structuredContent.data or text content.`);
+  return JSON.parse(text);
+}
+
+export function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+export function assertDeepEqual(actual, expected, message) {
+  const actualJson = JSON.stringify(actual);
+  const expectedJson = JSON.stringify(expected);
+  if (actualJson !== expectedJson) {
+    throw new Error(`${message}\nExpected: ${expectedJson}\nActual: ${actualJson}`);
+  }
+}
+
+export function asRecord(value, label) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new Error(`${label} must be an object.`);
+  }
+  return value;
+}

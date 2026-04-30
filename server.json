@@ -1,0 +1,43 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.cliff-personal/synapse-network-mcp-server",
+  "description": "Stateless MCP stdio server for SynapseNetwork service discovery, paid invocation, and receipts.",
+  "repository": {
+    "url": "https://github.com/cliff-personal/Synapse-Network-MCP-Server",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@synapse-network/mcp-server",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "SYNAPSE_AGENT_KEY",
+          "description": "SynapseNetwork Agent Key beginning with agt_. Used as the Gateway X-Credential header.",
+          "isRequired": true,
+          "format": "string",
+          "isSecret": true
+        },
+        {
+          "name": "SYNAPSE_ENV",
+          "description": "Gateway environment preset: staging, local, or prod. Defaults to staging.",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": false
+        },
+        {
+          "name": "SYNAPSE_GATEWAY_URL",
+          "description": "Optional custom Gateway base URL. Overrides SYNAPSE_ENV.",
+          "isRequired": false,
+          "format": "uri",
+          "isSecret": false
+        }
+      ]
+    }
+  ]
+}
