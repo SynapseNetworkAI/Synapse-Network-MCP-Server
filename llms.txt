@@ -3,7 +3,7 @@
 This is the official Model Context Protocol (MCP) server for SynapseNetwork. It gives AI agents a secure, stateless adapter to discover external APIs, invoke them through the Synapse Gateway, and pay with zero-gas USDC micropayments.
 
 Website: https://synapse-network.ai/
-Repository: https://github.com/cliff-personal/Synapse-Network-MCP-Server
+Repository: https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server
 Package: @synapse-network/mcp-server
 
 SynapseNetwork is agent payment infrastructure for Cursor, Claude Desktop, Devin, LangChain, LlamaIndex, Vercel AI SDK, and other MCP-compatible agent frameworks.

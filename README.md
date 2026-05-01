@@ -6,7 +6,7 @@
 
 # SynapseNetwork MCP Server
 
-[![CI](https://github.com/cliff-personal/Synapse-Network-MCP-Server/actions/workflows/ci.yml/badge.svg)](https://github.com/cliff-personal/Synapse-Network-MCP-Server/actions/workflows/ci.yml)
+[![CI](https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server/actions/workflows/ci.yml/badge.svg)](https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![MCP](https://img.shields.io/badge/MCP-stdio-0f766e.svg)](server.json)
 

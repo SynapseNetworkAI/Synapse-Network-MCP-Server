@@ -2,7 +2,7 @@
 
 Use GitHub Issues for support, bug reports, feature requests, and MCP client compatibility questions:
 
-https://github.com/cliff-personal/Synapse-Network-MCP-Server/issues
+https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server/issues
 
 For useful support, include:
 
