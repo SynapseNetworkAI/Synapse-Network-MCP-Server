@@ -10,7 +10,7 @@
   "packages": [
     {
       "registryType": "npm",
-      "identifier": "@synapse-network/mcp-server",
+      "identifier": "@synapse-network-ai/mcp-server",
       "version": "0.1.0",
       "transport": {
         "type": "stdio"

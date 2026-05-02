@@ -42,7 +42,7 @@ E2E verification and production configuration:
 ```bash
 npm run verify:mcp
 npm run ci:quality
-SYNAPSE_ENV=prod npx -y @synapse-network/mcp-server --help
+SYNAPSE_ENV=prod npx -y @synapse-network-ai/mcp-server --help
 SYNAPSE_AGENT_KEY=agt_xxx SYNAPSE_ENV=staging npm run test:e2e:staging
 ```
 

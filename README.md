@@ -39,13 +39,13 @@ The server is intentionally small and stateless:
 Use `npx` from an MCP client:
 
 ```bash
-npx -y @synapse-network/mcp-server
+npx -y @synapse-network-ai/mcp-server
 ```
 
 Or install globally for manual testing:
 
 ```bash
-npm install -g @synapse-network/mcp-server
+npm install -g @synapse-network-ai/mcp-server
 synapse-mcp-server --help
 ```
 
@@ -74,7 +74,7 @@ Add the server to `claude_desktop_config.json`:
   "mcpServers": {
     "synapse-agentpay": {
       "command": "npx",
-      "args": ["-y", "@synapse-network/mcp-server"],
+      "args": ["-y", "@synapse-network-ai/mcp-server"],
       "env": {
         "SYNAPSE_AGENT_KEY": "agt_xxx",
         "SYNAPSE_ENV": "prod"
@@ -93,7 +93,7 @@ Add an MCP server with the same command and environment:
 ```json
 {
   "command": "npx",
-  "args": ["-y", "@synapse-network/mcp-server"],
+  "args": ["-y", "@synapse-network-ai/mcp-server"],
   "env": {
     "SYNAPSE_AGENT_KEY": "agt_xxx",
     "SYNAPSE_ENV": "prod"
@@ -265,7 +265,7 @@ npm run test:e2e:prod
 
 No services in staging discovery during preview testing: confirm the Agent Key can access staging and try a broader query or no query.
 
-Tool does not appear in the MCP client: run `npm run build`, restart the MCP client, and confirm the configured command uses `npx -y @synapse-network/mcp-server` or the built `dist/index.js`.
+Tool does not appear in the MCP client: run `npm run build`, restart the MCP client, and confirm the configured command uses `npx -y @synapse-network-ai/mcp-server` or the built `dist/index.js`.
 
 ## Development
 
