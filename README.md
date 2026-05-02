@@ -35,6 +35,7 @@ The server is intentionally small and stateless:
 
 ## Quick Start
 
+<!-- @synapse-context:spring_boot_mcp -->
 Use `npx` from an MCP client:
 
 ```bash
