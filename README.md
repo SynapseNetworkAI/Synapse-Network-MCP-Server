@@ -208,6 +208,17 @@ discover_services -> invoke_and_pay -> get_receipt
 Use staging only for preview validation and live E2E smoke tests. Do not use staging for production Agent workflows.
 
 ```bash
+export SYNAPSE_ENV=staging
+
+npm run test:e2e:staging
+```
+
+For SynapseNetwork maintainers, staging E2E reads `SYNAPSE_AGENT_KEY` from Google Secret Manager by default using the `synapse-staging-e2e-agent-credential` secret. Set `SYNAPSE_E2E_SECRET_PROJECT` when the active `gcloud` project is not the staging secrets project.
+
+Developers who are not using SynapseNetwork's GCP project can force a local Agent Key:
+
+```bash
+export SYNAPSE_E2E_AGENT_KEY_SOURCE=env
 export SYNAPSE_AGENT_KEY=agt_xxx
 export SYNAPSE_ENV=staging
 
@@ -219,7 +230,6 @@ By default, staging E2E performs broad discovery with `sort=lowest_price`, then 
 Specified staging service:
 
 ```bash
-export SYNAPSE_AGENT_KEY=agt_xxx
 export SYNAPSE_ENV=staging
 export SYNAPSE_E2E_SERVICE_ID=svc_quotes_famous_top3
 export SYNAPSE_E2E_PAYLOAD_JSON='{"topic":"agent payments"}'
@@ -231,7 +241,6 @@ npm run test:e2e:staging
 Token-metered staging service:
 
 ```bash
-export SYNAPSE_AGENT_KEY=agt_xxx
 export SYNAPSE_ENV=staging
 export SYNAPSE_E2E_SERVICE_ID=svc_deepseek_chat
 export SYNAPSE_E2E_PAYLOAD_JSON='{"messages":[{"role":"user","content":"hello"}],"max_tokens":32}'

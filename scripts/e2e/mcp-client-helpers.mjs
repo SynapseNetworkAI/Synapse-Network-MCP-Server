@@ -3,11 +3,33 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 
 export const EXPECTED_TOOLS = ["discover_services", "get_receipt", "invoke_and_pay"];
 
+const BASE_ENV_ALLOWLIST = new Set([
+  "PATH",
+  "HOME",
+  "USER",
+  "TMPDIR",
+  "TMP",
+  "TEMP",
+  "SHELL",
+  "SystemRoot",
+  "ComSpec",
+  "PATHEXT",
+  "SSL_CERT_FILE",
+  "NODE_EXTRA_CA_CERTS"
+]);
+
+const SYNAPSE_CHILD_ENV_ALLOWLIST = new Set([
+  "SYNAPSE_AGENT_KEY",
+  "SYNAPSE_ENV",
+  "SYNAPSE_GATEWAY_URL",
+  "SYNAPSE_TIMEOUT_MS"
+]);
+
 export async function withMcpClient(env, fn) {
   const transport = new StdioClientTransport({
     command: process.execPath,
     args: ["dist/index.js"],
-    env: { ...process.env, ...env },
+    env: buildMcpChildEnv(env),
     stderr: "pipe"
   });
   const client = new Client({ name: "synapse-e2e-client", version: "0.1.0" });
@@ -67,4 +89,33 @@ export function asRecord(value, label) {
     throw new Error(`${label} must be an object.`);
   }
   return value;
+}
+
+export function buildMcpChildEnv(overrides = {}, baseEnv = process.env) {
+  const childEnv = {};
+  for (const [key, value] of Object.entries(baseEnv)) {
+    if (isAllowedBaseEnv(key) || key.startsWith("SYNAPSE_E2E_")) {
+      assignStringEnv(childEnv, key, value);
+    }
+  }
+  for (const [key, value] of Object.entries(overrides)) {
+    if (isAllowedOverrideEnv(key)) {
+      assignStringEnv(childEnv, key, value);
+    }
+  }
+  return childEnv;
+}
+
+function isAllowedBaseEnv(key) {
+  return BASE_ENV_ALLOWLIST.has(key);
+}
+
+function isAllowedOverrideEnv(key) {
+  return SYNAPSE_CHILD_ENV_ALLOWLIST.has(key) || key.startsWith("SYNAPSE_E2E_") || BASE_ENV_ALLOWLIST.has(key);
+}
+
+function assignStringEnv(target, key, value) {
+  if (typeof value === "string" && value.length > 0) {
+    target[key] = value;
+  }
 }

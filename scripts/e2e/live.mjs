@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { resolveLiveAgentKey } from "./agent-key-resolver.mjs";
 import { assert, assertToolList, asRecord, callToolData, withMcpClient } from "./mcp-client-helpers.mjs";
 
 const profile = process.argv[2] ?? "staging";
@@ -6,9 +7,12 @@ if (!["local", "staging", "prod"].includes(profile)) {
   fail(`Unsupported E2E profile '${profile}'. Expected local, staging, or prod.`);
 }
 
-const agentKey = process.env.SYNAPSE_AGENT_KEY?.trim();
-if (!agentKey) fail("SYNAPSE_AGENT_KEY=agt_xxx is required for live MCP E2E.");
-if (!agentKey.startsWith("agt_")) fail("SYNAPSE_AGENT_KEY must start with agt_.");
+let credential;
+try {
+  credential = resolveLiveAgentKey(profile);
+} catch (error) {
+  fail(error.message);
+}
 
 if (profile === "prod" && process.env.SYNAPSE_ENV !== "prod") {
   fail("Prod E2E must be explicit: set SYNAPSE_ENV=prod and run npm run test:e2e:prod.");
@@ -23,7 +27,7 @@ const explicitMaxCostUsdc = process.env.SYNAPSE_E2E_MAX_COST_USDC?.trim();
 const payload = parsePayload(process.env.SYNAPSE_E2E_PAYLOAD_JSON);
 const idempotencyKey = process.env.SYNAPSE_E2E_IDEMPOTENCY_KEY?.trim() || `mcp-${profile}-e2e-${Date.now()}`;
 const env = {
-  SYNAPSE_AGENT_KEY: agentKey,
+  SYNAPSE_AGENT_KEY: credential.agentKey,
   SYNAPSE_ENV: profile,
   SYNAPSE_TIMEOUT_MS: process.env.SYNAPSE_TIMEOUT_MS || "60000"
 };
@@ -64,6 +68,7 @@ await withMcpClient(env, async (client) => {
     invokeArgs.costUsdc = costUsdc;
   }
 
+  console.log(`Live MCP ${profile} E2E credential source: ${credential.source}`);
   console.log(`Live MCP ${profile} E2E selected service: ${serviceId}`);
   const invokeData = asRecord(await callToolData(client, "invoke_and_pay", invokeArgs), "invoke_and_pay data");
   const gatewayResult = asRecord(invokeData.gateway ?? invokeData, "invoke_and_pay gateway result");
