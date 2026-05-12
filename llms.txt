@@ -150,7 +150,7 @@ Do not add public documentation that requires developers to run a Synapse Gatewa
 - Production Agent workflows should use `SYNAPSE_ENV=prod`; staging is only for preview/E2E validation, not production usage.
 - `npm run verify:mcp` runs typecheck, unit tests, build, and mock MCP E2E.
 - `npm run ci:quality` runs source-shape and quality-budget gates.
-- `npm run test:e2e:staging` requires a staging `SYNAPSE_AGENT_KEY=agt_xxx` and verifies the real staging Gateway over MCP stdio for preview smoke testing.
+- `npm run test:e2e:staging` verifies the real staging Gateway over MCP stdio for preview smoke testing. Maintainer staging E2E reads `SYNAPSE_AGENT_KEY` from Google Secret Manager secret `synapse-staging-e2e-agent-credential` by default; external developers can set `SYNAPSE_E2E_AGENT_KEY_SOURCE=env` and provide their own `SYNAPSE_AGENT_KEY=agt_xxx`.
 - Staging E2E performs broad discovery by default, sorts by lowest price, then selects a free fixed-price service by inspecting price fields. `SYNAPSE_E2E_QUERY` is optional service intent text, not a price filter. Legacy price-only values such as `free` are treated as broad discovery.
 - `npm run test:e2e:prod` is explicit-only production validation and must not be part of default CI.
 
