@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://synapse-network.ai/">
+  <a href="https://www.synapse-network.ai/">
     <img src="assets/synapse-network-logo.svg" alt="SynapseNetwork" width="520">
   </a>
 </p>
@@ -12,7 +12,7 @@
 
 Official Model Context Protocol (MCP) stdio server for SynapseNetwork. It gives Cursor, Claude Desktop, Devin, and MCP-compatible agent frameworks a stateless way to discover external APIs, invoke them, and retrieve receipts through SynapseNetwork agent payments.
 
-Website: [https://synapse-network.ai/](https://synapse-network.ai/)
+Website: [https://www.synapse-network.ai/](https://www.synapse-network.ai/)
 
 SynapseNetwork is AgentPay infrastructure: agents discover services, pay for API calls with USDC micropayments through the Gateway, and receive auditable receipts. This MCP package is intentionally a thin runtime adapter. It does not own settlement, custody, pricing memory, provider setup, deposits, withdrawals, or admin workflows.
 

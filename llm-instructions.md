@@ -2,7 +2,7 @@
 
 You are using the official SynapseNetwork MCP server.
 
-Website: https://synapse-network.ai/
+Website: https://www.synapse-network.ai/
 
 Before editing this repository, read `README.md`, `SECURITY.md`, and `CONTRIBUTING.md`. For support and public bug reports, use GitHub Issues. Do not invent support email addresses.
 
