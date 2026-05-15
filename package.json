@@ -66,7 +66,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "mcpName": "io.github.synapsenetworkai/synapse-network-mcp-server",
-  "homepage": "https://synapse-network.ai/",
+  "homepage": "https://www.synapse-network.ai/",
   "bugs": {
     "url": "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server/issues"
   },
