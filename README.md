@@ -6,7 +6,6 @@
 
 # SynapseNetwork MCP Server
 
-[![CI](https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server/actions/workflows/ci.yml/badge.svg)](https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![MCP](https://img.shields.io/badge/MCP-stdio-0f766e.svg)](server.json)
 
@@ -15,6 +14,21 @@ Official Model Context Protocol (MCP) stdio server for SynapseNetwork. It gives 
 Website: [https://www.synapse-network.ai/](https://www.synapse-network.ai/)
 
 SynapseNetwork is AgentPay infrastructure: agents discover services, pay for API calls with USDC micropayments through the Gateway, and receive auditable receipts. This MCP package is intentionally a thin runtime adapter. It does not own settlement, custody, pricing memory, provider setup, deposits, withdrawals, or admin workflows.
+
+## Related packages
+
+This MCP server is the agent-tool adapter published as
+`@synapse-network-ai/mcp-server`. It does not import the Synapse SDK.
+
+Use the official SDK repository when you want application code instead of MCP
+tools:
+
+- SDK source: <https://github.com/SynapseNetworkAI/Synapse-Network-Sdk>
+- TypeScript SDK: <https://www.npmjs.com/package/@synapse-network-ai/sdk/v/1.0.0>
+- Python SDK: <https://pypi.org/project/synapse-network-ai-sdk/1.0.0/>
+- Go SDK: <https://pkg.go.dev/github.com/SynapseNetworkAI/Synapse-Network-Sdk/go@v1.0.0>
+- Java SDK: <https://repo1.maven.org/maven2/ai/synapse-network/synapse-network-sdk/1.0.0/>
+- .NET SDK: <https://www.nuget.org/packages/SynapseNetwork.Sdk/1.0.0>
 
 ## Why This Exists
 
