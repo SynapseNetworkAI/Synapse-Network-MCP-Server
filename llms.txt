@@ -5,6 +5,8 @@ This is the official Model Context Protocol (MCP) server for SynapseNetwork. It 
 Website: https://www.synapse-network.ai/
 Repository: https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server
 Package: @synapse-network-ai/mcp-server
+Related SDK source: https://github.com/SynapseNetworkAI/Synapse-Network-Sdk
+Related SDK packages: @synapse-network-ai/sdk@1.0.0, synapse-network-ai-sdk==1.0.0, github.com/SynapseNetworkAI/Synapse-Network-Sdk/go@v1.0.0, ai.synapse-network:synapse-network-sdk:1.0.0, SynapseNetwork.Sdk 1.0.0
 
 SynapseNetwork is agent payment infrastructure for Cursor, Claude Desktop, Devin, LangChain, LlamaIndex, Vercel AI SDK, and other MCP-compatible agent frameworks.
 
