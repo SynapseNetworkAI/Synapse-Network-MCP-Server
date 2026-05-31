@@ -131,26 +131,71 @@ Extract duplicated logic into shared helpers. Split large or complex functions b
 
 Do not add public documentation that requires developers to run a Synapse Gateway for the open-source verification path. Production configuration should use `SYNAPSE_ENV=prod`; staging is only for preview/E2E validation.
 
+## Distribution And Registration Rules
+
+Use these canonical public identifiers when generating release, registry, or directory instructions:
+
+- npm package: `@synapse-network-ai/mcp-server`
+- MCP registry name: `io.github.synapsenetworkai/synapse-network-mcp-server`
+- Website: `https://www.synapse-network.ai/`
+- Install command: `npx -y @synapse-network-ai/mcp-server`
+- Production env: `SYNAPSE_ENV=prod`
+
+Publish order: npm package first, GitHub Release second, official MCP Registry third, third-party MCP directories fourth, Agent Skills and framework examples fifth.
+
+For third-party MCP directories, use the same production metadata for Smithery, PulseMCP, Glama MCP Directory, mcp.so / MCP.so, and awesome-mcp-servers style community lists. Do not describe staging as a production default.
+
+Remote MCP is a hosted V2 distribution channel for cloud-hosted agents such as OpenAI Remote MCP / Apps SDK, Claude MCP connector, or managed-agent connector flows. The npm stdio package remains the default local-client distribution.
+
+Hosted Remote MCP entrypoint:
+
+- `POST /mcp` and `GET /mcp`: Streamable HTTP transport.
+- `GET /mcp/sse`: legacy HTTP+SSE connection endpoint for OpenAI/Claude compatibility.
+- `POST /mcp/messages`: legacy HTTP+SSE message endpoint.
+- `GET /healthz` and `GET /readyz`: public unauthenticated probes.
+- `GET /.well-known/oauth-protected-resource`: OAuth protected-resource metadata.
+
+Remote MCP auth must use `Authorization: Bearer <token>`. External OpenAI/Claude/OAuth tokens are validated at the Remote MCP layer and must not be forwarded to Synapse Gateway. Gateway receives only the mapped Synapse Agent Key through `X-Credential`.
+
+## Agent Skills And Rules
+
+Reusable instruction packs live in:
+
+- `skills/claude/synapse-agentpay/SKILL.md`
+- `skills/cursor/synapse-agentpay.mdc`
+- `skills/codex/synapse-agentpay/SKILL.md`
+
+These files are optional distribution assets. They must reinforce the same three-tool workflow, production config, string money rule, stateless MCP boundary, and no owner/admin/provider/private-key rule.
+
 ## Source Map For Maintainers
 
 - `src/server.ts`: MCP tool registration.
 - `src/tools.ts`: tool schemas and MCP result/error shaping.
 - `src/gateway.ts`: direct native `fetch` Gateway adapter.
 - `src/config.ts`: environment resolution.
+- `src/http.ts`: hosted Remote MCP Streamable HTTP and HTTP+SSE entrypoint.
+- `src/remote-auth.ts`: Remote MCP bearer/OAuth validation and Agent Key mapping.
 - `scripts/ci/source_quality_checks.py`: public raw-map return guard.
 - `scripts/ci/quality_budget_check.mjs`: lightweight size, complexity, duplicate-code, and suppression-comment guard.
 - `scripts/e2e/mock.mjs`: no-secret MCP stdio E2E against a mock Gateway.
+- `scripts/e2e/remote-mock.mjs`: no-secret Remote MCP HTTP/SSE E2E against a mock Gateway.
+- `scripts/e2e/openai-remote-smoke.mjs`: opt-in OpenAI Remote MCP smoke.
+- `scripts/e2e/claude-remote-smoke.mjs`: opt-in Claude MCP connector smoke.
 - `scripts/e2e/live.mjs`: opt-in staging/prod live E2E against public Synapse Gateway environments.
 - `README.md`: human installation and usage guide.
 - `SECURITY.md`: security boundary and vulnerability reporting.
 - `CONTRIBUTING.md`: contributor workflow and quality gates.
 - `llm-instructions.md`: compact rules for agents.
 - `server.json`: MCP Registry metadata.
+- `docs/launch/mcp-and-skills-registration.md`: public registry, directory, and skills launch checklist.
+- `skills/`: reusable Claude, Cursor, and Codex Agent instruction packs.
 
 ## E2E Verification Rules
 
 - Production Agent workflows should use `SYNAPSE_ENV=prod`; staging is only for preview/E2E validation, not production usage.
 - `npm run verify:mcp` runs typecheck, unit tests, build, and mock MCP E2E.
+- `npm run test:e2e:remote:mock` verifies local hosted `/mcp`, `/mcp/sse`, `/mcp/messages`, public probes, and auth boundaries against a mock Gateway.
+- `npm run start:http` starts the hosted Remote MCP entrypoint from `dist/http.js`.
 - `npm run ci:quality` runs source-shape and quality-budget gates.
 - `npm run test:e2e:staging` verifies the real staging Gateway over MCP stdio for preview smoke testing. Maintainer staging E2E reads `SYNAPSE_AGENT_KEY` from Google Secret Manager secret `synapse-staging-e2e-agent-credential` by default; external developers can set `SYNAPSE_E2E_AGENT_KEY_SOURCE=env` and provide their own `SYNAPSE_AGENT_KEY=agt_xxx`.
 - Staging E2E performs broad discovery by default, sorts by lowest price, then selects a free fixed-price service by inspecting price fields. `SYNAPSE_E2E_QUERY` is optional service intent text, not a price filter. Legacy price-only values such as `free` are treated as broad discovery.

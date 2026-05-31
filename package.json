@@ -4,11 +4,14 @@
   "description": "Official stateless MCP server for SynapseNetwork agent payments.",
   "type": "module",
   "bin": {
-    "synapse-mcp-server": "./dist/index.js"
+    "synapse-mcp-server": "./dist/index.js",
+    "synapse-mcp-http": "./dist/http.js"
   },
   "files": [
     "dist",
     "assets",
+    "docs/launch",
+    "skills",
     "README.md",
     "LICENSE",
     "llms.txt",
@@ -22,13 +25,18 @@
     "prepack": "npm run build",
     "smoke:cli": "node dist/index.js --help",
     "test:e2e:mock": "node scripts/e2e/mock.mjs",
+    "test:e2e:remote:mock": "npm run build && node scripts/e2e/remote-mock.mjs",
+    "test:e2e:remote:openai": "node scripts/e2e/openai-remote-smoke.mjs",
+    "test:e2e:remote:claude": "node scripts/e2e/claude-remote-smoke.mjs",
     "test:e2e:local": "node scripts/e2e/live.mjs local",
     "test:e2e:staging": "node scripts/e2e/live.mjs staging",
     "test:e2e:prod": "node scripts/e2e/live.mjs prod",
     "ci:source-quality": "python3 scripts/ci/source_quality_checks_test.py && python3 scripts/ci/source_quality_checks.py",
     "ci:quality-budget": "node scripts/ci/quality_budget_check.test.mjs && node scripts/ci/quality_budget_check.mjs",
     "ci:quality": "npm run ci:source-quality && npm run ci:quality-budget",
-    "verify:mcp": "npm run typecheck && npm test && npm run build && npm run test:e2e:mock"
+    "start:http": "node dist/http.js",
+    "verify:mcp": "npm run typecheck && npm test && npm run build && npm run test:e2e:mock",
+    "release:readiness": "npm run verify:mcp && npm run ci:quality && npm run smoke:cli && npm pack --dry-run"
   },
   "keywords": [
     "mcp",
@@ -42,7 +50,14 @@
     "usdc",
     "cursor",
     "claude-desktop",
+    "claude-skills",
     "devin",
+    "cursor-rules",
+    "mcp-registry",
+    "smithery",
+    "pulsemcp",
+    "glama",
+    "openai-apps-sdk",
     "llms-txt"
   ],
   "license": "MIT",
@@ -56,6 +71,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
+    "jose": "^6.2.3",
     "zod": "^4.3.6"
   },
   "devDependencies": {
