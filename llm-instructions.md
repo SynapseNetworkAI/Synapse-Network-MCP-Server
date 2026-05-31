@@ -29,6 +29,24 @@ Critical contribution rules:
 5. Any suppression comment must include `quality-disable-reason: ...`.
 6. Do not add public documentation that requires developers to run a Synapse Gateway for the open-source verification path. Use `SYNAPSE_ENV=prod` for production Agent workflows; use staging only for preview/E2E validation.
 
+Distribution rules:
+
+1. Use `@synapse-network-ai/mcp-server` as the npm package name and `io.github.synapsenetworkai/synapse-network-mcp-server` as the MCP registry name.
+2. Publish order is npm package, GitHub Release, official MCP Registry, third-party MCP directories, then Agent Skills and framework examples.
+3. Third-party MCP directory copy should target Smithery, PulseMCP, Glama MCP Directory, mcp.so / MCP.so, and awesome-mcp-servers style lists.
+4. Use `https://www.synapse-network.ai/` as the public website URL.
+5. Do not claim the stdio npm package itself is the hosted remote endpoint. Hosted Remote MCP is served by `synapse-mcp-http` / `npm run start:http` after build.
+6. Reusable Agent instruction packs live under `skills/claude`, `skills/cursor`, and `skills/codex`.
+
+Remote MCP rules:
+
+1. Modern clients should use `https://mcp.synapse-network.ai/mcp` with Streamable HTTP.
+2. OpenAI/Claude compatibility clients may use `https://mcp.synapse-network.ai/mcp/sse`, which pairs with `POST /mcp/messages`.
+3. `GET /healthz` and `GET /readyz` are public probes and must not require OAuth.
+4. Remote requests must authenticate with `Authorization: Bearer <token>`.
+5. Do not forward OpenAI, Claude, or OAuth bearer tokens to Synapse Gateway. Validate them at the Remote MCP layer and map to a Synapse Agent Key for Gateway `X-Credential`.
+6. Treat `invoke_and_pay` as a sensitive payment tool; remote platform examples should require human approval unless invoking an explicit free smoke provider.
+
 Recommended flow:
 
 ```text
@@ -41,6 +59,7 @@ E2E verification and production configuration:
 
 ```bash
 npm run verify:mcp
+npm run test:e2e:remote:mock
 npm run ci:quality
 SYNAPSE_ENV=prod npx -y @synapse-network-ai/mcp-server --help
 SYNAPSE_AGENT_KEY=agt_xxx SYNAPSE_ENV=staging npm run test:e2e:staging

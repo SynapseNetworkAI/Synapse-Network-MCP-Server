@@ -17,7 +17,12 @@ export function createServer(client = new SynapseGatewayClient(loadConfig())): M
       title: "Discover Synapse services",
       description:
         "Search SynapseNetwork for agent-callable services. Use this before invoke_and_pay. For fixed-price APIs, copy the observed price into costUsdc.",
-      inputSchema: discoverServicesSchema
+      inputSchema: discoverServicesSchema,
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        openWorldHint: true
+      }
     },
     handlers.discoverServices
   );
@@ -27,8 +32,13 @@ export function createServer(client = new SynapseGatewayClient(loadConfig())): M
     {
       title: "Invoke and pay",
       description:
-        "Invoke a Synapse service using the configured Agent Key. For fixed-price APIs, pass costUsdc from discovery. For token-metered LLMs, omit costUsdc and pass maxCostUsdc. This server never caches prices.",
-      inputSchema: invokeAndPaySchema
+        "Invoke a Synapse service using the configured Agent Key. This is a payment action. For fixed-price APIs, pass costUsdc from discovery. For token-metered LLMs, omit costUsdc and pass maxCostUsdc. This server never caches prices.",
+      inputSchema: invokeAndPaySchema,
+      annotations: {
+        readOnlyHint: false,
+        destructiveHint: true,
+        openWorldHint: true
+      }
     },
     handlers.invokeAndPay
   );
@@ -38,7 +48,12 @@ export function createServer(client = new SynapseGatewayClient(loadConfig())): M
     {
       title: "Get invocation receipt",
       description: "Fetch a Synapse invocation receipt/status. Gateway enforces that the invocation belongs to the configured Agent Key.",
-      inputSchema: getReceiptSchema
+      inputSchema: getReceiptSchema,
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        openWorldHint: true
+      }
     },
     handlers.getReceipt
   );

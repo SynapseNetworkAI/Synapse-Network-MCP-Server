@@ -117,6 +117,30 @@ Add an MCP server with the same command and environment:
 
 Once configured, ask Cursor to discover Synapse services before invoking paid APIs.
 
+## Other MCP Clients
+
+Most MCP clients do not require a separate Synapse-specific plugin. They launch this npm package as a stdio MCP server and pass an Agent Key in the environment.
+
+VS Code / GitHub Copilot workspace-style config:
+
+```json
+{
+  "servers": {
+    "synapse-agentpay": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@synapse-network-ai/mcp-server"],
+      "env": {
+        "SYNAPSE_AGENT_KEY": "agt_xxx",
+        "SYNAPSE_ENV": "prod"
+      }
+    }
+  }
+}
+```
+
+Windsurf, Cline, Roo Code, Zed, Devin, and other MCP-compatible clients should use the same command, args, and environment variables when they support stdio MCP servers.
+
 ## MCP Tools
 
 ### `discover_services`
@@ -217,6 +241,19 @@ This checks type safety, unit tests, build output, MCP stdio tool discovery, and
 discover_services -> invoke_and_pay -> get_receipt
 ```
 
+Remote MCP protocol smoke with a mock Gateway:
+
+```bash
+npm run test:e2e:remote:mock
+```
+
+This starts the hosted HTTP entrypoint locally and verifies:
+
+- `POST /mcp` Streamable HTTP with bearer auth.
+- `GET /mcp/sse` plus `POST /mcp/messages` legacy HTTP+SSE compatibility.
+- Public unauthenticated `GET /healthz` and `GET /readyz`.
+- `401` plus `WWW-Authenticate` metadata on unauthenticated MCP calls.
+
 ### Preview And Staging E2E
 
 Use staging only for preview validation and live E2E smoke tests. Do not use staging for production Agent workflows.
@@ -298,13 +335,32 @@ npm run typecheck
 npm test
 npm run build
 npm run test:e2e:mock
+npm run test:e2e:remote:mock
 npm run ci:quality
 npm pack --dry-run
+```
+
+Release readiness check:
+
+```bash
+npm run release:readiness
 ```
 
 CI runs `npm run verify:mcp`, `npm run smoke:cli`, `npm run ci:quality`, and `npm pack --dry-run`.
 
 Quality gates enforce named public object return contracts, size budgets, complexity budgets, duplicate-code detection, and justified suppression comments. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contributor workflow.
+
+## Agent Skills And Rules
+
+MCP tools are the runtime capability surface. Skills and rules are optional instruction packs that help agents use those tools correctly.
+
+This repository includes reusable templates:
+
+- Claude Skill: [skills/claude/synapse-agentpay/SKILL.md](skills/claude/synapse-agentpay/SKILL.md)
+- Cursor Rule: [skills/cursor/synapse-agentpay.mdc](skills/cursor/synapse-agentpay.mdc)
+- Codex Skill: [skills/codex/synapse-agentpay/SKILL.md](skills/codex/synapse-agentpay/SKILL.md)
+
+These files teach agents to use production MCP config, call `discover_services -> invoke_and_pay -> get_receipt`, keep money as strings, rediscover on `PRICE_MISMATCH`, and stay inside the Agent Key security boundary.
 
 ## Open Source Community
 
@@ -320,8 +376,57 @@ Quality gates enforce named public object return contracts, size budgets, comple
 The repo includes `server.json` for the MCP Registry publisher flow. After publishing the npm package:
 
 ```bash
+npm run release:readiness
+npm publish --access public --registry=https://registry.npmjs.org
+npm view @synapse-network-ai/mcp-server --registry=https://registry.npmjs.org
+npx -y @synapse-network-ai/mcp-server --help
 mcp-publisher login github
 mcp-publisher publish
 ```
 
 The registry hosts metadata; npm hosts the package artifact.
+
+## MCP Directory Submissions
+
+After npm and the official MCP Registry entry are live, submit the same production metadata to community discovery surfaces:
+
+- Smithery.
+- PulseMCP.
+- Glama MCP Directory.
+- mcp.so / MCP.so.
+- awesome-mcp-servers and related community lists.
+
+Use the package name `@synapse-network-ai/mcp-server`, the website `https://www.synapse-network.ai/`, and the MCP registry name `io.github.synapsenetworkai/synapse-network-mcp-server`. Public listings should describe staging only as preview/E2E validation, not as the default Agent workflow.
+
+Detailed launch copy and submission checklist: [docs/launch/mcp-and-skills-registration.md](docs/launch/mcp-and-skills-registration.md).
+
+## Remote MCP Hosted Endpoint
+
+The default package remains a stdio MCP server for local MCP clients. For cloud-hosted app surfaces such as OpenAI Remote MCP, Claude MCP connector, Apps SDK, or managed-agent connector flows, run the hosted HTTP entrypoint:
+
+```bash
+npm run build
+SYNAPSE_MCP_HTTP_HOST=0.0.0.0 \
+SYNAPSE_MCP_HTTP_PORT=3000 \
+SYNAPSE_MCP_PUBLIC_BASE_URL=https://mcp.synapse-network.ai \
+SYNAPSE_GATEWAY_URL=https://api.synapse-network.ai \
+SYNAPSE_REMOTE_AUTH_MODE=agent_key \
+npm run start:http
+```
+
+Remote endpoint map:
+
+- `POST /mcp` and `GET /mcp`: Streamable HTTP MCP transport.
+- `GET /mcp/sse`: legacy HTTP+SSE connection endpoint for OpenAI/Claude compatibility.
+- `POST /mcp/messages`: legacy HTTP+SSE JSON-RPC message endpoint.
+- `GET /healthz` and `GET /readyz`: public lightweight probes, never OAuth-gated.
+- `GET /.well-known/oauth-protected-resource`: OAuth protected-resource metadata.
+
+Remote auth modes:
+
+- `SYNAPSE_REMOTE_AUTH_MODE=agent_key`: smoke/internal mode. `Authorization: Bearer agt_xxx` maps directly to Gateway `X-Credential`, or `SYNAPSE_REMOTE_BEARER_TOKEN` can map to a configured `SYNAPSE_AGENT_KEY`.
+- `SYNAPSE_REMOTE_AUTH_MODE=oauth`: validates OAuth JWTs with `SYNAPSE_OAUTH_ISSUER`, `SYNAPSE_OAUTH_JWKS_URL`, and `SYNAPSE_OAUTH_AUDIENCE`, then maps the verified token to the configured downstream `SYNAPSE_AGENT_KEY`.
+
+Remote MCP exposes the same three stateless tools and the same security boundary. External OpenAI/Claude/OAuth tokens are never forwarded to Synapse Gateway. For paid `invoke_and_pay`, configure OpenAI/Claude with a human approval step unless the target provider is an explicit free smoke service.
+
+Cloud Run note: if using `/mcp/sse`, enable Session Affinity so `/mcp/messages` returns to the instance holding the SSE transport. Prefer `/mcp` Streamable HTTP for newer clients.

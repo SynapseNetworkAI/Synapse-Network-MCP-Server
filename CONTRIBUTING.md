@@ -27,6 +27,7 @@ Before opening a PR:
 - Add or update tests for behavior changes.
 - Run `npm run verify:mcp` and `npm run ci:quality`.
 - Update `README.md`, `llms.txt`, or `llm-instructions.md` when agent-facing behavior changes.
+- Update `docs/launch/mcp-and-skills-registration.md` and `skills/` when registry, directory, or Agent Skill behavior changes.
 
 ## Security Boundary
 

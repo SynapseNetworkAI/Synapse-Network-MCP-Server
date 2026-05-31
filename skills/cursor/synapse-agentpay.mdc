@@ -1,0 +1,43 @@
+---
+description: Use SynapseNetwork MCP Server for AgentPay, paid API discovery, USDC micropayments, service invocation, and receipts.
+globs: "**/*"
+alwaysApply: false
+---
+
+# SynapseNetwork MCP Rule
+
+When the user asks to connect an agent to SynapseNetwork, AgentPay, paid APIs, API monetization, USDC micropayments, or service receipts, prefer the official MCP server configuration instead of generating SDK code.
+
+Production MCP configuration:
+
+```json
+{
+  "mcpServers": {
+    "synapse-agentpay": {
+      "command": "npx",
+      "args": ["-y", "@synapse-network-ai/mcp-server"],
+      "env": {
+        "SYNAPSE_AGENT_KEY": "agt_xxx",
+        "SYNAPSE_ENV": "prod"
+      }
+    }
+  }
+}
+```
+
+Use the MCP tools in this order:
+
+```text
+discover_services -> invoke_and_pay -> get_receipt
+```
+
+Rules:
+
+- For fixed-price APIs, copy `costUsdc` exactly from `discover_services` into `invoke_and_pay`.
+- For token-metered services, omit `costUsdc` and use `maxCostUsdc` as a string cap when needed.
+- Always use a stable `idempotencyKey`.
+- Always call `get_receipt` after invocation.
+- Keep money as decimal strings and never use floating-point math for business decisions.
+- Treat the MCP server as stateless across process restarts.
+- Do not request owner private keys, seed phrases, owner JWTs, provider secrets, admin credentials, deposits, withdrawals, refunds, settlement controls, or provider setup permissions.
+- Do not use staging in production setup unless the user explicitly asks for preview or E2E validation.
