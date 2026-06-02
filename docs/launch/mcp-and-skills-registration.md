@@ -147,6 +147,15 @@ Remote MCP requirements:
 
 Remote MCP must not replace the npm stdio package; it is an additional distribution channel.
 
+Production Cloud Run deployment and OpenAI Remote MCP smoke validation live in
+[remote-mcp-gcloud-openai.md](remote-mcp-gcloud-openai.md). The P0 hosted
+service should run as `synapse-prod-mcp-server`, publish
+`https://mcp.synapse-network.ai/mcp`, keep `--max-instances=1` until remote
+session storage or affinity is proven, and use public bring-your-own-Agent-Key
+auth. Do not configure `SYNAPSE_AGENT_KEY` or `SYNAPSE_REMOTE_BEARER_TOKEN` on
+the public Cloud Run service; customers pass their own `agt_xxx` as
+`Authorization: Bearer agt_xxx`.
+
 ## Pre-Submission Checklist
 
 Before every public submission:

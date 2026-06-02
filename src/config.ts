@@ -89,7 +89,7 @@ export function loadRemoteServerConfig(env: ConfigEnv = process.env): RemoteServ
   validateRemoteAuth(authMode, downstreamAgentKey, env);
 
   return {
-    gatewayUrl: resolveGatewayUrl(env),
+    gatewayUrl: resolveRemoteGatewayUrl(env),
     timeoutMs: resolveTimeoutMs(env.SYNAPSE_TIMEOUT_MS),
     host: env.SYNAPSE_MCP_HTTP_HOST?.trim() || "127.0.0.1",
     port: resolvePort(env.SYNAPSE_MCP_HTTP_PORT || env.PORT),
@@ -104,6 +104,10 @@ export function loadRemoteServerConfig(env: ConfigEnv = process.env): RemoteServ
     allowedOrigins: splitCsv(env.SYNAPSE_MCP_ALLOWED_ORIGINS),
     sseSessionTtlMs: resolveSessionTtlMs(env.SYNAPSE_MCP_SSE_SESSION_TTL_MS)
   };
+}
+
+function resolveRemoteGatewayUrl(env: Pick<ConfigEnv, "SYNAPSE_GATEWAY_URL" | "SYNAPSE_ENV"> = {}): string {
+  return resolveGatewayUrl({ ...env, SYNAPSE_ENV: env.SYNAPSE_ENV?.trim() || "prod" });
 }
 
 function resolveTimeoutMs(raw: string | undefined): number {

@@ -19,9 +19,9 @@ describe("config", () => {
   });
 
   it("loads hosted Remote MCP defaults without requiring an env Agent Key in agent_key mode", () => {
-    expect(loadRemoteServerConfig({ SYNAPSE_GATEWAY_URL: "http://gateway.test" })).toMatchObject({
+    expect(loadRemoteServerConfig({})).toMatchObject({
       authMode: "agent_key",
-      gatewayUrl: "http://gateway.test",
+      gatewayUrl: "https://api.synapse-network.ai",
       host: "127.0.0.1",
       port: 3000,
       publicBaseUrl: "https://mcp.synapse-network.ai",

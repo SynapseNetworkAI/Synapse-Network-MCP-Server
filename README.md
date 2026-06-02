@@ -424,9 +424,15 @@ Remote endpoint map:
 
 Remote auth modes:
 
-- `SYNAPSE_REMOTE_AUTH_MODE=agent_key`: smoke/internal mode. `Authorization: Bearer agt_xxx` maps directly to Gateway `X-Credential`, or `SYNAPSE_REMOTE_BEARER_TOKEN` can map to a configured `SYNAPSE_AGENT_KEY`.
+- `SYNAPSE_REMOTE_AUTH_MODE=agent_key`: public bring-your-own-Agent-Key mode. `Authorization: Bearer agt_xxx` maps directly to Gateway `X-Credential`, so each customer pays from their own Agent balance. Do not configure `SYNAPSE_AGENT_KEY` or `SYNAPSE_REMOTE_BEARER_TOKEN` on the public hosted endpoint.
 - `SYNAPSE_REMOTE_AUTH_MODE=oauth`: validates OAuth JWTs with `SYNAPSE_OAUTH_ISSUER`, `SYNAPSE_OAUTH_JWKS_URL`, and `SYNAPSE_OAUTH_AUDIENCE`, then maps the verified token to the configured downstream `SYNAPSE_AGENT_KEY`.
 
 Remote MCP exposes the same three stateless tools and the same security boundary. External OpenAI/Claude/OAuth tokens are never forwarded to Synapse Gateway. For paid `invoke_and_pay`, configure OpenAI/Claude with a human approval step unless the target provider is an explicit free smoke service.
 
 Cloud Run note: if using `/mcp/sse`, enable Session Affinity so `/mcp/messages` returns to the instance holding the SSE transport. Prefer `/mcp` Streamable HTTP for newer clients.
+
+Production Cloud Run deployment and OpenAI Remote MCP smoke steps are documented in [docs/launch/remote-mcp-gcloud-openai.md](docs/launch/remote-mcp-gcloud-openai.md). Maintainers can deploy the hosted endpoint with:
+
+```bash
+PROJECT_ID=<gcp-project-id> npm run deploy:gcloud:remote
+```
