@@ -97,20 +97,25 @@ run gcloud builds submit \
 
 run gcloud "${deploy_args[@]}"
 
+run gcloud beta run services add-iam-policy-binding "${SERVICE_NAME}" \
+  --project "${PROJECT_ID}" \
+  --region "${REGION}" \
+  --member allUsers \
+  --role roles/run.invoker
+
 if [[ "${CREATE_DOMAIN_MAPPING}" == "1" ]]; then
   if [[ "${DRY_RUN}" == "1" ]]; then
-    run gcloud run domain-mappings create \
+    run gcloud beta run domain-mappings create \
       --project "${PROJECT_ID}" \
       --region "${REGION}" \
       --service "${SERVICE_NAME}" \
       --domain "${DOMAIN}"
-  elif gcloud run domain-mappings describe \
+  elif gcloud beta run domain-mappings describe "${DOMAIN}" \
     --project "${PROJECT_ID}" \
-    --region "${REGION}" \
-    --domain "${DOMAIN}" >/dev/null 2>&1; then
+    --region "${REGION}" >/dev/null 2>&1; then
     echo "Domain mapping already exists for ${DOMAIN}."
   else
-    run gcloud run domain-mappings create \
+    run gcloud beta run domain-mappings create \
       --project "${PROJECT_ID}" \
       --region "${REGION}" \
       --service "${SERVICE_NAME}" \
