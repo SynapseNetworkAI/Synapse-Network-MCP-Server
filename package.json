@@ -1,11 +1,12 @@
 {
   "name": "@synapse-network-ai/mcp-server",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "description": "Official stateless MCP server for SynapseNetwork agent payments.",
   "type": "module",
   "bin": {
-    "synapse-mcp-server": "./dist/index.js",
-    "synapse-mcp-http": "./dist/http.js"
+    "mcp-server": "dist/index.js",
+    "synapse-mcp-server": "dist/index.js",
+    "synapse-mcp-http": "dist/http.js"
   },
   "files": [
     "dist",
@@ -82,7 +83,7 @@
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "mcpName": "io.github.synapsenetworkai/synapse-network-mcp-server",
+  "mcpName": "io.github.SynapseNetworkAI/synapse-network-mcp-server",
   "homepage": "https://www.synapse-network.ai/",
   "bugs": {
     "url": "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server/issues"

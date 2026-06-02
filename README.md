@@ -373,7 +373,14 @@ These files teach agents to use production MCP config, call `discover_services -
 
 ## MCP Registry Publishing
 
-The repo includes `server.json` for the MCP Registry publisher flow. After publishing the npm package:
+The repo includes `server.json` for the MCP Registry publisher flow. It publishes
+both the npm stdio package and the hosted Remote MCP endpoint:
+
+- stdio package: `npx -y @synapse-network-ai/mcp-server`
+- Remote MCP: `https://mcp.synapse-network.ai/mcp`
+- Remote auth: `Authorization: Bearer agt_xxx`
+
+After publishing the npm package:
 
 ```bash
 npm run release:readiness
@@ -384,19 +391,24 @@ mcp-publisher login github
 mcp-publisher publish
 ```
 
-The registry hosts metadata; npm hosts the package artifact.
+The registry hosts metadata; npm hosts the package artifact. Remote MCP remains a
+hosted BYOK channel: customers pass their own Agent Key as the bearer token.
 
 ## MCP Directory Submissions
 
 After npm and the official MCP Registry entry are live, submit the same production metadata to community discovery surfaces:
 
-- Smithery.
+- Smithery: publish/import the public MCP URL when supported, otherwise use the GitHub/npm package metadata.
+- Glama MCP Directory: submit the GitHub repository and use the Inspector against the Remote MCP URL with a bearer Agent Key.
 - PulseMCP.
-- Glama MCP Directory.
 - mcp.so / MCP.so.
 - awesome-mcp-servers and related community lists.
 
-Use the package name `@synapse-network-ai/mcp-server`, the website `https://www.synapse-network.ai/`, and the MCP registry name `io.github.synapsenetworkai/synapse-network-mcp-server`. Public listings should describe staging only as preview/E2E validation, not as the default Agent workflow.
+Use the package name `@synapse-network-ai/mcp-server`, the hosted endpoint
+`https://mcp.synapse-network.ai/mcp`, the website `https://www.synapse-network.ai/`,
+and the MCP registry name `io.github.SynapseNetworkAI/synapse-network-mcp-server`.
+Public listings should describe staging only as preview/E2E validation, not as
+the default Agent workflow.
 
 Detailed launch copy and submission checklist: [docs/launch/mcp-and-skills-registration.md](docs/launch/mcp-and-skills-registration.md).
 
@@ -428,6 +440,14 @@ Remote auth modes:
 - `SYNAPSE_REMOTE_AUTH_MODE=oauth`: validates OAuth JWTs with `SYNAPSE_OAUTH_ISSUER`, `SYNAPSE_OAUTH_JWKS_URL`, and `SYNAPSE_OAUTH_AUDIENCE`, then maps the verified token to the configured downstream `SYNAPSE_AGENT_KEY`.
 
 Remote MCP exposes the same three stateless tools and the same security boundary. External OpenAI/Claude/OAuth tokens are never forwarded to Synapse Gateway. For paid `invoke_and_pay`, configure OpenAI/Claude with a human approval step unless the target provider is an explicit free smoke service.
+
+ChatGPT workspace custom app registration:
+
+1. In ChatGPT Business, Enterprise, or Edu, enable developer mode for the workspace/user.
+2. Create a custom app with MCP endpoint `https://mcp.synapse-network.ai/mcp`.
+3. Use bearer/API-token authentication with `agt_xxx` as the secret credential when the UI supports static bearer tokens.
+4. Scan tools and verify `discover_services` imports. Keep `invoke_and_pay` behind human approval/action confirmation.
+5. If the workspace requires OAuth/OIDC instead of static bearer credentials, treat that as an OAuth wrapper follow-up; do not weaken Remote MCP auth.
 
 Cloud Run note: if using `/mcp/sse`, enable Session Affinity so `/mcp/messages` returns to the instance holding the SSE transport. Prefer `/mcp` Streamable HTTP for newer clients.
 

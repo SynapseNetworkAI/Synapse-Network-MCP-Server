@@ -31,7 +31,7 @@ Critical contribution rules:
 
 Distribution rules:
 
-1. Use `@synapse-network-ai/mcp-server` as the npm package name and `io.github.synapsenetworkai/synapse-network-mcp-server` as the MCP registry name.
+1. Use `@synapse-network-ai/mcp-server` as the npm package name and `io.github.SynapseNetworkAI/synapse-network-mcp-server` as the MCP registry name.
 2. Publish order is npm package, GitHub Release, official MCP Registry, third-party MCP directories, then Agent Skills and framework examples.
 3. Third-party MCP directory copy should target Smithery, PulseMCP, Glama MCP Directory, mcp.so / MCP.so, and awesome-mcp-servers style lists.
 4. Use `https://www.synapse-network.ai/` as the public website URL.
