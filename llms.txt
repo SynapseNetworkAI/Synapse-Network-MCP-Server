@@ -136,16 +136,20 @@ Do not add public documentation that requires developers to run a Synapse Gatewa
 Use these canonical public identifiers when generating release, registry, or directory instructions:
 
 - npm package: `@synapse-network-ai/mcp-server`
-- MCP registry name: `io.github.synapsenetworkai/synapse-network-mcp-server`
+- MCP registry name: `io.github.SynapseNetworkAI/synapse-network-mcp-server`
 - Website: `https://www.synapse-network.ai/`
 - Install command: `npx -y @synapse-network-ai/mcp-server`
 - Production env: `SYNAPSE_ENV=prod`
+- Hosted Remote MCP URL: `https://mcp.synapse-network.ai/mcp`
+- Hosted Remote MCP auth: `Authorization: Bearer agt_xxx`
 
 Publish order: npm package first, GitHub Release second, official MCP Registry third, third-party MCP directories fourth, Agent Skills and framework examples fifth.
 
 For third-party MCP directories, use the same production metadata for Smithery, PulseMCP, Glama MCP Directory, mcp.so / MCP.so, and awesome-mcp-servers style community lists. Do not describe staging as a production default.
 
 Remote MCP is a hosted V2 distribution channel for cloud-hosted agents such as OpenAI Remote MCP / Apps SDK, Claude MCP connector, or managed-agent connector flows. The npm stdio package remains the default local-client distribution.
+
+Official MCP Registry metadata should publish both the npm stdio package and the hosted Remote MCP endpoint. Third-party MCP directories should use the same public metadata and include the hosted URL when their submission flow supports remote servers.
 
 Hosted Remote MCP entrypoint:
 
@@ -158,6 +162,8 @@ Hosted Remote MCP entrypoint:
 Remote MCP auth must use `Authorization: Bearer <token>`. External OpenAI/Claude/OAuth tokens are validated at the Remote MCP layer and must not be forwarded to Synapse Gateway. Gateway receives only the mapped Synapse Agent Key through `X-Credential`.
 
 Public hosted Remote MCP uses bring-your-own-Agent-Key auth. Do not configure `SYNAPSE_AGENT_KEY` or `SYNAPSE_REMOTE_BEARER_TOKEN` on `https://mcp.synapse-network.ai`; customers pass their own `agt_xxx` as `Authorization: Bearer agt_xxx`, and Gateway charges that customer's Agent balance. The hosted production service runs with `SYNAPSE_REMOTE_AUTH_MODE=agent_key` and `SYNAPSE_ENV=prod`.
+
+ChatGPT workspace custom app registration should use `https://mcp.synapse-network.ai/mcp` with bearer/API-token auth when available. Scan `discover_services` first and require human approval for paid `invoke_and_pay`. Do not claim public ChatGPT app directory availability from internal workspace registration. If a workspace requires OAuth/OIDC, keep BYOK bearer auth and implement an OAuth wrapper follow-up.
 
 ## Agent Skills And Rules
 

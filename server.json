@@ -1,17 +1,31 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.synapsenetworkai/synapse-network-mcp-server",
-  "description": "Official stateless MCP stdio server for SynapseNetwork service discovery, paid invocation, and receipts. Website: https://www.synapse-network.ai/",
+  "name": "io.github.SynapseNetworkAI/synapse-network-mcp-server",
+  "description": "Official SynapseNetwork MCP server for agent payments, service discovery, and receipts.",
   "repository": {
     "url": "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server",
     "source": "github"
   },
-  "version": "0.1.0",
+  "version": "0.1.3",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.synapse-network.ai/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer SynapseNetwork Agent Key beginning with agt_. Example: Bearer agt_xxx. Used by the Remote MCP layer and mapped to Gateway X-Credential.",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@synapse-network-ai/mcp-server",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "transport": {
         "type": "stdio"
       },
@@ -34,7 +48,7 @@
           "name": "SYNAPSE_GATEWAY_URL",
           "description": "Optional custom Gateway base URL. Overrides SYNAPSE_ENV.",
           "isRequired": false,
-          "format": "uri",
+          "format": "string",
           "isSecret": false
         }
       ]

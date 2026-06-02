@@ -11,17 +11,19 @@ Use production by default for every public listing. Staging is only for preview 
 - Website: https://www.synapse-network.ai/
 - GitHub repository: https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server
 - npm package: `@synapse-network-ai/mcp-server`
-- MCP registry name: `io.github.synapsenetworkai/synapse-network-mcp-server`
-- Transport: stdio
+- MCP registry name: `io.github.SynapseNetworkAI/synapse-network-mcp-server`
+- Transport: stdio package plus hosted Remote MCP
 - Install command: `npx -y @synapse-network-ai/mcp-server`
+- Remote MCP endpoint: `https://mcp.synapse-network.ai/mcp`
 - Required credential: `SYNAPSE_AGENT_KEY=agt_xxx`
+- Remote MCP credential: `Authorization: Bearer agt_xxx`
 - Production environment: `SYNAPSE_ENV=prod`
 - Tools: `discover_services`, `invoke_and_pay`, `get_receipt`
 - Category keywords: payments, API monetization, agent commerce, USDC micropayments, service discovery, receipts
 
 Short description:
 
-> Official stateless MCP stdio server for SynapseNetwork. It lets agents discover external APIs, invoke services, pay through SynapseNetwork Gateway, and retrieve auditable receipts with an Agent Key.
+> Official stateless MCP server for SynapseNetwork. It lets agents discover external APIs, invoke services, pay through SynapseNetwork Gateway, and retrieve auditable receipts with an Agent Key. Use the npm stdio package for local MCP clients or the hosted Remote MCP endpoint for cloud-hosted agents.
 
 Security boundary:
 
@@ -44,7 +46,8 @@ Acceptance checks:
 
 - npm resolves `@synapse-network-ai/mcp-server`.
 - `npx -y @synapse-network-ai/mcp-server --help` exits successfully.
-- Official MCP Registry shows `io.github.synapsenetworkai/synapse-network-mcp-server`.
+- Official MCP Registry shows `io.github.SynapseNetworkAI/synapse-network-mcp-server`.
+- Official MCP Registry metadata includes Remote MCP `https://mcp.synapse-network.ai/mcp`.
 - Production E2E evidence is recorded without secrets or full runtime IDs.
 
 ## P1 MCP Directories
@@ -52,10 +55,10 @@ Acceptance checks:
 Submit the same canonical metadata to these discovery surfaces:
 
 - Official MCP Registry: publish `server.json` with `mcp-publisher`.
-- Smithery: submit GitHub/npm metadata for stdio packages; use remote MCP only if the listing requires a hosted URL.
+- Smithery: publish/import `https://mcp.synapse-network.ai/mcp` when remote URL publishing is supported; otherwise submit GitHub/npm metadata.
 - PulseMCP: submit GitHub repository, npm package, tool list, website, and security boundary.
-- Glama MCP Directory: submit GitHub repository so the directory can index tools and schemas.
-- mcp.so / MCP.so: submit the GitHub repository and npm package.
+- Glama MCP Directory: submit GitHub repository and verify the hosted URL with the Glama Inspector using a bearer Agent Key.
+- mcp.so / MCP.so: submit the GitHub repository, npm package, and hosted Remote MCP URL when the form supports it.
 - awesome-mcp-servers and similar community lists: submit a PR under payments, agent commerce, or API monetization.
 
 Do not describe staging as the default runtime in public directory listings.
@@ -147,6 +150,29 @@ Remote MCP requirements:
 
 Remote MCP must not replace the npm stdio package; it is an additional distribution channel.
 
+## ChatGPT And Claude Remote Connector Registration
+
+ChatGPT workspace custom app registration:
+
+```text
+MCP endpoint: https://mcp.synapse-network.ai/mcp
+Authentication: Bearer/API token
+Secret value: agt_xxx
+Read-only smoke tool: discover_services
+Consequential tool: invoke_and_pay, require human approval
+```
+
+ChatGPT Business, Enterprise, or Edu admins should enable developer mode, create
+a custom app, scan tools, and publish only after verifying action controls. Do
+not claim public ChatGPT app directory availability from this internal custom
+app registration. If a workspace only accepts OAuth/OIDC credentials, keep the
+current BYOK bearer auth and open an OAuth wrapper follow-up.
+
+Claude remote connectors can use the same URL and bearer Agent Key credential.
+For local Claude Desktop, Cursor, VS Code, Windsurf, Devin, and similar clients,
+continue to prefer the stdio `npx` configuration unless the client explicitly
+supports Remote MCP over Streamable HTTP.
+
 Production Cloud Run deployment and OpenAI Remote MCP smoke validation live in
 [remote-mcp-gcloud-openai.md](remote-mcp-gcloud-openai.md). The P0 hosted
 service should run as `synapse-prod-mcp-server`, publish
@@ -169,6 +195,8 @@ Manual review:
 
 - Public examples use `SYNAPSE_ENV=prod`.
 - Staging appears only in preview/E2E context.
+- Remote MCP examples use `https://mcp.synapse-network.ai/mcp` and `Authorization: Bearer agt_xxx`.
+- ChatGPT/Claude copy requires human approval for paid `invoke_and_pay`.
 - No local Gateway instructions are exposed as the public install path.
 - No owner private key, seed phrase, owner JWT, provider secret, admin credential, deposit, withdrawal, refund, settlement, or provider setup examples exist.
 - Directory copy links to https://www.synapse-network.ai/ and the GitHub repository.
