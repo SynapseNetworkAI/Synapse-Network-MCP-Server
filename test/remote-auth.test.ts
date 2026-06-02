@@ -20,17 +20,21 @@ const baseConfig: RemoteServerConfig = {
 };
 
 describe("remote auth", () => {
-  it("accepts direct Agent Key bearer tokens in smoke mode", async () => {
-    const context = await resolveRemoteAuthContext("Bearer agt_request", { ...baseConfig, remoteBearerToken: undefined });
+  it("accepts customer Agent Key bearer tokens in public mode", async () => {
+    const context = await resolveRemoteAuthContext("Bearer agt_customer", {
+      ...baseConfig,
+      downstreamAgentKey: undefined,
+      remoteBearerToken: undefined
+    });
 
     expect(context.serverConfig).toMatchObject({
-      agentKey: "agt_request",
+      agentKey: "agt_customer",
       gatewayUrl: "http://gateway.test"
     });
     expect(context.scopes).toEqual(["synapse.discovery.read", "synapse.invocations.write", "synapse.receipts.read"]);
   });
 
-  it("maps an opaque remote bearer token to the configured downstream Agent Key", async () => {
+  it("still supports an explicit single-tenant opaque token mapping when configured", async () => {
     const context = await resolveRemoteAuthContext("Bearer remote_token", baseConfig);
 
     expect(context.serverConfig.agentKey).toBe("agt_downstream");

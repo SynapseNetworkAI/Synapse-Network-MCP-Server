@@ -157,6 +157,8 @@ Hosted Remote MCP entrypoint:
 
 Remote MCP auth must use `Authorization: Bearer <token>`. External OpenAI/Claude/OAuth tokens are validated at the Remote MCP layer and must not be forwarded to Synapse Gateway. Gateway receives only the mapped Synapse Agent Key through `X-Credential`.
 
+Public hosted Remote MCP uses bring-your-own-Agent-Key auth. Do not configure `SYNAPSE_AGENT_KEY` or `SYNAPSE_REMOTE_BEARER_TOKEN` on `https://mcp.synapse-network.ai`; customers pass their own `agt_xxx` as `Authorization: Bearer agt_xxx`, and Gateway charges that customer's Agent balance. The hosted production service runs with `SYNAPSE_REMOTE_AUTH_MODE=agent_key` and `SYNAPSE_ENV=prod`.
+
 ## Agent Skills And Rules
 
 Reusable instruction packs live in:
@@ -182,6 +184,9 @@ These files are optional distribution assets. They must reinforce the same three
 - `scripts/e2e/openai-remote-smoke.mjs`: opt-in OpenAI Remote MCP smoke.
 - `scripts/e2e/claude-remote-smoke.mjs`: opt-in Claude MCP connector smoke.
 - `scripts/e2e/live.mjs`: opt-in staging/prod live E2E against public Synapse Gateway environments.
+- `Dockerfile`: Node 20 production image for hosted Remote MCP on Cloud Run.
+- `scripts/deploy/gcloud-remote-mcp.sh`: Artifact Registry build and public BYOK Cloud Run deploy script for `synapse-prod-mcp-server`.
+- `docs/launch/remote-mcp-gcloud-openai.md`: production GCloud deployment and OpenAI Remote MCP smoke runbook.
 - `README.md`: human installation and usage guide.
 - `SECURITY.md`: security boundary and vulnerability reporting.
 - `CONTRIBUTING.md`: contributor workflow and quality gates.
