@@ -10,7 +10,7 @@ await postJson(
     Authorization: `Bearer ${requiredEnv("OPENAI_API_KEY", "OpenAI Remote MCP smoke")}`
   },
   {
-    model: process.env.OPENAI_MODEL || "gpt-5",
+    model: process.env.OPENAI_MODEL || "gpt-4.1-mini",
     tools: [
       {
         type: "mcp",
