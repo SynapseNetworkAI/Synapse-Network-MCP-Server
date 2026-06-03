@@ -277,7 +277,7 @@ function protectedResourceMetadata(config: RemoteServerConfig): unknown {
     resource: `${config.publicBaseUrl}${MCP_PATH}`,
     authorization_servers: config.oauthIssuer ? [config.oauthIssuer] : [],
     bearer_methods_supported: ["header"],
-    scopes_supported: ["synapse.discovery.read", "synapse.invocations.write", "synapse.receipts.read"]
+    scopes_supported: ["synapse.discovery.read", "synapse.invocations.write", "synapse.receipts.read", "offline_access"]
   };
 }
 
@@ -286,11 +286,13 @@ function sendOptionalAuthServerMetadata(res: ServerResponse, config: RemoteServe
   sendJson(res, 200, {
     issuer: config.oauthIssuer,
     jwks_uri: config.oauthJwksUrl,
-    authorization_endpoint: `${config.oauthIssuer}/authorize`,
-    token_endpoint: `${config.oauthIssuer}/token`,
+    authorization_endpoint: `${config.oauthIssuer}/oauth/authorize`,
+    token_endpoint: `${config.oauthIssuer}/oauth/token`,
+    revocation_endpoint: `${config.oauthIssuer}/oauth/revoke`,
     response_types_supported: ["code"],
     grant_types_supported: ["authorization_code", "refresh_token"],
-    code_challenge_methods_supported: ["S256"]
+    code_challenge_methods_supported: ["S256"],
+    scopes_supported: ["synapse.discovery.read", "synapse.invocations.write", "synapse.receipts.read", "offline_access"]
   });
 }
 

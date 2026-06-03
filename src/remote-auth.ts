@@ -25,6 +25,7 @@ export class RemoteAuthError extends Error {
 export async function resolveRemoteAuthContext(authHeader: string | undefined, config: RemoteServerConfig): Promise<RemoteAuthContext> {
   const bearerToken = parseBearerToken(authHeader);
   if (config.authMode === "oauth") return resolveOauthContext(bearerToken, config);
+  if (config.authMode === "synapse_oauth") return resolveSynapseOauthContext(bearerToken, config);
   return resolveAgentKeyContext(bearerToken, config);
 }
 
@@ -87,6 +88,29 @@ async function resolveOauthContext(bearerToken: string, config: RemoteServerConf
     audience
   });
   return authContext(downstreamAgentKey, config, fingerprint(bearerToken), scopesFromClaim(payload.scope));
+}
+
+async function resolveSynapseOauthContext(bearerToken: string, config: RemoteServerConfig): Promise<RemoteAuthContext> {
+  const issuer = required(config.oauthIssuer, "SYNAPSE_OAUTH_ISSUER");
+  const jwtSecret = required(config.oauthJwtSecret, "SYNAPSE_OAUTH_JWT_SECRET");
+  const audience = required(config.oauthAudience, "SYNAPSE_OAUTH_AUDIENCE");
+  const secretKey = new TextEncoder().encode(jwtSecret);
+  const { payload } = await jwtVerify(bearerToken, secretKey, {
+    issuer,
+    audience
+  });
+  if (payload.token_use !== "synapse_mcp_access") {
+    throw new RemoteAuthError(401, "INVALID_TOKEN", "Remote MCP OAuth token use is invalid.");
+  }
+  return {
+    serverConfig: {
+      oauthAccessToken: bearerToken,
+      gatewayUrl: config.gatewayUrl,
+      timeoutMs: config.timeoutMs
+    },
+    tokenFingerprint: fingerprint(bearerToken),
+    scopes: scopesFromClaim(payload.scope)
+  };
 }
 
 function authContext(agentKey: string, config: RemoteServerConfig, tokenFingerprint: string, scopes: string[]): RemoteAuthContext {

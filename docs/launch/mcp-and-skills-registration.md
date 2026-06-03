@@ -140,12 +140,12 @@ Remote MCP requirements:
 
 - Streamable HTTP transport on `/mcp`.
 - Legacy HTTP+SSE compatibility on `/mcp/sse` and `/mcp/messages`.
-- Agent Key smoke mode or OAuth bearer-token authentication.
+- Agent Key smoke mode or Synapse OAuth bearer-token authentication.
 - Public unauthenticated `/healthz` and `/readyz` probes.
 - Per-agent rate limits and request audit logs.
 - Production smoke tests independent of local `npx` execution, including OpenAI and Claude connector smoke scripts.
 - Same three tools and same stateless pricing behavior as the stdio server.
-- No token passthrough: OpenAI, Claude, and OAuth tokens are validated at Remote MCP and mapped to Gateway `X-Credential`.
+- No external token passthrough: OpenAI and Claude tokens are not sent to Gateway. Synapse first-party OAuth access tokens are allowed in `synapse_oauth` mode and resolve at Gateway to a linked Agent Credential.
 - Paid `invoke_and_pay` examples must recommend human approval unless the selected provider is an explicit free smoke service.
 
 Remote MCP must not replace the npm stdio package; it is an additional distribution channel.
@@ -165,8 +165,22 @@ Consequential tool: invoke_and_pay, require human approval
 ChatGPT Business, Enterprise, or Edu admins should enable developer mode, create
 a custom app, scan tools, and publish only after verifying action controls. Do
 not claim public ChatGPT app directory availability from this internal custom
-app registration. If a workspace only accepts OAuth/OIDC credentials, keep the
-current BYOK bearer auth and open an OAuth wrapper follow-up.
+app registration.
+
+If the ChatGPT UI only accepts OAuth, use Synapse first-party OAuth:
+
+```text
+MCP endpoint: https://mcp.synapse-network.ai/mcp
+Authentication: OAuth
+Authorization endpoint: https://www.synapse-network.ai/oauth/authorize
+Token endpoint: https://www.synapse-network.ai/oauth/token
+Default scopes: synapse.discovery.read synapse.receipts.read offline_access
+Write scope: synapse.invocations.write
+```
+
+The user signs in with Synapse wallet auth, selects or creates a dedicated
+`ChatGPT Remote MCP` Agent Credential, and ChatGPT receives OAuth tokens only.
+Gateway maps those tokens to the linked Agent Credential server-side.
 
 Claude remote connectors can use the same URL and bearer Agent Key credential.
 For local Claude Desktop, Cursor, VS Code, Windsurf, Devin, and similar clients,

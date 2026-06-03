@@ -92,9 +92,15 @@ export class SynapseGatewayClient {
     try {
       const headers: Record<string, string> = {
         "Accept": "application/json",
-        "Content-Type": "application/json",
-        "X-Credential": this.config.agentKey
+        "Content-Type": "application/json"
       };
+      if (this.config.oauthAccessToken) {
+        headers.Authorization = `Bearer ${this.config.oauthAccessToken}`;
+      } else if (this.config.agentKey) {
+        headers["X-Credential"] = this.config.agentKey;
+      } else {
+        throw new GatewayError(401, "GATEWAY_CREDENTIAL_MISSING", "Synapse Gateway credential is missing.");
+      }
       if (init.requestId?.trim()) headers["X-Request-Id"] = init.requestId.trim();
 
       const fetchInit: RequestInit = {

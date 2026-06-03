@@ -438,16 +438,19 @@ Remote auth modes:
 
 - `SYNAPSE_REMOTE_AUTH_MODE=agent_key`: public bring-your-own-Agent-Key mode. `Authorization: Bearer agt_xxx` maps directly to Gateway `X-Credential`, so each customer pays from their own Agent balance. Do not configure `SYNAPSE_AGENT_KEY` or `SYNAPSE_REMOTE_BEARER_TOKEN` on the public hosted endpoint.
 - `SYNAPSE_REMOTE_AUTH_MODE=oauth`: validates OAuth JWTs with `SYNAPSE_OAUTH_ISSUER`, `SYNAPSE_OAUTH_JWKS_URL`, and `SYNAPSE_OAUTH_AUDIENCE`, then maps the verified token to the configured downstream `SYNAPSE_AGENT_KEY`.
+- `SYNAPSE_REMOTE_AUTH_MODE=synapse_oauth`: validates first-party Synapse OAuth access tokens issued for `https://mcp.synapse-network.ai/mcp`, enforces tool scopes locally, and forwards the same OAuth bearer token to Gateway. Gateway resolves that token to the user-selected Agent Credential, so ChatGPT receives OAuth credentials but never receives `agt_xxx`.
 
-Remote MCP exposes the same three stateless tools and the same security boundary. External OpenAI/Claude/OAuth tokens are never forwarded to Synapse Gateway. For paid `invoke_and_pay`, configure OpenAI/Claude with a human approval step unless the target provider is an explicit free smoke service.
+For `synapse_oauth`, configure `SYNAPSE_OAUTH_ISSUER=https://www.synapse-network.ai`, `SYNAPSE_OAUTH_AUDIENCE=https://mcp.synapse-network.ai/mcp`, and `SYNAPSE_OAUTH_JWT_SECRET` with the same secret used by Gateway. The OAuth JWT secret is infrastructure configuration, not a user Agent Key.
+
+Remote MCP exposes the same three stateless tools and the same security boundary. External OpenAI/Claude tokens are never forwarded to Synapse Gateway. Synapse first-party OAuth tokens may be forwarded because Gateway validates them and maps them server-side to an Agent Credential. For paid `invoke_and_pay`, configure OpenAI/Claude with a human approval step unless the target provider is an explicit free smoke service.
 
 ChatGPT workspace custom app registration:
 
 1. In ChatGPT Business, Enterprise, or Edu, enable developer mode for the workspace/user.
 2. Create a custom app with MCP endpoint `https://mcp.synapse-network.ai/mcp`.
-3. Use bearer/API-token authentication with `agt_xxx` as the secret credential when the UI supports static bearer tokens.
-4. Scan tools and verify `discover_services` imports. Keep `invoke_and_pay` behind human approval/action confirmation.
-5. If the workspace requires OAuth/OIDC instead of static bearer credentials, treat that as an OAuth wrapper follow-up; do not weaken Remote MCP auth.
+3. If the UI offers OAuth only, use Synapse OAuth. ChatGPT redirects the user to `https://www.synapse-network.ai/oauth/authorize`, where the user signs in and selects or creates a dedicated Agent Credential.
+4. If the UI supports static bearer credentials, `Authorization: Bearer agt_xxx` remains supported for BYOK clients.
+5. Scan tools and verify `discover_services` imports. Keep `invoke_and_pay` behind human approval/action confirmation.
 
 Cloud Run note: if using `/mcp/sse`, enable Session Affinity so `/mcp/messages` returns to the instance holding the SSE transport. Prefer `/mcp` Streamable HTTP for newer clients.
 

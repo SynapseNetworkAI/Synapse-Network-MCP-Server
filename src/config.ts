@@ -7,12 +7,13 @@ const GATEWAY_URLS: Record<SynapseEnvironment, string> = {
 };
 
 export interface ServerConfig {
-  agentKey: string;
+  agentKey?: string | undefined;
+  oauthAccessToken?: string | undefined;
   gatewayUrl: string;
   timeoutMs: number;
 }
 
-export type RemoteAuthMode = "agent_key" | "oauth";
+export type RemoteAuthMode = "agent_key" | "oauth" | "synapse_oauth";
 
 export interface RemoteServerConfig {
   gatewayUrl: string;
@@ -26,6 +27,7 @@ export interface RemoteServerConfig {
   oauthIssuer: string | undefined;
   oauthJwksUrl: string | undefined;
   oauthAudience: string | undefined;
+  oauthJwtSecret: string | undefined;
   allowedHosts: string[];
   allowedOrigins: string[];
   sseSessionTtlMs: number;
@@ -47,6 +49,7 @@ export interface ConfigEnv {
   SYNAPSE_OAUTH_ISSUER?: string;
   SYNAPSE_OAUTH_JWKS_URL?: string;
   SYNAPSE_OAUTH_AUDIENCE?: string;
+  SYNAPSE_OAUTH_JWT_SECRET?: string;
   SYNAPSE_MCP_ALLOWED_HOSTS?: string;
   SYNAPSE_MCP_ALLOWED_ORIGINS?: string;
   SYNAPSE_MCP_SSE_SESSION_TTL_MS?: string;
@@ -100,6 +103,7 @@ export function loadRemoteServerConfig(env: ConfigEnv = process.env): RemoteServ
     oauthIssuer: optionalTrim(env.SYNAPSE_OAUTH_ISSUER),
     oauthJwksUrl: optionalTrim(env.SYNAPSE_OAUTH_JWKS_URL),
     oauthAudience: optionalTrim(env.SYNAPSE_OAUTH_AUDIENCE) || `${publicBaseUrl}/mcp`,
+    oauthJwtSecret: optionalTrim(env.SYNAPSE_OAUTH_JWT_SECRET),
     allowedHosts: resolveAllowedHosts(publicBaseUrl, env.SYNAPSE_MCP_ALLOWED_HOSTS),
     allowedOrigins: splitCsv(env.SYNAPSE_MCP_ALLOWED_ORIGINS),
     sseSessionTtlMs: resolveSessionTtlMs(env.SYNAPSE_MCP_SSE_SESSION_TTL_MS)
@@ -139,8 +143,8 @@ function resolveSessionTtlMs(raw: string | undefined): number {
 
 function resolveRemoteAuthMode(raw: string | undefined): RemoteAuthMode {
   const value = raw?.trim() || "agent_key";
-  if (value === "agent_key" || value === "oauth") return value;
-  throw new ConfigError("SYNAPSE_REMOTE_AUTH_MODE must be agent_key or oauth.");
+  if (value === "agent_key" || value === "oauth" || value === "synapse_oauth") return value;
+  throw new ConfigError("SYNAPSE_REMOTE_AUTH_MODE must be agent_key, oauth, or synapse_oauth.");
 }
 
 function validateRemoteAuth(authMode: RemoteAuthMode, downstreamAgentKey: string | undefined, env: ConfigEnv): void {
@@ -151,6 +155,14 @@ function validateRemoteAuth(authMode: RemoteAuthMode, downstreamAgentKey: string
     if (!downstreamAgentKey) throw new ConfigError("SYNAPSE_AGENT_KEY is required when SYNAPSE_REMOTE_AUTH_MODE=oauth.");
     if (!env.SYNAPSE_OAUTH_ISSUER?.trim()) throw new ConfigError("SYNAPSE_OAUTH_ISSUER is required when SYNAPSE_REMOTE_AUTH_MODE=oauth.");
     if (!env.SYNAPSE_OAUTH_JWKS_URL?.trim()) throw new ConfigError("SYNAPSE_OAUTH_JWKS_URL is required when SYNAPSE_REMOTE_AUTH_MODE=oauth.");
+  }
+  if (authMode === "synapse_oauth") {
+    if (!env.SYNAPSE_OAUTH_ISSUER?.trim()) {
+      throw new ConfigError("SYNAPSE_OAUTH_ISSUER is required when SYNAPSE_REMOTE_AUTH_MODE=synapse_oauth.");
+    }
+    if (!env.SYNAPSE_OAUTH_JWT_SECRET?.trim()) {
+      throw new ConfigError("SYNAPSE_OAUTH_JWT_SECRET is required when SYNAPSE_REMOTE_AUTH_MODE=synapse_oauth.");
+    }
   }
 }
 
