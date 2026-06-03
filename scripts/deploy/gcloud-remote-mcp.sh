@@ -79,6 +79,11 @@ ensure_artifact_repository() {
     --description "Synapse production container images"
 }
 
+deploy_env_vars="SYNAPSE_MCP_HTTP_HOST=0.0.0.0,SYNAPSE_MCP_PUBLIC_BASE_URL=${PUBLIC_BASE_URL},SYNAPSE_ENV=prod,SYNAPSE_GATEWAY_URL=${GATEWAY_URL},SYNAPSE_REMOTE_AUTH_MODE=${REMOTE_AUTH_MODE}"
+if [[ "${REMOTE_AUTH_MODE}" == "synapse_oauth" ]]; then
+  deploy_env_vars+=",SYNAPSE_OAUTH_ISSUER=${OAUTH_ISSUER},SYNAPSE_OAUTH_AUDIENCE=${OAUTH_AUDIENCE}"
+fi
+
 deploy_args=(
   run deploy "${SERVICE_NAME}"
   --project "${PROJECT_ID}"
@@ -93,12 +98,11 @@ deploy_args=(
   --memory "${MEMORY}"
   --concurrency "${CONCURRENCY}"
   --timeout "${TIMEOUT}"
-  --set-env-vars "SYNAPSE_MCP_HTTP_HOST=0.0.0.0,SYNAPSE_MCP_PUBLIC_BASE_URL=${PUBLIC_BASE_URL},SYNAPSE_ENV=prod,SYNAPSE_GATEWAY_URL=${GATEWAY_URL},SYNAPSE_REMOTE_AUTH_MODE=${REMOTE_AUTH_MODE}"
+  --set-env-vars "${deploy_env_vars}"
 )
 
 if [[ "${REMOTE_AUTH_MODE}" == "synapse_oauth" ]]; then
   deploy_args+=(
-    --update-env-vars "SYNAPSE_OAUTH_ISSUER=${OAUTH_ISSUER},SYNAPSE_OAUTH_AUDIENCE=${OAUTH_AUDIENCE}"
     --update-secrets "SYNAPSE_OAUTH_JWT_SECRET=${OAUTH_JWT_SECRET_NAME}:latest"
   )
 fi
