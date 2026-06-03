@@ -44,7 +44,7 @@ Remote MCP rules:
 2. OpenAI/Claude compatibility clients may use `https://mcp.synapse-network.ai/mcp/sse`, which pairs with `POST /mcp/messages`.
 3. `GET /healthz` and `GET /readyz` are public probes and must not require OAuth.
 4. Remote requests must authenticate with `Authorization: Bearer <token>`.
-5. Do not forward OpenAI, Claude, or OAuth bearer tokens to Synapse Gateway. Validate them at the Remote MCP layer and map to a Synapse Agent Key for Gateway `X-Credential`.
+5. Do not forward external OpenAI or Claude tokens to Synapse Gateway. In `synapse_oauth` mode, first-party Synapse OAuth bearer tokens are validated at the Remote MCP layer and then forwarded to Gateway, where they resolve server-side to a linked Agent Credential.
 6. Treat `invoke_and_pay` as a sensitive payment tool; remote platform examples should require human approval unless invoking an explicit free smoke provider.
 
 Recommended flow:

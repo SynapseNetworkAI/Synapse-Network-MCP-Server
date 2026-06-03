@@ -103,8 +103,15 @@ free or lowest-price service. It must not invoke paid tools.
 - Remote clients send `Authorization: Bearer <token>` to the MCP layer.
 - In public mode, `<token>` must be the customer's Agent Key beginning with
   `agt_`.
-- OpenAI, Claude, or OAuth tokens are never forwarded to Synapse Gateway.
-- Gateway receives the customer's Agent Key through `X-Credential`.
+- OpenAI and Claude platform tokens are never forwarded to Synapse Gateway.
+- In `agent_key` mode, Gateway receives the customer's Agent Key through
+  `X-Credential`.
+- In `synapse_oauth` mode, the MCP layer validates Synapse OAuth JWT issuer,
+  audience, expiry, and scopes, then forwards the Synapse OAuth bearer token to
+  Gateway. Gateway resolves it to the Agent Credential selected during
+  `https://www.synapse-network.ai/oauth/authorize` consent.
+- `SYNAPSE_OAUTH_JWT_SECRET` must be the same on Gateway and the Remote MCP
+  Cloud Run service. It is a signing secret, not a customer Agent Key.
 - Do not use owner private keys, seed phrases, owner JWTs, admin credentials,
   provider secrets, deposit permissions, withdrawal permissions, refund
   permissions, or settlement controls in this service.

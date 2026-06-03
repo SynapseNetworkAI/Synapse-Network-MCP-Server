@@ -39,4 +39,19 @@ describe("config", () => {
       })
     ).toThrow(ConfigError);
   });
+
+  it("loads Synapse OAuth mode without a platform Agent Key", () => {
+    expect(
+      loadRemoteServerConfig({
+        SYNAPSE_REMOTE_AUTH_MODE: "synapse_oauth",
+        SYNAPSE_OAUTH_ISSUER: "https://www.synapse-network.ai",
+        SYNAPSE_OAUTH_JWT_SECRET: "test-secret"
+      })
+    ).toMatchObject({
+      authMode: "synapse_oauth",
+      downstreamAgentKey: undefined,
+      oauthIssuer: "https://www.synapse-network.ai",
+      oauthAudience: "https://mcp.synapse-network.ai/mcp"
+    });
+  });
 });

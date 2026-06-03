@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { SignJWT } from "jose";
 import type { RemoteServerConfig } from "../src/config.js";
 import { RemoteAuthError, resolveRemoteAuthContext, ScopedSynapseGatewayClient } from "../src/remote-auth.js";
 
@@ -14,6 +15,7 @@ const baseConfig: RemoteServerConfig = {
   oauthIssuer: undefined,
   oauthJwksUrl: undefined,
   oauthAudience: "https://mcp.synapse-network.ai/mcp",
+  oauthJwtSecret: undefined,
   allowedHosts: ["mcp.synapse-network.ai"],
   allowedOrigins: [],
   sseSessionTtlMs: 900_000
@@ -62,5 +64,32 @@ describe("remote auth", () => {
       status: 403,
       code: "INSUFFICIENT_SCOPE"
     } satisfies Partial<RemoteAuthError>);
+  });
+
+  it("accepts Synapse OAuth tokens and forwards them as Gateway bearer auth", async () => {
+    const token = await new SignJWT({
+      scope: "synapse.discovery.read synapse.receipts.read",
+      token_use: "synapse_mcp_access"
+    })
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuer("https://www.synapse-network.ai")
+      .setAudience("https://mcp.synapse-network.ai/mcp")
+      .setSubject("0xowner")
+      .setExpirationTime("15m")
+      .sign(new TextEncoder().encode("test-secret"));
+
+    const context = await resolveRemoteAuthContext("Bearer " + token, {
+      ...baseConfig,
+      authMode: "synapse_oauth",
+      downstreamAgentKey: undefined,
+      oauthIssuer: "https://www.synapse-network.ai",
+      oauthJwtSecret: "test-secret"
+    });
+
+    expect(context.serverConfig).toMatchObject({
+      oauthAccessToken: token,
+      gatewayUrl: "http://gateway.test"
+    });
+    expect(context.scopes).toEqual(["synapse.discovery.read", "synapse.receipts.read"]);
   });
 });

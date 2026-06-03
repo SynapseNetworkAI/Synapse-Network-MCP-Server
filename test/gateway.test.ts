@@ -31,6 +31,29 @@ describe("SynapseGatewayClient", () => {
     });
   });
 
+  it("can call Gateway with a Synapse OAuth access token", async () => {
+    const calls: Array<{ input: string | URL; init?: RequestInit }> = [];
+    const fetchImpl: FetchLike = vi.fn(async (input, init) => {
+      calls.push({ input, init });
+      return jsonResponse({ results: [] });
+    });
+    const client = new SynapseGatewayClient(
+      {
+        oauthAccessToken: "oauth_access",
+        gatewayUrl: "http://gateway.test",
+        timeoutMs: 30_000
+      },
+      fetchImpl
+    );
+
+    await client.discoverServices({});
+
+    expect(calls[0]?.init?.headers).toMatchObject({
+      Authorization: "Bearer oauth_access"
+    });
+    expect(calls[0]?.init?.headers).not.toMatchObject({ "X-Credential": expect.any(String) });
+  });
+
   it("passes caller costUsdc directly and generates idempotency only when omitted", async () => {
     const calls: Array<{ input: string | URL; init?: RequestInit }> = [];
     const fetchImpl: FetchLike = vi.fn(async (input, init) => {

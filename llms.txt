@@ -159,11 +159,11 @@ Hosted Remote MCP entrypoint:
 - `GET /healthz` and `GET /readyz`: public unauthenticated probes.
 - `GET /.well-known/oauth-protected-resource`: OAuth protected-resource metadata.
 
-Remote MCP auth must use `Authorization: Bearer <token>`. External OpenAI/Claude/OAuth tokens are validated at the Remote MCP layer and must not be forwarded to Synapse Gateway. Gateway receives only the mapped Synapse Agent Key through `X-Credential`.
+Remote MCP auth must use `Authorization: Bearer <token>`. External OpenAI/Claude tokens are validated or rejected at the Remote MCP layer and must not be forwarded to Synapse Gateway. In `SYNAPSE_REMOTE_AUTH_MODE=synapse_oauth`, first-party Synapse OAuth access tokens are validated at the MCP layer and forwarded to Gateway as bearer auth; Gateway resolves them to the linked Agent Credential. In `agent_key` and legacy single-tenant `oauth` mode, Gateway receives an Agent Key through `X-Credential`.
 
 Public hosted Remote MCP uses bring-your-own-Agent-Key auth. Do not configure `SYNAPSE_AGENT_KEY` or `SYNAPSE_REMOTE_BEARER_TOKEN` on `https://mcp.synapse-network.ai`; customers pass their own `agt_xxx` as `Authorization: Bearer agt_xxx`, and Gateway charges that customer's Agent balance. The hosted production service runs with `SYNAPSE_REMOTE_AUTH_MODE=agent_key` and `SYNAPSE_ENV=prod`.
 
-ChatGPT workspace custom app registration should use `https://mcp.synapse-network.ai/mcp` with bearer/API-token auth when available. Scan `discover_services` first and require human approval for paid `invoke_and_pay`. Do not claim public ChatGPT app directory availability from internal workspace registration. If a workspace requires OAuth/OIDC, keep BYOK bearer auth and implement an OAuth wrapper follow-up.
+ChatGPT workspace custom app registration should use `https://mcp.synapse-network.ai/mcp`. If ChatGPT requires OAuth, use Synapse first-party OAuth with `https://www.synapse-network.ai/oauth/authorize`; ChatGPT receives OAuth tokens, not `agt_xxx`. If bearer/API-token auth is available, BYOK `agt_xxx` remains supported. Scan `discover_services` first and require human approval for paid `invoke_and_pay`. Do not claim public ChatGPT app directory availability from internal workspace registration.
 
 ## Agent Skills And Rules
 

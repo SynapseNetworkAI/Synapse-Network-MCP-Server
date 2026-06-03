@@ -20,6 +20,10 @@ CREATE_ARTIFACT_REPOSITORY="${CREATE_ARTIFACT_REPOSITORY:-1}"
 CREATE_DOMAIN_MAPPING="${CREATE_DOMAIN_MAPPING:-0}"
 ENABLE_SESSION_AFFINITY="${ENABLE_SESSION_AFFINITY:-0}"
 SERVICE_ACCOUNT="${SERVICE_ACCOUNT:-}"
+REMOTE_AUTH_MODE="${SYNAPSE_REMOTE_AUTH_MODE:-${REMOTE_AUTH_MODE:-agent_key}}"
+OAUTH_ISSUER="${SYNAPSE_OAUTH_ISSUER:-${OAUTH_ISSUER:-}}"
+OAUTH_AUDIENCE="${SYNAPSE_OAUTH_AUDIENCE:-${OAUTH_AUDIENCE:-}}"
+OAUTH_JWT_SECRET_NAME="${SYNAPSE_OAUTH_JWT_SECRET_NAME:-${OAUTH_JWT_SECRET_NAME:-}}"
 DRY_RUN="${DRY_RUN:-0}"
 
 if [[ -z "${PROJECT_ID}" ]]; then
@@ -28,6 +32,18 @@ if [[ -z "${PROJECT_ID}" ]]; then
 fi
 
 IMAGE="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}"
+
+if [[ "${REMOTE_AUTH_MODE}" != "agent_key" && "${REMOTE_AUTH_MODE}" != "oauth" && "${REMOTE_AUTH_MODE}" != "synapse_oauth" ]]; then
+  echo "SYNAPSE_REMOTE_AUTH_MODE/REMOTE_AUTH_MODE must be agent_key, oauth, or synapse_oauth." >&2
+  exit 2
+fi
+
+if [[ "${REMOTE_AUTH_MODE}" == "synapse_oauth" ]]; then
+  if [[ -z "${OAUTH_ISSUER}" || -z "${OAUTH_AUDIENCE}" || -z "${OAUTH_JWT_SECRET_NAME}" ]]; then
+    echo "synapse_oauth mode requires SYNAPSE_OAUTH_ISSUER, SYNAPSE_OAUTH_AUDIENCE, and SYNAPSE_OAUTH_JWT_SECRET_NAME." >&2
+    exit 2
+  fi
+fi
 
 run() {
   if [[ "${DRY_RUN}" == "1" ]]; then
@@ -77,8 +93,15 @@ deploy_args=(
   --memory "${MEMORY}"
   --concurrency "${CONCURRENCY}"
   --timeout "${TIMEOUT}"
-  --set-env-vars "SYNAPSE_MCP_HTTP_HOST=0.0.0.0,SYNAPSE_MCP_PUBLIC_BASE_URL=${PUBLIC_BASE_URL},SYNAPSE_ENV=prod,SYNAPSE_GATEWAY_URL=${GATEWAY_URL},SYNAPSE_REMOTE_AUTH_MODE=agent_key"
+  --set-env-vars "SYNAPSE_MCP_HTTP_HOST=0.0.0.0,SYNAPSE_MCP_PUBLIC_BASE_URL=${PUBLIC_BASE_URL},SYNAPSE_ENV=prod,SYNAPSE_GATEWAY_URL=${GATEWAY_URL},SYNAPSE_REMOTE_AUTH_MODE=${REMOTE_AUTH_MODE}"
 )
+
+if [[ "${REMOTE_AUTH_MODE}" == "synapse_oauth" ]]; then
+  deploy_args+=(
+    --update-env-vars "SYNAPSE_OAUTH_ISSUER=${OAUTH_ISSUER},SYNAPSE_OAUTH_AUDIENCE=${OAUTH_AUDIENCE}"
+    --update-secrets "SYNAPSE_OAUTH_JWT_SECRET=${OAUTH_JWT_SECRET_NAME}:latest"
+  )
+fi
 
 if [[ -n "${SERVICE_ACCOUNT}" ]]; then
   deploy_args+=(--service-account "${SERVICE_ACCOUNT}")
