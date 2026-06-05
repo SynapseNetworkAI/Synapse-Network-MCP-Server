@@ -16,8 +16,6 @@ jobs:
   publish:
     name: Publish npm and MCP Registry
     runs-on: ubuntu-latest
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,15 +23,23 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
 
-      - name: Verify NPM token exists
+      - name: Prepare npm publish auth
         run: |
-          if [ -z "${NODE_AUTH_TOKEN}" ]; then
-            echo "NPM_TOKEN repository secret is required." >&2
-            exit 1
+          npm install -g npm@latest
+          npm --version
+          if [ -n "${NPM_TOKEN}" ]; then
+            echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > "${HOME}/.npmrc"
+            echo "Using NPM_TOKEN repository secret for npm publish."
+          else
+            echo "NPM_TOKEN is not configured; attempting npm trusted publishing via GitHub Actions OIDC."
+            echo "If this fails, configure the npm package trusted publisher for SynapseNetworkAI/Synapse-Network-MCP-Server and workflow publish-mcp.yml."
           fi
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Validate version metadata
         run: |
