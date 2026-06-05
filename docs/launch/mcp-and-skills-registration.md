@@ -43,9 +43,18 @@ mcp-publisher publish
 ```
 
 If local npm auth is unavailable, use the GitHub Actions workflow
-`Publish MCP Server` after adding the repository secret `NPM_TOKEN`. The workflow
-runs the same readiness checks, publishes npm, then uses GitHub OIDC to publish
-the official MCP Registry metadata without a local Registry JWT:
+`Publish MCP Server`. Preferred auth is npm trusted publishing via GitHub
+Actions OIDC. Configure the npm package trusted publisher with:
+
+- Organization: `SynapseNetworkAI`
+- Repository: `Synapse-Network-MCP-Server`
+- Workflow filename: `publish-mcp.yml`
+- Allowed action: `npm publish`
+
+If trusted publishing is not configured yet, add the repository secret
+`NPM_TOKEN` as a fallback. The workflow runs the same readiness checks,
+publishes npm, then uses GitHub OIDC to publish the official MCP Registry
+metadata without a local Registry JWT:
 
 ```text
 Actions -> Publish MCP Server -> Run workflow -> expected_version=<package version>
