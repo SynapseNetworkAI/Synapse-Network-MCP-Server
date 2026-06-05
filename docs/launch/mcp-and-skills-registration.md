@@ -60,6 +60,11 @@ metadata without a local Registry JWT:
 Actions -> Publish MCP Server -> Run workflow -> expected_version=<package version>
 ```
 
+If `npm publish` returns `E404 ... could not be found or you do not have
+permission`, treat it as a publish-auth blocker: configure the trusted publisher
+above or replace `NPM_TOKEN` with an npm token that can publish the
+`@synapse-network-ai/mcp-server` scoped package.
+
 Acceptance checks:
 
 - npm resolves `@synapse-network-ai/mcp-server`.
