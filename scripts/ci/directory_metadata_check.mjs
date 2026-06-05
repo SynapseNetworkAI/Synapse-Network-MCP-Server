@@ -47,6 +47,7 @@ for (const target of [
   "MCP Central",
   "AgentIndex",
   "ToolTrust",
+  "Protodex",
   "PulseMCP",
 ]) {
   if (!submissionTargets.has(target)) {
@@ -69,14 +70,34 @@ for (const [label, content] of [
     "MCP Central",
     "AgentIndex",
     "ToolTrust",
+    "Protodex",
     "x402",
     "Stripe",
   ]) {
     if (!content.includes(term)) findings.push(`${label} must include ${term}`);
   }
+  for (const collision of ["susheel synapse mcp", "SynapseAudit", "Azure Synapse"]) {
+    if (!content.includes(collision)) findings.push(`${label} must disambiguate ${collision}`);
+  }
   if (!content.includes("discover_services") || !content.includes("invoke_and_pay") || !content.includes("get_receipt")) {
     findings.push(`${label} must include the paid API MCP tool loop`);
   }
+}
+
+const visibility = JSON.stringify(metadata.observed_directory_visibility || []);
+if (!visibility.includes("protodex.io/servers/synapsenetworkai-synapse-network-mcp-server.html")) {
+  findings.push("observed_directory_visibility must include the Protodex SynapseNetworkAI listing.");
+}
+
+const collisions = JSON.stringify(metadata.observed_name_collisions || []);
+for (const collision of ["susheel synapse mcp", "synapse-audit", "Azure Synapse"]) {
+  if (!collisions.includes(collision)) {
+    findings.push(`observed_name_collisions must include ${collision}`);
+  }
+}
+
+if (!metadata.disambiguation?.includes("@synapse-network-ai/mcp-server")) {
+  findings.push("disambiguation must identify the official npm package.");
 }
 
 if (!metadata.short_description?.includes("Hosted Remote MCP")) {
