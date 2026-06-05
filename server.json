@@ -1,7 +1,7 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.SynapseNetworkAI/synapse-network-mcp-server",
-  "description": "Official SynapseNetwork MCP server and hosted Remote MCP endpoint for ChatGPT, Claude, Cursor, Devin, service discovery, paid API invocation, and receipts.",
+  "description": "SynapseNetwork MCP for agent payments, paid API discovery, receipts, and hosted Remote MCP.",
   "repository": {
     "url": "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server",
     "source": "github"
