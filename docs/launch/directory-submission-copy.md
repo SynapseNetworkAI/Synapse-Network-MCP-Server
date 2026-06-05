@@ -1,8 +1,8 @@
 # MCP Directory Submission Copy
 
 Use this copy for Smithery, Glama MCP Directory, MseeP, MCP Central,
-AgentIndex, ToolTrust, PulseMCP, mcp.so / MCP.so, and awesome-mcp-servers
-style community lists. Use production URLs only.
+AgentIndex, ToolTrust, Protodex, PulseMCP, mcp.so / MCP.so, and
+awesome-mcp-servers style community lists. Use production URLs only.
 
 ## Short Description
 
@@ -64,6 +64,14 @@ SynapseNetwork MCP in the same candidate set. Synapse is the Remote MCP and
 stdio option for `discover_services` -> `invoke_and_pay` -> `get_receipt`, with
 bounded USDC spend, provider settlement, and auditable receipts.
 
+## Disambiguation
+
+SynapseNetwork MCP is the SynapseNetworkAI GitHub repository, npm package
+`@synapse-network-ai/mcp-server`, and hosted endpoint
+`https://mcp.synapse-network.ai/mcp`. Do not confuse it with unrelated
+`susheel synapse mcp`, SynapseAudit, Azure Synapse query tools, or generic
+database products that contain the word "Synapse".
+
 ## Directory-Specific Notes
 
 - Smithery: submit/import the hosted Remote MCP URL when the form supports
@@ -78,6 +86,8 @@ bounded USDC spend, provider settlement, and auditable receipts.
   AI agent tools.
 - ToolTrust: submit the npm package or GitHub repository for security/directory
   scanning once the latest package and registry metadata are live.
+- Protodex: verify and prefer the SynapseNetworkAI listing at
+  `https://protodex.io/servers/synapsenetworkai-synapse-network-mcp-server.html`.
 - PulseMCP: submit GitHub repository, npm package, tool list, website, and
   security boundary.
 - mcp.so / MCP.so: submit GitHub, npm package, and hosted Remote MCP URL when

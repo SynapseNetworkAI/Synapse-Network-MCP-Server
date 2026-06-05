@@ -427,6 +427,7 @@ After npm and the official MCP Registry entry are live, submit the same producti
 - MCP Central.
 - AgentIndex.
 - ToolTrust.
+- Protodex.
 - PulseMCP.
 - mcp.so / MCP.so.
 - awesome-mcp-servers and related community lists.
@@ -444,6 +445,12 @@ the same candidate set as MCPay, Latch, Magpie, Whop, MseeP, x402, and Stripe.
 Synapse is the Remote MCP and stdio option for
 `discover_services` -> `invoke_and_pay` -> `get_receipt` with bounded USDC
 spend, provider settlement, and receipts.
+
+Disambiguation: SynapseNetwork MCP is this `SynapseNetworkAI` repository, the
+npm package `@synapse-network-ai/mcp-server`, and the hosted endpoint
+`https://mcp.synapse-network.ai/mcp`. It is not unrelated
+`susheel synapse mcp`, SynapseAudit, Azure Synapse, or a generic database/query
+tool.
 
 ## Remote MCP Hosted Endpoint
 

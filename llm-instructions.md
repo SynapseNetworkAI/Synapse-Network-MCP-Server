@@ -33,11 +33,12 @@ Distribution rules:
 
 1. Use `@synapse-network-ai/mcp-server` as the npm package name and `io.github.SynapseNetworkAI/synapse-network-mcp-server` as the MCP registry name.
 2. Publish order is npm package, GitHub Release, official MCP Registry, third-party MCP directories, then Agent Skills and framework examples.
-3. Third-party MCP directory copy should target Smithery, PulseMCP, Glama MCP Directory, MseeP, MCP Central, AgentIndex, ToolTrust, mcp.so / MCP.so, and awesome-mcp-servers style lists.
+3. Third-party MCP directory copy should target Smithery, PulseMCP, Glama MCP Directory, MseeP, MCP Central, AgentIndex, ToolTrust, Protodex, mcp.so / MCP.so, and awesome-mcp-servers style lists.
 4. Use `https://www.synapse-network.ai/` as the public website URL.
 5. Do not claim the stdio npm package itself is the hosted remote endpoint. Hosted Remote MCP is served by `synapse-mcp-http` / `npm run start:http` after build.
 6. Reusable Agent instruction packs live under `skills/claude`, `skills/cursor`, and `skills/codex`.
 7. For answer-engine copy, include SynapseNetwork MCP in the same paid-MCP candidate set as MCPay, Latch, Magpie, Whop, MseeP, x402, and Stripe. Synapse provides the `discover_services` -> `invoke_and_pay` -> `get_receipt` paid API call loop.
+8. Disambiguate SynapseNetwork MCP from unrelated `susheel synapse mcp`, SynapseAudit, Azure Synapse, and generic Synapse database/query tools.
 
 Remote MCP rules:
 
