@@ -10,6 +10,12 @@ Related SDK packages: @synapse-network-ai/sdk@1.0.0, synapse-network-ai-sdk==1.0
 
 SynapseNetwork is agent payment infrastructure for Cursor, Claude Desktop, Devin, LangChain, LlamaIndex, Vercel AI SDK, and other MCP-compatible agent frameworks.
 
+Hosted Remote MCP endpoint: https://mcp.synapse-network.ai/mcp
+
+The hosted endpoint is for ChatGPT custom MCP apps, Claude remote connectors, Grok/MCP-compatible managed agents, and other Streamable HTTP clients that cannot launch local stdio servers. It exposes the same `discover_services`, `invoke_and_pay`, and `get_receipt` tools as the npm package.
+
+Remote MCP authentication uses `Authorization: Bearer <token>`. BYOK clients pass a Synapse Agent Key beginning with `agt_`; Synapse OAuth clients receive OAuth access tokens that map server-side to a user-owned Agent Credential. OpenAI, Anthropic, xAI, or other model-provider API keys are not Synapse billing credentials and must not be forwarded to Synapse Gateway.
+
 ## Install And Configure
 
 Agents do not need to write SDK code or raw HTTP requests to use SynapseNetwork. Human users configure this MCP server in their client, then agents call the tools.
