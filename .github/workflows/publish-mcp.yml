@@ -1,0 +1,74 @@
+name: Publish MCP Server
+
+on:
+  workflow_dispatch:
+    inputs:
+      expected_version:
+        description: "Version to publish from package.json and server.json"
+        required: true
+        default: "0.1.4"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    name: Publish npm and MCP Registry
+    runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Verify NPM token exists
+        run: |
+          if [ -z "${NODE_AUTH_TOKEN}" ]; then
+            echo "NPM_TOKEN repository secret is required." >&2
+            exit 1
+          fi
+
+      - name: Validate version metadata
+        run: |
+          PACKAGE_VERSION="$(node -p "require('./package.json').version")"
+          SERVER_VERSION="$(node -p "require('./server.json').version")"
+          SERVER_PACKAGE_VERSION="$(node -p "require('./server.json').packages[0].version")"
+          if [ "${PACKAGE_VERSION}" != "${{ inputs.expected_version }}" ]; then
+            echo "package.json version ${PACKAGE_VERSION} does not match expected ${{ inputs.expected_version }}" >&2
+            exit 1
+          fi
+          if [ "${SERVER_VERSION}" != "${PACKAGE_VERSION}" ] || [ "${SERVER_PACKAGE_VERSION}" != "${PACKAGE_VERSION}" ]; then
+            echo "server.json versions must match package.json ${PACKAGE_VERSION}" >&2
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Release readiness
+        run: npm run release:readiness
+
+      - name: Publish npm package
+        run: npm publish --access public --registry=https://registry.npmjs.org
+
+      - name: Install MCP publisher
+        run: |
+          curl -L \
+            "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" \
+            | tar xz mcp-publisher
+          chmod +x mcp-publisher
+
+      - name: Validate MCP Registry metadata
+        run: ./mcp-publisher validate
+
+      - name: Publish MCP Registry metadata
+        run: |
+          ./mcp-publisher login github-oidc
+          ./mcp-publisher publish
