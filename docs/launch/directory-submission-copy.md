@@ -1,7 +1,8 @@
 # MCP Directory Submission Copy
 
-Use this copy for Smithery, Glama MCP Directory, PulseMCP, mcp.so / MCP.so,
-and awesome-mcp-servers style community lists. Use production URLs only.
+Use this copy for Smithery, Glama MCP Directory, MseeP, MCP Central,
+AgentIndex, ToolTrust, PulseMCP, mcp.so / MCP.so, and awesome-mcp-servers
+style community lists. Use production URLs only.
 
 ## Short Description
 
@@ -71,6 +72,12 @@ bounded USDC spend, provider settlement, and auditable receipts.
   with Inspector using a bearer Agent Key.
 - MseeP: submit the GitHub repository, production website, remote endpoint, npm
   package, and the paid API discovery/payment positioning above.
+- MCP Central: submit the GitHub repository and production metadata so the
+  server appears in search-engine-readable MCP directory pages.
+- AgentIndex: submit under MCP servers, agent payments, API monetization, and
+  AI agent tools.
+- ToolTrust: submit the npm package or GitHub repository for security/directory
+  scanning once the latest package and registry metadata are live.
 - PulseMCP: submit GitHub repository, npm package, tool list, website, and
   security boundary.
 - mcp.so / MCP.so: submit GitHub, npm package, and hosted Remote MCP URL when

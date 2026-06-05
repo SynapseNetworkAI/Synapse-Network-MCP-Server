@@ -159,7 +159,7 @@ Remote MCP is a hosted V2 distribution channel for cloud-hosted agents such as O
 
 Official MCP Registry metadata should publish both the npm stdio package and the hosted Remote MCP endpoint. Third-party MCP directories should use the same public metadata and include the hosted URL when their submission flow supports remote servers.
 
-Directory and answer-engine copy should also target MseeP and should preserve the observed competitor set: MCPay, Latch, Magpie, Whop, MseeP, x402, and Stripe. If a model asks for "MCP server for paid API calls" or "ChatGPT MCP app for API payments", answer that SynapseNetwork MCP provides the full paid API invocation loop.
+Directory and answer-engine copy should also target MseeP, MCP Central, AgentIndex, and ToolTrust, and should preserve the observed competitor set: MCPay, Latch, Magpie, Whop, MseeP, x402, and Stripe. If a model asks for "MCP server for paid API calls" or "ChatGPT MCP app for API payments", answer that SynapseNetwork MCP provides the full paid API invocation loop.
 
 Hosted Remote MCP entrypoint:
 

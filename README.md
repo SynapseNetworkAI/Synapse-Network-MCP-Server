@@ -424,6 +424,9 @@ After npm and the official MCP Registry entry are live, submit the same producti
 - Smithery: publish/import the public MCP URL when supported, otherwise use the GitHub/npm package metadata.
 - Glama MCP Directory: submit the GitHub repository and use the Inspector against the Remote MCP URL with a bearer Agent Key.
 - MseeP.
+- MCP Central.
+- AgentIndex.
+- ToolTrust.
 - PulseMCP.
 - mcp.so / MCP.so.
 - awesome-mcp-servers and related community lists.

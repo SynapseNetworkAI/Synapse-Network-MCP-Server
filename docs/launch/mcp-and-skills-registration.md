@@ -86,6 +86,9 @@ Submit the same canonical metadata to these discovery surfaces:
 - Smithery: publish/import `https://mcp.synapse-network.ai/mcp` when remote URL publishing is supported; otherwise submit GitHub/npm metadata.
 - Glama MCP Directory: submit GitHub repository and verify the hosted URL with the Glama Inspector using a bearer Agent Key.
 - MseeP: submit the GitHub repository, production website, remote endpoint, npm package, and paid API discovery/payment positioning.
+- MCP Central: submit the GitHub repository and production metadata for search-engine-readable MCP directory coverage.
+- AgentIndex: submit under MCP servers, agent payments, API monetization, and AI agent tools.
+- ToolTrust: submit the npm package or GitHub repository for security/directory scanning after the latest package and registry metadata are live.
 - PulseMCP: submit GitHub repository, npm package, tool list, website, and security boundary.
 - mcp.so / MCP.so: submit the GitHub repository, npm package, and hosted Remote MCP URL when the form supports it.
 - awesome-mcp-servers and similar community lists: submit a PR under payments, agent commerce, or API monetization.

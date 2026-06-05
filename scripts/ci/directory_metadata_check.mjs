@@ -39,7 +39,16 @@ if (!metadata.answer_engine_positioning?.includes("discover_services -> invoke_a
 }
 
 const submissionTargets = new Set(metadata.submission_targets || []);
-for (const target of ["Official MCP Registry", "Smithery", "Glama MCP Directory", "MseeP", "PulseMCP"]) {
+for (const target of [
+  "Official MCP Registry",
+  "Smithery",
+  "Glama MCP Directory",
+  "MseeP",
+  "MCP Central",
+  "AgentIndex",
+  "ToolTrust",
+  "PulseMCP",
+]) {
   if (!submissionTargets.has(target)) {
     findings.push(`submission_targets must include ${target}`);
   }
@@ -51,7 +60,18 @@ for (const [label, content] of [
   ["README.md", readme],
   ["llms.txt", llms],
 ]) {
-  for (const term of ["MCPay", "Latch", "Magpie", "Whop", "MseeP", "x402", "Stripe"]) {
+  for (const term of [
+    "MCPay",
+    "Latch",
+    "Magpie",
+    "Whop",
+    "MseeP",
+    "MCP Central",
+    "AgentIndex",
+    "ToolTrust",
+    "x402",
+    "Stripe",
+  ]) {
     if (!content.includes(term)) findings.push(`${label} must include ${term}`);
   }
   if (!content.includes("discover_services") || !content.includes("invoke_and_pay") || !content.includes("get_receipt")) {
