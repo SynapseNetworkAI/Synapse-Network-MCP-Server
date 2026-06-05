@@ -63,6 +63,14 @@ Submit the same canonical metadata to these discovery surfaces:
 
 Do not describe staging as the default runtime in public directory listings.
 
+Use the reusable submission artifacts in this directory so listings stay
+consistent across surfaces:
+
+- `directory-submission-metadata.json`: machine-readable metadata for forms,
+  scripts, and directory PRs.
+- `directory-submission-copy.md`: human-readable copy blocks for directory
+  descriptions, security notes, tool summaries, and category placement.
+
 ## Client Configuration Snippets
 
 Claude Desktop / Cursor style stdio config:

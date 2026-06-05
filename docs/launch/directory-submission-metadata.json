@@ -1,0 +1,77 @@
+{
+  "product_name": "SynapseNetwork MCP Server",
+  "short_name": "Synapse MCP",
+  "category": "AI agent payments and paid API discovery",
+  "short_description": "Hosted Remote MCP and stdio server for SynapseNetwork agent payments, paid API discovery, invocation receipts, and ChatGPT/Claude-compatible MCP clients.",
+  "long_description": "SynapseNetwork MCP Server lets AI agents discover payable APIs, invoke services through SynapseNetwork Gateway, and retrieve auditable receipts. Use the npm stdio package for local MCP clients or the hosted Remote MCP endpoint for cloud-hosted clients such as ChatGPT custom MCP apps and Claude remote connectors.",
+  "website": "https://www.synapse-network.ai/",
+  "docs": [
+    "https://docs.synapse-network.ai/mcp/paid-api-calls",
+    "https://docs.synapse-network.ai/ai-agent-payments"
+  ],
+  "repository": "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server",
+  "npm_package": "@synapse-network-ai/mcp-server",
+  "mcp_registry_name": "io.github.SynapseNetworkAI/synapse-network-mcp-server",
+  "remote_mcp_endpoint": "https://mcp.synapse-network.ai/mcp",
+  "remote_transport": "streamable-http",
+  "stdio_install_command": "npx -y @synapse-network-ai/mcp-server",
+  "auth": {
+    "stdio": "SYNAPSE_AGENT_KEY=agt_xxx",
+    "remote": "Authorization: Bearer agt_xxx",
+    "oauth_note": "When a client requires OAuth, use Synapse first-party OAuth so the client receives OAuth tokens, not the raw Agent Key."
+  },
+  "tools": [
+    {
+      "name": "discover_services",
+      "type": "read",
+      "description": "Search SynapseNetwork services and inspect pricing before spending."
+    },
+    {
+      "name": "invoke_and_pay",
+      "type": "consequential",
+      "description": "Invoke a selected provider API through Synapse Gateway with payment hold, charge, and receipt generation."
+    },
+    {
+      "name": "get_receipt",
+      "type": "read",
+      "description": "Retrieve invocation status, result, charged amount, and receipt reference for the linked Agent Credential."
+    }
+  ],
+  "security_boundary": [
+    "No owner private keys or seed phrases.",
+    "No owner JWTs or wallet signing authority.",
+    "No provider secrets or provider setup permissions.",
+    "No admin credentials, refunds, withdrawals, deposits, or settlement controls.",
+    "Paid invoke_and_pay should require human approval/action confirmation in ChatGPT, Claude, and managed-agent clients."
+  ],
+  "keywords": [
+    "mcp",
+    "remote mcp",
+    "model context protocol",
+    "ChatGPT custom MCP",
+    "Claude remote connector",
+    "agent payments",
+    "AI agent payments",
+    "paid API discovery",
+    "API monetization",
+    "USDC micropayments",
+    "AgentPay",
+    "SynapseNetwork"
+  ],
+  "submission_targets": [
+    "Official MCP Registry",
+    "Smithery",
+    "Glama MCP Directory",
+    "PulseMCP",
+    "mcp.so",
+    "MCP.so",
+    "awesome-mcp-servers"
+  ],
+  "verification_commands": [
+    "npm run release:readiness",
+    "curl -fsS https://mcp.synapse-network.ai/readyz",
+    "curl -i -sS -X POST https://mcp.synapse-network.ai/mcp",
+    "curl -fsS https://www.synapse-network.ai/llms.txt",
+    "curl -fsS https://docs.synapse-network.ai/mcp/paid-api-calls"
+  ]
+}
