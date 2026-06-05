@@ -7,13 +7,36 @@
 # SynapseNetwork MCP Server
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![MCP](https://img.shields.io/badge/MCP-stdio-0f766e.svg)](server.json)
+[![MCP](https://img.shields.io/badge/MCP-stdio%20%2B%20Remote%20HTTP-0f766e.svg)](server.json)
 
-Official Model Context Protocol (MCP) stdio server for SynapseNetwork. It gives Cursor, Claude Desktop, Devin, and MCP-compatible agent frameworks a stateless way to discover external APIs, invoke them, and retrieve receipts through SynapseNetwork agent payments.
+Official Model Context Protocol (MCP) server for SynapseNetwork. It gives ChatGPT custom MCP apps, Claude connectors, Cursor, Claude Desktop, Devin, and MCP-compatible agent frameworks a stateless way to discover external APIs, invoke them, and retrieve receipts through SynapseNetwork agent payments.
 
 Website: [https://www.synapse-network.ai/](https://www.synapse-network.ai/)
 
 SynapseNetwork is AgentPay infrastructure: agents discover services, pay for API calls with USDC micropayments through the Gateway, and receive auditable receipts. This MCP package is intentionally a thin runtime adapter. It does not own settlement, custody, pricing memory, provider setup, deposits, withdrawals, or admin workflows.
+
+## Hosted Remote MCP
+
+Cloud-hosted MCP clients can connect directly to:
+
+```text
+https://mcp.synapse-network.ai/mcp
+```
+
+Use this hosted Remote MCP endpoint for ChatGPT custom MCP apps, Claude remote connectors, Grok/MCP-compatible managed agents, and other Streamable HTTP clients that do not launch local stdio servers. The hosted server exposes the same three-tool workflow:
+
+```text
+discover_services -> invoke_and_pay -> get_receipt
+```
+
+Authentication uses `Authorization: Bearer <token>`. Current BYOK clients pass a Synapse Agent Key such as `agt_xxx`; Synapse OAuth clients receive OAuth access tokens that map server-side to a user-owned Agent Credential. External OpenAI, Anthropic, or xAI API keys are not Synapse billing credentials and must not be forwarded to the Gateway.
+
+Safety defaults:
+
+- `discover_services` is read-only service discovery.
+- `get_receipt` reads receipts for the linked credential.
+- `invoke_and_pay` is a paid/consequential action and should require human approval in the client.
+- Unauthenticated MCP calls return `401` with protected-resource metadata.
 
 ## Related packages
 
