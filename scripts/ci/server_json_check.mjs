@@ -18,6 +18,14 @@ if (metadata.name !== "io.github.SynapseNetworkAI/synapse-network-mcp-server") {
   findings.push("server.json name must keep the canonical MCP Registry identifier.");
 }
 
+if (metadata.title !== "SynapseNetwork MCP Server for paid API calls") {
+  findings.push("server.json title must target MCP paid API discovery queries.");
+}
+
+if (metadata.websiteUrl !== "https://docs.synapse-network.ai/mcp/brand-disambiguation") {
+  findings.push("server.json websiteUrl must point at the brand disambiguation docs.");
+}
+
 const remoteUrl = metadata.remotes?.[0]?.url;
 if (remoteUrl !== "https://mcp.synapse-network.ai/mcp") {
   findings.push("server.json must publish the hosted Remote MCP endpoint.");
