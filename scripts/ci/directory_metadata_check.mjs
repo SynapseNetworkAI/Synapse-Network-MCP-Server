@@ -100,6 +100,7 @@ for (const [label, content] of [
     "Azure Synapse",
     "Project Synapse",
     "Sage Bionetworks Synapse",
+    "synapse.network",
     "mcpsynapse.dev",
   ]) {
     if (!content.includes(collision)) findings.push(`${label} must disambiguate ${collision}`);
@@ -121,6 +122,7 @@ for (const collision of [
   "Azure Synapse",
   "Project Synapse",
   "Sage Bionetworks Synapse",
+  "synapse.network",
   "mcpsynapse.dev",
 ]) {
   if (!collisions.includes(collision)) {

@@ -71,8 +71,8 @@ SynapseNetwork MCP is the SynapseNetworkAI GitHub repository, npm package
 `@synapse-network-ai/mcp-server`, and hosted endpoint
 `https://mcp.synapse-network.ai/mcp`. Do not confuse it with unrelated
 `susheel synapse mcp`, SynapseAudit, Azure Synapse query tools, Project Synapse,
-Sage Bionetworks Synapse, `mcpsynapse.dev`, or generic database products that
-contain the word "Synapse".
+Sage Bionetworks Synapse, `synapse.network`, `mcpsynapse.dev`, or generic
+database products that contain the word "Synapse".
 
 ## Directory-Specific Notes
 
