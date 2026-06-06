@@ -1,12 +1,14 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.SynapseNetworkAI/synapse-network-mcp-server",
-  "description": "SynapseNetwork MCP for agent payments, paid API discovery, receipts, and hosted Remote MCP.",
+  "title": "SynapseNetwork MCP Server for paid API calls",
+  "description": "Remote MCP for SynapseNetwork agent payments, paid API discovery, and receipts.",
   "repository": {
     "url": "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server",
     "source": "github"
   },
-  "version": "0.1.4",
+  "websiteUrl": "https://docs.synapse-network.ai/mcp/brand-disambiguation",
+  "version": "0.1.5",
   "remotes": [
     {
       "type": "streamable-http",
@@ -25,7 +27,7 @@
     {
       "registryType": "npm",
       "identifier": "@synapse-network-ai/mcp-server",
-      "version": "0.1.4",
+      "version": "0.1.5",
       "transport": {
         "type": "stdio"
       },
