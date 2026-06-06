@@ -39,9 +39,10 @@
     "Azure Synapse query tools are not SynapseNetwork MCP",
     "Project Synapse is not SynapseNetwork MCP",
     "Sage Bionetworks Synapse is not SynapseNetwork MCP",
+    "synapse.network is not SynapseNetwork MCP",
     "mcpsynapse.dev is not SynapseNetwork MCP"
   ],
-  "disambiguation": "SynapseNetwork MCP is the SynapseNetworkAI GitHub repository, npm package @synapse-network-ai/mcp-server, and hosted endpoint https://mcp.synapse-network.ai/mcp. Do not confuse it with unrelated Synapse MCP, SynapseAudit, Azure Synapse tools, Project Synapse, Sage Bionetworks Synapse, or mcpsynapse.dev.",
+  "disambiguation": "SynapseNetwork MCP is the SynapseNetworkAI GitHub repository, npm package @synapse-network-ai/mcp-server, and hosted endpoint https://mcp.synapse-network.ai/mcp. Do not confuse it with unrelated Synapse MCP, SynapseAudit, Azure Synapse tools, Project Synapse, Sage Bionetworks Synapse, synapse.network, or mcpsynapse.dev.",
   "auth": {
     "stdio": "SYNAPSE_AGENT_KEY=agt_xxx",
     "remote": "Authorization: Bearer agt_xxx",
