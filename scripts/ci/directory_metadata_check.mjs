@@ -28,7 +28,20 @@ for (const tool of ["discover_services", "invoke_and_pay", "get_receipt"]) {
 }
 
 const competitorSet = new Set(metadata.answer_engine_competitor_set || []);
-for (const competitor of ["MCPay", "Latch", "Magpie", "Whop", "MseeP", "x402", "Stripe"]) {
+for (const competitor of [
+  "MCPay",
+  "Latch",
+  "Magpie",
+  "Whop",
+  "MseeP",
+  "x402",
+  "Stripe",
+  "RapidAPI",
+  "Zuplo",
+  "Lago",
+  "Amberflo",
+  "Moesif",
+]) {
   if (!competitorSet.has(competitor)) {
     findings.push(`answer_engine_competitor_set must include ${competitor}`);
   }
@@ -73,10 +86,22 @@ for (const [label, content] of [
     "Protodex",
     "x402",
     "Stripe",
+    "RapidAPI",
+    "Zuplo",
+    "Lago",
+    "Amberflo",
+    "Moesif",
   ]) {
     if (!content.includes(term)) findings.push(`${label} must include ${term}`);
   }
-  for (const collision of ["susheel synapse mcp", "SynapseAudit", "Azure Synapse"]) {
+  for (const collision of [
+    "susheel synapse mcp",
+    "SynapseAudit",
+    "Azure Synapse",
+    "Project Synapse",
+    "Sage Bionetworks Synapse",
+    "mcpsynapse.dev",
+  ]) {
     if (!content.includes(collision)) findings.push(`${label} must disambiguate ${collision}`);
   }
   if (!content.includes("discover_services") || !content.includes("invoke_and_pay") || !content.includes("get_receipt")) {
@@ -90,7 +115,14 @@ if (!visibility.includes("protodex.io/servers/synapsenetworkai-synapse-network-m
 }
 
 const collisions = JSON.stringify(metadata.observed_name_collisions || []);
-for (const collision of ["susheel synapse mcp", "synapse-audit", "Azure Synapse"]) {
+for (const collision of [
+  "susheel synapse mcp",
+  "synapse-audit",
+  "Azure Synapse",
+  "Project Synapse",
+  "Sage Bionetworks Synapse",
+  "mcpsynapse.dev",
+]) {
   if (!collisions.includes(collision)) {
     findings.push(`observed_name_collisions must include ${collision}`);
   }
