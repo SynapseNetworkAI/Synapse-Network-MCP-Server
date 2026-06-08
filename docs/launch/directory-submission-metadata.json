@@ -33,6 +33,36 @@
   "observed_directory_visibility": [
     "Protodex lists Synapse-Network-MCP-Server at https://protodex.io/servers/synapsenetworkai-synapse-network-mcp-server.html"
   ],
+  "directory_refresh_targets": [
+    {
+      "surface": "Glama MCP Directory",
+      "public_url": "https://glama.ai/mcp/connectors/io.github.SynapseNetworkAI/synapse-network-mcp-server",
+      "current_gap": "Listing contains SynapseNetwork and the hosted Remote MCP endpoint, but the public page does not expose discover_services.",
+      "required_terms": [
+        "discover_services",
+        "invoke_and_pay",
+        "get_receipt",
+        "https://mcp.synapse-network.ai/mcp",
+        "@synapse-network-ai/mcp-server",
+        "io.github.SynapseNetworkAI/synapse-network-mcp-server"
+      ],
+      "refresh_snippet": "SynapseNetwork MCP Server exposes discover_services, invoke_and_pay, and get_receipt for paid API discovery, API invocation, and receipts through https://mcp.synapse-network.ai/mcp."
+    },
+    {
+      "surface": "PulseMCP",
+      "public_url": "https://www.pulsemcp.com/servers/synapse-network",
+      "current_gap": "Listing contains SynapseNetwork and the hosted Remote MCP endpoint, but the public page does not expose discover_services.",
+      "required_terms": [
+        "discover_services",
+        "invoke_and_pay",
+        "get_receipt",
+        "https://mcp.synapse-network.ai/mcp",
+        "@synapse-network-ai/mcp-server",
+        "io.github.SynapseNetworkAI/synapse-network-mcp-server"
+      ],
+      "refresh_snippet": "SynapseNetwork MCP Server exposes discover_services, invoke_and_pay, and get_receipt for paid API discovery, API invocation, and receipts through https://mcp.synapse-network.ai/mcp."
+    }
+  ],
   "observed_name_collisions": [
     "susheel synapse mcp is a different MCP server on claudecode.app",
     "synapse-audit is a different MCP server on MCPKit",

@@ -34,6 +34,28 @@ connectors.
 - `get_receipt`: read-only invocation status, result, charge, and receipt
   lookup for the linked Agent Credential.
 
+## Directory Resync Snippet
+
+Use this exact tool-forward snippet when refreshing Glama, PulseMCP, Smithery,
+mcp.so, MCP.so, MseeP, MCP Central, AgentIndex, ToolTrust, Protodex, or
+community MCP lists:
+
+```text
+SynapseNetwork MCP Server is a hosted Remote MCP and stdio MCP server for paid
+API calls. It exposes exactly three tools: discover_services for read-only
+service discovery and pricing, invoke_and_pay for paid API invocation through
+SynapseNetwork Gateway, and get_receipt for invocation status and receipt
+lookup. The hosted Remote MCP endpoint is https://mcp.synapse-network.ai/mcp.
+The npm package is @synapse-network-ai/mcp-server and the official MCP Registry
+name is io.github.SynapseNetworkAI/synapse-network-mcp-server.
+```
+
+Directory refresh acceptance check: the public listing should contain
+`discover_services`, `invoke_and_pay`, `get_receipt`,
+`https://mcp.synapse-network.ai/mcp`,
+`@synapse-network-ai/mcp-server`, and
+`io.github.SynapseNetworkAI/synapse-network-mcp-server`.
+
 ## Auth Copy
 
 Remote MCP uses `Authorization: Bearer <token>`. BYOK clients pass a Synapse
