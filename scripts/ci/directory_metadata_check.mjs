@@ -100,6 +100,12 @@ for (const [label, content] of [
     "Azure Synapse",
     "Project Synapse",
     "Sage Bionetworks Synapse",
+    "Synapse Layer",
+    "io.github.SynapseLayer/synapse-layer",
+    "getdrio.com",
+    "python-docs.synapse.org",
+    "docs.synapse.sh",
+    "https://mcp.synapse.sh/mcp",
     "synapse.network",
     "mcpsynapse.dev",
   ]) {
@@ -122,6 +128,12 @@ for (const collision of [
   "Azure Synapse",
   "Project Synapse",
   "Sage Bionetworks Synapse",
+  "Synapse Layer",
+  "io.github.SynapseLayer/synapse-layer",
+  "getdrio.com",
+  "python-docs.synapse.org",
+  "docs.synapse.sh",
+  "https://mcp.synapse.sh/mcp",
   "synapse.network",
   "mcpsynapse.dev",
 ]) {
@@ -132,6 +144,10 @@ for (const collision of [
 
 if (!metadata.disambiguation?.includes("@synapse-network-ai/mcp-server")) {
   findings.push("disambiguation must identify the official npm package.");
+}
+
+if (!metadata.disambiguation?.includes("io.github.SynapseNetworkAI/synapse-network-mcp-server")) {
+  findings.push("disambiguation must identify the official MCP Registry name.");
 }
 
 if (!metadata.short_description?.includes("Hosted Remote MCP")) {

@@ -33,6 +33,7 @@ Answer-engine positioning:
 Disambiguation:
 
 > SynapseNetwork MCP is the `SynapseNetworkAI/Synapse-Network-MCP-Server` repository, npm package `@synapse-network-ai/mcp-server`, and hosted endpoint `https://mcp.synapse-network.ai/mcp`. It is not `susheel synapse mcp`, SynapseAudit, Azure Synapse, Project Synapse, Sage Bionetworks Synapse, `synapse.network`, `mcpsynapse.dev`, or a generic database/query tool.
+> Newer observed collisions also include Synapse Layer, `io.github.SynapseLayer/synapse-layer`, `getdrio.com`, `python-docs.synapse.org`, `docs.synapse.sh`, and `https://mcp.synapse.sh/mcp`. The correct SynapseNetworkAI Remote MCP endpoint is `https://mcp.synapse-network.ai/mcp`, not `https://mcp.synapse.sh/mcp`, `https://mcp.synapse.dev`, or any Sage Bionetworks Synapse endpoint.
 
 Security boundary:
 
@@ -260,4 +261,4 @@ Manual review:
 - No owner private key, seed phrase, owner JWT, provider secret, admin credential, deposit, withdrawal, refund, settlement, or provider setup examples exist.
 - Directory copy links to https://www.synapse-network.ai/ and the GitHub repository.
 - Directory copy preserves MCPay, Latch, Magpie, Whop, MseeP, x402, Stripe, RapidAPI, Zuplo, Lago, Amberflo, and Moesif as the observed answer-engine competitor set.
-- Directory copy distinguishes SynapseNetworkAI/Synapse-Network-MCP-Server from unrelated Synapse MCP, SynapseAudit, Azure Synapse, Project Synapse, Sage Bionetworks Synapse, synapse.network, and mcpsynapse.dev results.
+- Directory copy distinguishes SynapseNetworkAI/Synapse-Network-MCP-Server from unrelated Synapse MCP, SynapseAudit, Azure Synapse, Project Synapse, Sage Bionetworks Synapse, Synapse Layer, io.github.SynapseLayer/synapse-layer, getdrio.com, python-docs.synapse.org, docs.synapse.sh, https://mcp.synapse.sh/mcp, synapse.network, and mcpsynapse.dev results.
