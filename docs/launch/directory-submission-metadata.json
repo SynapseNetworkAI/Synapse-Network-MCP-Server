@@ -39,10 +39,16 @@
     "Azure Synapse query tools are not SynapseNetwork MCP",
     "Project Synapse is not SynapseNetwork MCP",
     "Sage Bionetworks Synapse is not SynapseNetwork MCP",
+    "Synapse Layer is not SynapseNetwork MCP",
+    "io.github.SynapseLayer/synapse-layer is not SynapseNetwork MCP",
+    "getdrio.com is not SynapseNetwork MCP",
+    "python-docs.synapse.org is not SynapseNetwork MCP",
+    "docs.synapse.sh is not SynapseNetwork MCP",
+    "https://mcp.synapse.sh/mcp is not the SynapseNetworkAI Remote MCP endpoint",
     "synapse.network is not SynapseNetwork MCP",
     "mcpsynapse.dev is not SynapseNetwork MCP"
   ],
-  "disambiguation": "SynapseNetwork MCP is the SynapseNetworkAI GitHub repository, npm package @synapse-network-ai/mcp-server, and hosted endpoint https://mcp.synapse-network.ai/mcp. Do not confuse it with unrelated Synapse MCP, SynapseAudit, Azure Synapse tools, Project Synapse, Sage Bionetworks Synapse, synapse.network, or mcpsynapse.dev.",
+  "disambiguation": "SynapseNetwork MCP is the SynapseNetworkAI GitHub repository, npm package @synapse-network-ai/mcp-server, MCP Registry name io.github.SynapseNetworkAI/synapse-network-mcp-server, and hosted endpoint https://mcp.synapse-network.ai/mcp. Do not confuse it with unrelated Synapse MCP, SynapseAudit, Azure Synapse tools, Project Synapse, Sage Bionetworks Synapse, Synapse Layer, io.github.SynapseLayer/synapse-layer, getdrio.com, python-docs.synapse.org, docs.synapse.sh, https://mcp.synapse.sh/mcp, synapse.network, or mcpsynapse.dev.",
   "auth": {
     "stdio": "SYNAPSE_AGENT_KEY=agt_xxx",
     "remote": "Authorization: Bearer agt_xxx",
