@@ -1,8 +1,9 @@
 # MCP Directory Submission Copy
 
-Use this copy for Smithery, Glama MCP Directory, MseeP, MCP Central,
-AgentIndex, ToolTrust, Protodex, PulseMCP, mcp.so / MCP.so, and
-awesome-mcp-servers style community lists. Use production URLs only.
+Use this copy for mcpservers.org, MCP.Directory, Smithery, Glama MCP
+Directory, MseeP, MCP Central, AgentIndex, ToolTrust, Protodex, PulseMCP,
+mcp.so / MCP.so, and awesome-mcp-servers style community lists. Use production
+URLs only.
 
 ## Short Description
 
@@ -55,6 +56,42 @@ Directory refresh acceptance check: the public listing should contain
 `https://mcp.synapse-network.ai/mcp`,
 `@synapse-network-ai/mcp-server`, and
 `io.github.SynapseNetworkAI/synapse-network-mcp-server`.
+
+## P0 Search-Gap Directory Submissions
+
+The live search gap for `"MCP server for paid API calls"` is that directory
+results surface paid-MCP alternatives such as KeyVex, PaidSync, PayToll, 1ly,
+AgentPay, and x402-oriented listings, but not SynapseNetwork. Prioritize
+directories that already rank for paid MCP/API-call queries and expose
+search-engine-readable listing pages.
+
+### mcpservers.org / Awesome MCP Servers
+
+- Submit URL: <https://mcpservers.org/submit>
+- Server Name: `SynapseNetwork MCP Server`
+- Short Description: `Remote MCP and stdio server for paid API discovery, API invocation, USDC agent payments, and settlement receipts.`
+- Link: <https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server>
+- Category: `Finance` first; if unavailable, use `Development` or `Other`.
+- Contact Email: `support@synapse-network.ai`
+- Free listing: yes; premium listing is optional and operator-approved only.
+
+Acceptance check: search the resulting mcpservers.org listing for
+`SynapseNetwork MCP Server`, `paid API discovery`, `discover_services`,
+`invoke_and_pay`, `get_receipt`, `https://mcp.synapse-network.ai/mcp`, and
+`@synapse-network-ai/mcp-server`.
+
+### MCP.Directory
+
+- Submit URL: <https://mcp.directory/submit>
+- GitHub Repository URL: <https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server>
+- npm Package: `@synapse-network-ai/mcp-server`
+- Short Description: `Remote MCP and stdio server for paid API discovery, API invocation, USDC agent payments, and settlement receipts.`
+- Email: `support@synapse-network.ai`
+
+Acceptance check: the published MCP.Directory page should include the
+repository, npm package, tool names, Remote MCP endpoint, and searchable
+phrases `MCP server for paid API calls`, `ChatGPT MCP app for API payments`,
+and `AI agent API monetization`.
 
 ## Auth Copy
 
@@ -110,6 +147,11 @@ official MCP Registry name is
 
 - Smithery: submit/import the hosted Remote MCP URL when the form supports
   remote servers; otherwise use the GitHub repository and npm package metadata.
+- mcpservers.org / Awesome MCP Servers: submit under Finance with the GitHub
+  repository link, then verify that the listing's searchable text includes the
+  tool names and Remote MCP endpoint.
+- MCP.Directory: submit the GitHub repository and npm package so it can
+  auto-detect README, tools, install configs, and package metadata.
 - Glama MCP Directory: submit the GitHub repository and verify the hosted URL
   with Inspector using a bearer Agent Key.
 - MseeP: submit the GitHub repository, production website, remote endpoint, npm

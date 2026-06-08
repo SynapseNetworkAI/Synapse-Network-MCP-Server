@@ -33,6 +33,51 @@
   "observed_directory_visibility": [
     "Protodex lists Synapse-Network-MCP-Server at https://protodex.io/servers/synapsenetworkai-synapse-network-mcp-server.html"
   ],
+  "p0_search_gap_directories": [
+    {
+      "surface": "mcpservers.org / Awesome MCP Servers",
+      "submit_url": "https://mcpservers.org/submit",
+      "why_now": "Search results for MCP server for paid API calls already surface mcpservers.org listings, but not SynapseNetwork.",
+      "form_fields": {
+        "server_name": "SynapseNetwork MCP Server",
+        "short_description": "Remote MCP and stdio server for paid API discovery, API invocation, USDC agent payments, and settlement receipts.",
+        "link": "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server",
+        "category": "Finance",
+        "contact_email": "support@synapse-network.ai"
+      },
+      "acceptance_terms": [
+        "SynapseNetwork MCP Server",
+        "paid API discovery",
+        "discover_services",
+        "invoke_and_pay",
+        "get_receipt",
+        "https://mcp.synapse-network.ai/mcp",
+        "@synapse-network-ai/mcp-server"
+      ]
+    },
+    {
+      "surface": "MCP.Directory",
+      "submit_url": "https://mcp.directory/submit",
+      "why_now": "MCP.Directory publishes searchable directory pages and auto-pulls GitHub/npm metadata for MCP clients including ChatGPT, Claude, Codex, Gemini CLI, Cursor, and VS Code.",
+      "form_fields": {
+        "github_repository_url": "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server",
+        "npm_package": "@synapse-network-ai/mcp-server",
+        "short_description": "Remote MCP and stdio server for paid API discovery, API invocation, USDC agent payments, and settlement receipts.",
+        "email": "support@synapse-network.ai"
+      },
+      "acceptance_terms": [
+        "SynapseNetwork MCP Server",
+        "MCP server for paid API calls",
+        "ChatGPT MCP app for API payments",
+        "AI agent API monetization",
+        "discover_services",
+        "invoke_and_pay",
+        "get_receipt",
+        "https://mcp.synapse-network.ai/mcp",
+        "@synapse-network-ai/mcp-server"
+      ]
+    }
+  ],
   "directory_refresh_targets": [
     {
       "surface": "Glama MCP Directory",
@@ -124,6 +169,8 @@
   ],
   "submission_targets": [
     "Official MCP Registry",
+    "mcpservers.org / Awesome MCP Servers",
+    "MCP.Directory",
     "Smithery",
     "Glama MCP Directory",
     "MseeP",
