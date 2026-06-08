@@ -1,9 +1,9 @@
 # MCP Directory Submission Copy
 
-Use this copy for mcpservers.org, MCP.Directory, Smithery, Glama MCP
-Directory, MseeP, MCP Central, AgentIndex, ToolTrust, Protodex, PulseMCP,
-mcp.so / MCP.so, and awesome-mcp-servers style community lists. Use production
-URLs only.
+Use this copy for mcpservers.org, MCP.Directory, MCP Marketplace, Smithery,
+Glama MCP Directory, MseeP, MCP Central, AgentIndex, ToolTrust, Protodex,
+PulseMCP, mcp.so / MCP.so, and awesome-mcp-servers style community lists. Use
+production URLs only.
 
 ## Short Description
 
@@ -64,6 +64,22 @@ results surface paid-MCP alternatives such as KeyVex, PaidSync, PayToll, 1ly,
 AgentPay, and x402-oriented listings, but not SynapseNetwork. Prioritize
 directories that already rank for paid MCP/API-call queries and expose
 search-engine-readable listing pages.
+
+### MCP Marketplace
+
+- Public URL: <https://mcp-marketplace.io/server/io-github-synapsenetworkai-synapse-network-mcp-server>
+- Status: approved
+- Listing name: `io.github.SynapseNetworkAI/synapse-network-mcp-server`
+- Category: `Developer Tools`
+- Security score: `10`
+- Remote MCP endpoint: <https://mcp.synapse-network.ai/mcp>
+- npm package: `@synapse-network-ai/mcp-server`
+- GitHub: <https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server>
+
+Acceptance check: the public page should include `Synapse Network MCP Server`,
+`paid API discovery`, `https://mcp.synapse-network.ai/mcp`,
+`@synapse-network-ai/mcp-server`, and the canonical slug
+`io-github-synapsenetworkai-synapse-network-mcp-server`.
 
 ### mcpservers.org / Awesome MCP Servers
 
@@ -154,6 +170,10 @@ official MCP Registry name is
 
 - Smithery: submit/import the hosted Remote MCP URL when the form supports
   remote servers; otherwise use the GitHub repository and npm package metadata.
+- MCP Marketplace: listing is approved at
+  `https://mcp-marketplace.io/server/io-github-synapsenetworkai-synapse-network-mcp-server`;
+  keep `LAUNCHGUIDE.md` current so marketplace metadata and tags can refresh
+  from the repository/npm package.
 - mcpservers.org / Awesome MCP Servers: submit under Finance with the GitHub
   repository link, then verify that the listing's searchable text includes the
   tool names and Remote MCP endpoint.
