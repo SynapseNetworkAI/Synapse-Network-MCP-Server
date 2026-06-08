@@ -40,10 +40,17 @@
       "why_now": "Search results for MCP server for paid API calls already surface mcpservers.org listings, but not SynapseNetwork.",
       "form_fields": {
         "server_name": "SynapseNetwork MCP Server",
-        "short_description": "Remote MCP and stdio server for paid API discovery, API invocation, USDC agent payments, and settlement receipts.",
+        "short_description": "Remote MCP for paid API discovery, API invocation, USDC agent payments, and receipts.",
         "link": "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server",
         "category": "Finance",
         "contact_email": "support@synapse-network.ai"
+      },
+      "last_submission": {
+        "submitted_at": "2026-06-08",
+        "status": "pending",
+        "submission_id": 3109,
+        "plan": "free",
+        "payment_status": "not_required"
       },
       "acceptance_terms": [
         "SynapseNetwork MCP Server",
@@ -62,8 +69,14 @@
       "form_fields": {
         "github_repository_url": "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server",
         "npm_package": "@synapse-network-ai/mcp-server",
-        "short_description": "Remote MCP and stdio server for paid API discovery, API invocation, USDC agent payments, and settlement receipts.",
+        "short_description": "Remote MCP for paid API discovery, invocation, USDC agent payments, and receipts.",
         "email": "support@synapse-network.ai"
+      },
+      "last_submission": {
+        "submitted_at": "2026-06-08",
+        "status": "submitted_for_review",
+        "response_summary": "Server submitted for review!",
+        "description_limit": "100 characters or less"
       },
       "acceptance_terms": [
         "SynapseNetwork MCP Server",

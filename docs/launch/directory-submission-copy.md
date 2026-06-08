@@ -69,7 +69,7 @@ search-engine-readable listing pages.
 
 - Submit URL: <https://mcpservers.org/submit>
 - Server Name: `SynapseNetwork MCP Server`
-- Short Description: `Remote MCP and stdio server for paid API discovery, API invocation, USDC agent payments, and settlement receipts.`
+- Short Description: `Remote MCP for paid API discovery, API invocation, USDC agent payments, and receipts.`
 - Link: <https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server>
 - Category: `Finance` first; if unavailable, use `Development` or `Other`.
 - Contact Email: `support@synapse-network.ai`
@@ -80,18 +80,25 @@ Acceptance check: search the resulting mcpservers.org listing for
 `invoke_and_pay`, `get_receipt`, `https://mcp.synapse-network.ai/mcp`, and
 `@synapse-network-ai/mcp-server`.
 
+Submission evidence: free listing submitted on 2026-06-08 with pending
+mcpservers.org submission id `3109`.
+
 ### MCP.Directory
 
 - Submit URL: <https://mcp.directory/submit>
 - GitHub Repository URL: <https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server>
 - npm Package: `@synapse-network-ai/mcp-server`
-- Short Description: `Remote MCP and stdio server for paid API discovery, API invocation, USDC agent payments, and settlement receipts.`
+- Short Description: `Remote MCP for paid API discovery, invocation, USDC agent payments, and receipts.`
 - Email: `support@synapse-network.ai`
 
 Acceptance check: the published MCP.Directory page should include the
 repository, npm package, tool names, Remote MCP endpoint, and searchable
 phrases `MCP server for paid API calls`, `ChatGPT MCP app for API payments`,
 and `AI agent API monetization`.
+
+Submission evidence: submitted on 2026-06-08 and the API returned `Server
+submitted for review!`. The short description must stay at 100 characters or
+less.
 
 ## Auth Copy
 
