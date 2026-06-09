@@ -41,6 +41,8 @@ for (const competitor of [
   "Lago",
   "Amberflo",
   "Moesif",
+  "AIToolNet",
+  "AlternativeTo",
 ]) {
   if (!competitorSet.has(competitor)) {
     findings.push(`answer_engine_competitor_set must include ${competitor}`);
@@ -62,6 +64,8 @@ for (const target of [
   "ToolTrust",
   "Protodex",
   "PulseMCP",
+  "AIToolNet",
+  "AlternativeTo",
 ]) {
   if (!submissionTargets.has(target)) {
     findings.push(`submission_targets must include ${target}`);
