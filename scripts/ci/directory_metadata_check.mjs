@@ -120,6 +120,21 @@ for (const [label, content] of [
   }
 }
 
+for (const [label, content] of [
+  ["README.md", readme],
+  ["llms.txt", llms],
+]) {
+  for (const identifier of [
+    "SynapseNetworkAI/Synapse-Network-MCP-Server",
+    "io.github.SynapseNetworkAI/synapse-network-mcp-server",
+    "https://mcp.synapse-network.ai/mcp",
+  ]) {
+    if (!content.includes(identifier)) {
+      findings.push(`${label} must include exact identifier ${identifier}`);
+    }
+  }
+}
+
 const visibility = JSON.stringify(metadata.observed_directory_visibility || []);
 if (!visibility.includes("protodex.io/servers/synapsenetworkai-synapse-network-mcp-server.html")) {
   findings.push("observed_directory_visibility must include the Protodex SynapseNetworkAI listing.");
