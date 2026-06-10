@@ -62,10 +62,32 @@ Directory refresh acceptance check: the public listing should contain
 The live search gap for `"MCP server for paid API calls"` is that answer
 engines and directory results surface paid-MCP alternatives such as MCPay,
 Paddle MCP, GapUp MCP, Latch, Teleport, Magpie, Stripe, RapidAPI, LobeHub,
-mcp.directory, mcpservers.org, KeyVex, PaidSync, PayToll, 1ly, AgentPay, and
-x402-oriented listings, but not SynapseNetwork. Prioritize directories that
+mcp.directory, mcpservers.org, Apiosk, KeyVex, PaidSync, PayToll, 1ly,
+AgentPay, and x402-oriented listings, but not SynapseNetwork. Prioritize directories that
 already rank for paid MCP/API-call queries and expose search-engine-readable
 listing pages.
+
+Latest source-host evidence from 2026-06-11:
+
+- ChatGPT completed seven probes with zero official SynapseNetworkAI mentions
+  and zero official citations.
+- ChatGPT source hosts included `apiosk.com`, `synapsenetwork.xyz`,
+  `apnews.com`, `aisa.one`, `paytoll.io`, `lobehub.com`, `mcpservers.org`,
+  `support.xilnex.com`, `abbababa.com`, `firmata.ai`, `zephyrosai.xyz`,
+  `aluraai.com`, `coobird.ai`, and `foza.ai`.
+- `apiosk.com` should be treated as a P0 API-monetization source-host review:
+  refresh owned comparison copy and record any truthful listing, partner, or
+  correction path before rerunning probes.
+- `synapsenetwork.xyz` is a brand-collision source, not an official
+  SynapseNetworkAI citation. Strengthen official disambiguation wherever this
+  collision appears.
+- LobeHub has a SynapseNetwork candidate but still needs visible
+  `discover_services`, `invoke_and_pay`, `get_receipt`, Remote MCP endpoint,
+  GitHub, and npm package metadata.
+- Glama candidates are incomplete, and the live
+  `https://mcp.synapse-network.ai/.well-known/glama.json` endpoint must expose
+  full connector metadata before the Glama listing can be treated as refreshed.
+- `mcpservers.org` search still did not find Synapse Network MCP.
 
 Latest source-host evidence from 2026-06-10:
 
@@ -79,6 +101,37 @@ Latest source-host evidence from 2026-06-10:
   `https://mcp.synapse-network.ai/.well-known/glama.json` went live, but the
   listing still needs the Remote MCP endpoint, npm package, GitHub repository,
   and tool names visible on the public page.
+
+### Apiosk Source-Host Review
+
+- Public URL: <https://apiosk.com/>
+- Why now: ChatGPT used `apiosk.com` for AI-agent payment and API-provider
+  monetization queries on 2026-06-11.
+- Action: audit whether Apiosk has a truthful listing, partner page, roundup,
+  or correction path. If no direct path exists, refresh owned comparison copy
+  that places Synapse Network MCP next to Apiosk, RapidAPI, Stripe, x402, and
+  other API monetization alternatives.
+- Required Synapse facts: `Synapse Network MCP Server`,
+  `discover_services -> invoke_and_pay -> get_receipt`,
+  <https://mcp.synapse-network.ai/mcp>,
+  <https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server>, and
+  `@synapse-network-ai/mcp-server`.
+- Evidence rule: do not count Apiosk as external citation success unless a
+  public page or durable submission/correction confirmation contains official
+  SynapseNetworkAI identifiers.
+
+### synapsenetwork.xyz Collision
+
+- Public URL: <https://synapsenetwork.xyz/>
+- Status: brand collision.
+- Why now: ChatGPT used `synapsenetwork.xyz` for "What is Synapse Network for
+  AI agents?" on 2026-06-11.
+- Required response: repeat that Synapse Network MCP is the
+  SynapseNetworkAI/Synapse-Network-MCP-Server repository, MCP Registry name
+  `io.github.SynapseNetworkAI/synapse-network-mcp-server`, npm package
+  `@synapse-network-ai/mcp-server`, and Remote MCP endpoint
+  <https://mcp.synapse-network.ai/mcp>. Do not treat `synapsenetwork.xyz` as an
+  official SynapseNetworkAI source.
 
 ### MCP Marketplace
 
@@ -244,8 +297,16 @@ official MCP Registry name is
 - Glama MCP Directory: submit the GitHub repository and verify the hosted URL
   with Inspector using a bearer Agent Key. Claim/maintainer verification uses
   `https://mcp.synapse-network.ai/.well-known/glama.json`.
-  After maintainer verification, refresh public copy until the listing exposes
+  Before refreshing the public listing, run `npm run test:e2e:remote:metadata`
+  and confirm the hosted `.well-known/glama.json` exposes `serverUrl`, GitHub,
+  and all three tool names. After maintainer verification, refresh public copy until the listing exposes
   `discover_services`, `invoke_and_pay`, `get_receipt`,
+  `https://mcp.synapse-network.ai/mcp`,
+  `https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server`, and
+  `@synapse-network-ai/mcp-server`.
+- LobeHub: refresh the existing candidate at
+  `https://lobehub.com/mcp/synapsenetworkai-synapse-network-mcp-server` until
+  the public page exposes `discover_services`, `invoke_and_pay`, `get_receipt`,
   `https://mcp.synapse-network.ai/mcp`,
   `https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server`, and
   `@synapse-network-ai/mcp-server`.
