@@ -81,7 +81,30 @@ curl -i -X POST https://mcp.synapse-network.ai/mcp \
 The unauthenticated MCP request must return `401` with `WWW-Authenticate`
 metadata. The public probes must not require Google IAM auth.
 
-## 3. OpenAI Remote MCP Smoke
+## 3. Public Metadata Gate
+
+Before refreshing Glama, LobeHub, MCP directory listings, or answer-engine
+source-host feeds, verify the hosted Remote MCP public metadata:
+
+```bash
+npm run test:e2e:remote:metadata
+```
+
+This no-secret check must pass against `https://mcp.synapse-network.ai` after
+each production deploy. It verifies:
+
+- `/readyz` returns `status=ready`.
+- `/.well-known/glama.json` exposes the connector name, hosted Remote MCP URL,
+  GitHub repository, maintainer email, and all three tools:
+  `discover_services`, `invoke_and_pay`, and `get_receipt`.
+- unauthenticated `POST /mcp` still returns `401` with protected-resource
+  metadata.
+
+If this gate fails, do not mark Glama/LobeHub metadata refreshed and do not
+rerun paid answer-engine probes as a success candidate. Redeploy the latest
+Cloud Run revision, then rerun the metadata gate.
+
+## 4. OpenAI Remote MCP Smoke
 
 OpenAI Responses API uses a Remote MCP tool definition with `server_url` and an
 authorization token. Use the customer's own Agent Key as the authorization
@@ -98,7 +121,7 @@ npm run test:e2e:remote:openai
 The smoke script imports only `discover_services` and asks OpenAI to discover a
 free or lowest-price service. It must not invoke paid tools.
 
-## 4. Security Boundary
+## 5. Security Boundary
 
 - Remote clients send `Authorization: Bearer <token>` to the MCP layer.
 - In public mode, `<token>` must be the customer's Agent Key beginning with
