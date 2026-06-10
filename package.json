@@ -1,7 +1,7 @@
 {
   "name": "@synapse-network-ai/mcp-server",
   "version": "0.1.5",
-  "description": "Official stateless MCP server for SynapseNetwork agent payments.",
+  "description": "Official Synapse Network MCP server for paid API calls and agent payments.",
   "type": "module",
   "bin": {
     "mcp-server": "dist/index.js",
@@ -47,6 +47,7 @@
     "mcp",
     "model-context-protocol",
     "synapse-network",
+    "synapse-network-mcp",
     "synapsenetwork",
     "agentpay",
     "agent-payments",

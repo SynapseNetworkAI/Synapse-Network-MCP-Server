@@ -1,9 +1,9 @@
 {
-  "product_name": "SynapseNetwork MCP Server",
+  "product_name": "Synapse Network MCP Server",
   "short_name": "Synapse MCP",
   "category": "AI agent payments and paid API discovery",
-  "short_description": "Hosted Remote MCP and stdio server for SynapseNetwork agent payments, paid API discovery, invocation receipts, and ChatGPT/Claude-compatible MCP clients.",
-  "long_description": "SynapseNetwork MCP Server lets AI agents discover payable APIs, invoke services through SynapseNetwork Gateway, and retrieve auditable receipts. Use the npm stdio package for local MCP clients or the hosted Remote MCP endpoint for cloud-hosted clients such as ChatGPT custom MCP apps and Claude remote connectors.",
+  "short_description": "Hosted Remote MCP and stdio server for Synapse Network agent payments, paid API discovery, invocation receipts, and ChatGPT/Claude-compatible MCP clients.",
+  "long_description": "Synapse Network MCP Server lets AI agents discover payable APIs, invoke services through SynapseNetwork Gateway, and retrieve auditable receipts. Use the npm stdio package for local MCP clients or the hosted Remote MCP endpoint for cloud-hosted clients such as ChatGPT custom MCP apps and Claude remote connectors.",
   "website": "https://www.synapse-network.ai/",
   "docs": [
     "https://docs.synapse-network.ai/mcp/paid-api-calls",
@@ -42,7 +42,7 @@
       "submit_url": "https://mcpservers.org/submit",
       "why_now": "Search results for MCP server for paid API calls already surface mcpservers.org listings, but not SynapseNetwork.",
       "form_fields": {
-        "server_name": "SynapseNetwork MCP Server",
+        "server_name": "Synapse Network MCP Server",
         "short_description": "Remote MCP for paid API discovery, API invocation, USDC agent payments, and receipts.",
         "link": "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server",
         "category": "Finance",
@@ -56,7 +56,7 @@
         "payment_status": "not_required"
       },
       "acceptance_terms": [
-        "SynapseNetwork MCP Server",
+        "Synapse Network MCP Server",
         "paid API discovery",
         "discover_services",
         "invoke_and_pay",
@@ -82,7 +82,7 @@
         "description_limit": "100 characters or less"
       },
       "acceptance_terms": [
-        "SynapseNetwork MCP Server",
+        "Synapse Network MCP Server",
         "MCP server for paid API calls",
         "ChatGPT MCP app for API payments",
         "AI agent API monetization",
@@ -98,7 +98,7 @@
       "submit_url": "https://www.aitoolnet.com/finish",
       "why_now": "The 2026-06-09 answer-engine source-host run observed AIToolNet among cited/listed AI tool surfaces, but SynapseNetwork is not yet present there.",
       "form_fields": {
-        "tool_name": "SynapseNetwork MCP Server",
+        "tool_name": "Synapse Network MCP Server",
         "website_url": "https://www.synapse-network.ai/",
         "github_repository_url": "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server",
         "remote_mcp_endpoint": "https://mcp.synapse-network.ai/mcp",
@@ -112,7 +112,7 @@
         "response_summary": "CLI probe received site-level 403; use authenticated browser/form flow."
       },
       "acceptance_terms": [
-        "SynapseNetwork MCP Server",
+        "Synapse Network MCP Server",
         "Remote MCP",
         "MCP server for paid API calls",
         "ChatGPT MCP app for API payments",
@@ -129,7 +129,7 @@
       "submit_url": "https://alternativeto.net/software/submit/",
       "why_now": "The 2026-06-09 answer-engine source-host run observed AlternativeTo among software-alternative surfaces that can influence AI answer candidate sets.",
       "form_fields": {
-        "software_name": "SynapseNetwork MCP Server",
+        "software_name": "Synapse Network MCP Server",
         "website_url": "https://www.synapse-network.ai/",
         "github_repository_url": "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server",
         "remote_mcp_endpoint": "https://mcp.synapse-network.ai/mcp",
@@ -148,7 +148,7 @@
         "response_summary": "CLI probe received site-level 403; use authenticated browser/form flow."
       },
       "acceptance_terms": [
-        "SynapseNetwork MCP Server",
+        "Synapse Network MCP Server",
         "Remote MCP",
         "paid API discovery",
         "AI agent payments",
@@ -174,7 +174,7 @@
         "@synapse-network-ai/mcp-server",
         "io.github.SynapseNetworkAI/synapse-network-mcp-server"
       ],
-      "refresh_snippet": "SynapseNetwork MCP Server exposes discover_services, invoke_and_pay, and get_receipt for paid API discovery, API invocation, and receipts through https://mcp.synapse-network.ai/mcp."
+      "refresh_snippet": "Synapse Network MCP Server exposes discover_services, invoke_and_pay, and get_receipt for paid API discovery, API invocation, and receipts through https://mcp.synapse-network.ai/mcp."
     },
     {
       "surface": "PulseMCP",
@@ -188,7 +188,7 @@
         "@synapse-network-ai/mcp-server",
         "io.github.SynapseNetworkAI/synapse-network-mcp-server"
       ],
-      "refresh_snippet": "SynapseNetwork MCP Server exposes discover_services, invoke_and_pay, and get_receipt for paid API discovery, API invocation, and receipts through https://mcp.synapse-network.ai/mcp."
+      "refresh_snippet": "Synapse Network MCP Server exposes discover_services, invoke_and_pay, and get_receipt for paid API discovery, API invocation, and receipts through https://mcp.synapse-network.ai/mcp."
     }
   ],
   "observed_name_collisions": [
@@ -201,12 +201,13 @@
     "io.github.SynapseLayer/synapse-layer is not SynapseNetwork MCP",
     "getdrio.com is not SynapseNetwork MCP",
     "python-docs.synapse.org is not SynapseNetwork MCP",
+    "mysynap.com is not SynapseNetwork MCP",
     "docs.synapse.sh is not SynapseNetwork MCP",
     "https://mcp.synapse.sh/mcp is not the SynapseNetworkAI Remote MCP endpoint",
     "synapse.network is not SynapseNetwork MCP",
     "mcpsynapse.dev is not SynapseNetwork MCP"
   ],
-  "disambiguation": "SynapseNetwork MCP is the SynapseNetworkAI GitHub repository, npm package @synapse-network-ai/mcp-server, MCP Registry name io.github.SynapseNetworkAI/synapse-network-mcp-server, and hosted endpoint https://mcp.synapse-network.ai/mcp. Do not confuse it with unrelated Synapse MCP, SynapseAudit, Azure Synapse tools, Project Synapse, Sage Bionetworks Synapse, Synapse Layer, io.github.SynapseLayer/synapse-layer, getdrio.com, python-docs.synapse.org, docs.synapse.sh, https://mcp.synapse.sh/mcp, synapse.network, or mcpsynapse.dev.",
+  "disambiguation": "Synapse Network MCP is the SynapseNetworkAI GitHub repository, npm package @synapse-network-ai/mcp-server, MCP Registry name io.github.SynapseNetworkAI/synapse-network-mcp-server, and hosted endpoint https://mcp.synapse-network.ai/mcp. Do not confuse it with unrelated Synapse MCP, SynapseAudit, Azure Synapse tools, Project Synapse, Sage Bionetworks Synapse, Synapse Layer, io.github.SynapseLayer/synapse-layer, getdrio.com, python-docs.synapse.org, mysynap.com, docs.synapse.sh, https://mcp.synapse.sh/mcp, synapse.network, or mcpsynapse.dev.",
   "auth": {
     "stdio": "SYNAPSE_AGENT_KEY=agt_xxx",
     "remote": "Authorization: Bearer agt_xxx",

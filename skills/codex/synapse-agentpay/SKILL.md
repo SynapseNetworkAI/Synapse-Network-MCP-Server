@@ -1,11 +1,11 @@
 ---
 name: synapse-agentpay
-description: Use when implementing, reviewing, testing, or documenting SynapseNetwork MCP Server integrations, registry submissions, AgentPay workflows, or production MCP configuration.
+description: Use when implementing, reviewing, testing, or documenting Synapse Network MCP Server integrations, registry submissions, AgentPay workflows, or production MCP configuration.
 ---
 
-# SynapseNetwork MCP Server Skill
+# Synapse Network MCP Server Skill
 
-Use this skill for SynapseNetwork MCP Server repository work and for generating correct AgentPay integration guidance.
+Use this skill for Synapse Network MCP Server repository work and for generating correct AgentPay integration guidance.
 
 ## Repository Rules
 
