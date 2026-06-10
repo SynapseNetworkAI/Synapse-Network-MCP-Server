@@ -83,6 +83,10 @@ async function handlePublicGet(req: IncomingMessage, res: ServerResponse, config
     sendOptionalAuthServerMetadata(res, config);
     return true;
   }
+  if (url.pathname === "/.well-known/glama.json") {
+    sendJson(res, 200, glamaConnectorMetadata());
+    return true;
+  }
   return false;
 }
 
@@ -278,6 +282,13 @@ function protectedResourceMetadata(config: RemoteServerConfig): unknown {
     authorization_servers: config.oauthIssuer ? [config.oauthIssuer] : [],
     bearer_methods_supported: ["header"],
     scopes_supported: ["synapse.discovery.read", "synapse.invocations.write", "synapse.receipts.read", "offline_access"]
+  };
+}
+
+function glamaConnectorMetadata(): unknown {
+  return {
+    "$schema": "https://glama.ai/mcp/schemas/connector.json",
+    maintainers: [{ email: "support@synapse-network.ai" }]
   };
 }
 

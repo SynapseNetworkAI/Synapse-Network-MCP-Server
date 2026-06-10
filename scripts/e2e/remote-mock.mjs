@@ -91,6 +91,7 @@ gateway.listen(0, "127.0.0.1", async () => {
 
     await assertPublicProbe(`${baseUrl}/healthz`);
     await assertPublicProbe(`${baseUrl}/readyz`);
+    await assertGlamaMetadata(`${baseUrl}/.well-known/glama.json`);
     await assertUnauthorizedMcp(`${baseUrl}/mcp`);
     await assertSseSessionMiss(`${baseUrl}/mcp/messages`);
     await runStreamableFlow(`${baseUrl}/mcp`);
@@ -159,6 +160,14 @@ async function withClient(transport, fn) {
 async function assertPublicProbe(url) {
   const response = await fetch(url);
   assert(response.status === 200, `${url} should be public and return 200.`);
+}
+
+async function assertGlamaMetadata(url) {
+  const response = await fetch(url);
+  assert(response.status === 200, `${url} should be public and return 200.`);
+  const payload = await response.json();
+  assert(payload["$schema"] === "https://glama.ai/mcp/schemas/connector.json", "Glama metadata must use the connector schema.");
+  assert(payload.maintainers?.[0]?.email === "support@synapse-network.ai", "Glama metadata must expose the Synapse support maintainer email.");
 }
 
 async function assertUnauthorizedMcp(url) {
