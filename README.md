@@ -441,7 +441,7 @@ both the npm stdio package and the hosted Remote MCP endpoint:
 - Remote MCP: `https://mcp.synapse-network.ai/mcp`
 - Remote auth: `Authorization: Bearer agt_xxx`
 
-After publishing the npm package:
+For a new package version, publish npm and then refresh the MCP Registry:
 
 ```bash
 npm run release:readiness
@@ -451,6 +451,11 @@ npx -y @synapse-network-ai/mcp-server --help
 mcp-publisher login github
 mcp-publisher publish
 ```
+
+For metadata-only refreshes where the package version already exists, run the
+GitHub Actions workflow `Publish MCP Server` with `publish_npm=false`. The
+workflow validates `server.json`, skips duplicate npm publication, and uses
+GitHub OIDC to refresh MCP Registry metadata without a local Registry JWT.
 
 The registry hosts metadata; npm hosts the package artifact. Remote MCP remains a
 hosted BYOK channel: customers pass their own Agent Key as the bearer token.

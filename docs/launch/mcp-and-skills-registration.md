@@ -52,9 +52,15 @@ mcp-publisher login github
 mcp-publisher publish
 ```
 
-If local npm auth is unavailable, use the GitHub Actions workflow
-`Publish MCP Server`. Preferred auth is npm trusted publishing via GitHub
-Actions OIDC. Configure the npm package trusted publisher with:
+If local npm auth or local MCP Registry auth is unavailable, use the GitHub
+Actions workflow `Publish MCP Server`. For metadata-only registry refreshes
+where the npm package version already exists, run the workflow with
+`publish_npm=false`; it skips duplicate npm publication and uses GitHub OIDC to
+publish the official MCP Registry metadata without a local Registry JWT.
+
+For new package versions, run the same workflow with `publish_npm=true`.
+Preferred npm auth is trusted publishing via GitHub Actions OIDC. Configure the
+npm package trusted publisher with:
 
 - Organization: `SynapseNetworkAI`
 - Repository: `Synapse-Network-MCP-Server`
@@ -62,12 +68,13 @@ Actions OIDC. Configure the npm package trusted publisher with:
 - Allowed action: `npm publish`
 
 If trusted publishing is not configured yet, add the repository secret
-`NPM_TOKEN` as a fallback. The workflow runs the same readiness checks,
-publishes npm, then uses GitHub OIDC to publish the official MCP Registry
-metadata without a local Registry JWT:
+`NPM_TOKEN` as a fallback. The workflow always runs the same readiness checks
+before publishing registry metadata:
 
 ```text
-Actions -> Publish MCP Server -> Run workflow -> expected_version=<package version>
+Actions -> Publish MCP Server -> Run workflow
+expected_version=<package version>
+publish_npm=false for metadata refresh, true for new package publication
 ```
 
 If `npm publish` returns `E404 ... could not be found or you do not have
