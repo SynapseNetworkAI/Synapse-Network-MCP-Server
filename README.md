@@ -454,8 +454,11 @@ mcp-publisher publish
 
 For metadata-only refreshes where the package version already exists, run the
 GitHub Actions workflow `Publish MCP Server` with `publish_npm=false`. The
-workflow validates `server.json`, skips duplicate npm publication, and uses
-GitHub OIDC to refresh MCP Registry metadata without a local Registry JWT.
+workflow validates `server.json`, confirms the referenced npm package version is
+already published, skips duplicate npm publication, and uses GitHub OIDC to
+refresh MCP Registry metadata without a local Registry JWT. In that mode,
+`server.json.version` may advance as a Registry metadata version while
+`server.json.packages[0].version` continues to point at the existing npm package.
 
 The registry hosts metadata; npm hosts the package artifact. Remote MCP remains a
 hosted BYOK channel: customers pass their own Agent Key as the bearer token.
