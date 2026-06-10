@@ -59,11 +59,26 @@ Directory refresh acceptance check: the public listing should contain
 
 ## P0 Search-Gap Directory Submissions
 
-The live search gap for `"MCP server for paid API calls"` is that directory
-results surface paid-MCP alternatives such as KeyVex, PaidSync, PayToll, 1ly,
-AgentPay, and x402-oriented listings, but not SynapseNetwork. Prioritize
-directories that already rank for paid MCP/API-call queries and expose
-search-engine-readable listing pages.
+The live search gap for `"MCP server for paid API calls"` is that answer
+engines and directory results surface paid-MCP alternatives such as MCPay,
+Paddle MCP, GapUp MCP, Latch, Teleport, Magpie, Stripe, RapidAPI, LobeHub,
+mcp.directory, mcpservers.org, KeyVex, PaidSync, PayToll, 1ly, AgentPay, and
+x402-oriented listings, but not SynapseNetwork. Prioritize directories that
+already rank for paid MCP/API-call queries and expose search-engine-readable
+listing pages.
+
+Latest source-host evidence from 2026-06-10:
+
+- ChatGPT cited or surfaced `lobehub.com`, `mcpservers.org`, `mcp.directory`,
+  `docs.mcpay.tech`, `mcpay.tech`, `docs.latchmcp.app`, `teleport.ltd`,
+  `mcp.magpie.im`, and `docs.cdp.coinbase.com` for paid MCP/API-payment
+  queries.
+- `mcp.directory` and `mcpservers.org` public search pages still did not show
+  Synapse Network MCP.
+- Glama search returned a Synapse candidate after
+  `https://mcp.synapse-network.ai/.well-known/glama.json` went live, but the
+  listing still needs the Remote MCP endpoint, npm package, GitHub repository,
+  and tool names visible on the public page.
 
 ### MCP Marketplace
 
@@ -229,6 +244,11 @@ official MCP Registry name is
 - Glama MCP Directory: submit the GitHub repository and verify the hosted URL
   with Inspector using a bearer Agent Key. Claim/maintainer verification uses
   `https://mcp.synapse-network.ai/.well-known/glama.json`.
+  After maintainer verification, refresh public copy until the listing exposes
+  `discover_services`, `invoke_and_pay`, `get_receipt`,
+  `https://mcp.synapse-network.ai/mcp`,
+  `https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server`, and
+  `@synapse-network-ai/mcp-server`.
 - MseeP: submit the GitHub repository, production website, remote endpoint, npm
   package, and the paid API discovery/payment positioning above.
 - MCP Central: submit the GitHub repository and production metadata so the

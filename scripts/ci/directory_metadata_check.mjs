@@ -43,6 +43,12 @@ for (const competitor of [
   "Moesif",
   "AIToolNet",
   "AlternativeTo",
+  "Paddle MCP",
+  "GapUp MCP",
+  "Teleport",
+  "LobeHub",
+  "mcp.directory",
+  "mcpservers.org",
 ]) {
   if (!competitorSet.has(competitor)) {
     findings.push(`answer_engine_competitor_set must include ${competitor}`);
@@ -95,6 +101,12 @@ for (const [label, content] of [
     "Lago",
     "Amberflo",
     "Moesif",
+    "Paddle MCP",
+    "GapUp MCP",
+    "Teleport",
+    "LobeHub",
+    "mcp.directory",
+    "mcpservers.org",
   ]) {
     if (!content.includes(term)) findings.push(`${label} must include ${term}`);
   }
