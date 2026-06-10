@@ -227,7 +227,8 @@ official MCP Registry name is
 - MCP.Directory: submit the GitHub repository and npm package so it can
   auto-detect README, tools, install configs, and package metadata.
 - Glama MCP Directory: submit the GitHub repository and verify the hosted URL
-  with Inspector using a bearer Agent Key.
+  with Inspector using a bearer Agent Key. Claim/maintainer verification uses
+  `https://mcp.synapse-network.ai/.well-known/glama.json`.
 - MseeP: submit the GitHub repository, production website, remote endpoint, npm
   package, and the paid API discovery/payment positioning above.
 - MCP Central: submit the GitHub repository and production metadata so the
