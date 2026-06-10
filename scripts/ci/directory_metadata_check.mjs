@@ -41,6 +41,8 @@ for (const competitor of [
   "Lago",
   "Amberflo",
   "Moesif",
+  "AIToolNet",
+  "AlternativeTo",
 ]) {
   if (!competitorSet.has(competitor)) {
     findings.push(`answer_engine_competitor_set must include ${competitor}`);
@@ -62,6 +64,8 @@ for (const target of [
   "ToolTrust",
   "Protodex",
   "PulseMCP",
+  "AIToolNet",
+  "AlternativeTo",
 ]) {
   if (!submissionTargets.has(target)) {
     findings.push(`submission_targets must include ${target}`);
@@ -113,6 +117,21 @@ for (const [label, content] of [
   }
   if (!content.includes("discover_services") || !content.includes("invoke_and_pay") || !content.includes("get_receipt")) {
     findings.push(`${label} must include the paid API MCP tool loop`);
+  }
+}
+
+for (const [label, content] of [
+  ["README.md", readme],
+  ["llms.txt", llms],
+]) {
+  for (const identifier of [
+    "SynapseNetworkAI/Synapse-Network-MCP-Server",
+    "io.github.SynapseNetworkAI/synapse-network-mcp-server",
+    "https://mcp.synapse-network.ai/mcp",
+  ]) {
+    if (!content.includes(identifier)) {
+      findings.push(`${label} must include exact identifier ${identifier}`);
+    }
   }
 }
 

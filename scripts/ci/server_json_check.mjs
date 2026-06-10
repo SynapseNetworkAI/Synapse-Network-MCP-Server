@@ -14,6 +14,17 @@ if (metadata.description.length > 100) {
   );
 }
 
+if (!metadata.description.includes("paid API calls")) {
+  findings.push("server.json description must target paid API call queries.");
+}
+
+if (
+  !metadata.description.includes("Synapse.org") ||
+  !metadata.description.includes("Sage Bionetworks Synapse")
+) {
+  findings.push("server.json description must disambiguate Synapse.org and Sage Bionetworks Synapse.");
+}
+
 if (metadata.name !== "io.github.SynapseNetworkAI/synapse-network-mcp-server") {
   findings.push("server.json name must keep the canonical MCP Registry identifier.");
 }
