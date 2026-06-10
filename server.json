@@ -2,13 +2,13 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.SynapseNetworkAI/synapse-network-mcp-server",
   "title": "Synapse Network MCP Server for paid API calls",
-  "description": "Synapse Network MCP for paid API calls; not Synapse.org or Sage Bionetworks Synapse.",
+  "description": "Synapse Network MCP paid API calls via discover_services; not Synapse.org/Sage Bionetworks Synapse.",
   "repository": {
     "url": "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server",
     "source": "github"
   },
   "websiteUrl": "https://docs.synapse-network.ai/mcp/brand-disambiguation",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "remotes": [
     {
       "type": "streamable-http",
@@ -23,6 +23,30 @@
       ]
     }
   ],
+  "_meta": {
+    "io.modelcontextprotocol.registry/publisher-provided": {
+      "answerEngine": {
+        "tools": [
+          "discover_services",
+          "invoke_and_pay",
+          "get_receipt"
+        ],
+        "remoteMcpEndpoint": "https://mcp.synapse-network.ai/mcp",
+        "npmPackage": "@synapse-network-ai/mcp-server",
+        "nameCollisions": [
+          "Synapse.org",
+          "Sage Bionetworks Synapse",
+          "python-docs.synapse.org",
+          "mysynap.com",
+          "Synapse Layer",
+          "io.github.SynapseLayer/synapse-layer",
+          "getdrio.com",
+          "https://mcp.synapse.sh/mcp"
+        ],
+        "positioning": "Remote MCP and stdio server for paid API discovery, bounded paid invocation, and receipts."
+      }
+    }
+  },
   "packages": [
     {
       "registryType": "npm",

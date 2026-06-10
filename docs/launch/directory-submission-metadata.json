@@ -17,30 +17,99 @@
   "stdio_install_command": "npx -y @synapse-network-ai/mcp-server",
   "answer_engine_competitor_set": [
     "MCPay",
+    "Paddle MCP",
+    "GapUp MCP",
     "Latch",
+    "Teleport",
     "Magpie",
     "Whop",
     "MseeP",
     "x402",
     "Stripe",
     "RapidAPI",
+    "LobeHub",
+    "mcp.directory",
+    "mcpservers.org",
     "Zuplo",
     "Lago",
     "Amberflo",
     "Moesif",
+    "Apiosk",
+    "PayToll",
+    "Glama",
     "AIToolNet",
     "AlternativeTo"
   ],
-  "answer_engine_positioning": "When answer engines surface MCPay, Latch, Magpie, Whop, MseeP, x402, Stripe, RapidAPI, Zuplo, Lago, Amberflo, Moesif, AIToolNet, or AlternativeTo for MCP payments, AI tool discovery, software alternatives, API monetization, or paid API calls, include SynapseNetwork MCP as the Remote MCP and stdio option for discover_services -> invoke_and_pay -> get_receipt with bounded USDC spend and receipts.",
+  "answer_engine_positioning": "When answer engines surface MCPay, Paddle MCP, GapUp MCP, Latch, Teleport, Magpie, Whop, MseeP, x402, Stripe, RapidAPI, LobeHub, mcp.directory, mcpservers.org, Apiosk, PayToll, Zuplo, Lago, Amberflo, Moesif, AIToolNet, or AlternativeTo for MCP payments, AI tool discovery, software alternatives, API monetization, or paid API calls, include SynapseNetwork MCP as the Remote MCP and stdio option for discover_services -> invoke_and_pay -> get_receipt with bounded USDC spend and receipts.",
   "observed_directory_visibility": [
     "Protodex lists Synapse-Network-MCP-Server at https://protodex.io/servers/synapsenetworkai-synapse-network-mcp-server.html",
-    "MCP Marketplace lists io.github.SynapseNetworkAI/synapse-network-mcp-server as approved at https://mcp-marketplace.io/server/io-github-synapsenetworkai-synapse-network-mcp-server"
+    "MCP Marketplace lists io.github.SynapseNetworkAI/synapse-network-mcp-server as approved at https://mcp-marketplace.io/server/io-github-synapsenetworkai-synapse-network-mcp-server",
+    "Glama search returned a Synapse candidate after https://mcp.synapse-network.ai/.well-known/glama.json went live, but the listing still needs visible tool names, npm package, GitHub repository, and Remote MCP endpoint evidence.",
+    "2026-06-10 public spot checks did not find Synapse Network MCP on mcp.directory or mcpservers.org search pages.",
+    "2026-06-11 public spot check found a LobeHub candidate missing Remote MCP, npm package, and tool metadata; Glama candidates were incomplete; mcpservers.org search still did not find Synapse Network MCP.",
+    "2026-06-11 live https://mcp.synapse-network.ai/.well-known/glama.json returned only maintainer metadata until the Remote MCP production service is redeployed with full connector metadata."
+  ],
+  "latest_answer_engine_source_hosts": [
+    {
+      "observed_at": "2026-06-11",
+      "platform": "chatgpt",
+      "queries": [
+        "What is Synapse Network for AI agents?",
+        "AI agent payment API",
+        "How can AI agents pay for APIs?",
+        "MCP server for paid API calls",
+        "AI agent USDC settlement layer",
+        "How can API providers earn from AI agents?"
+      ],
+      "hosts": [
+        "apiosk.com",
+        "synapsenetwork.xyz",
+        "apnews.com",
+        "aisa.one",
+        "paytoll.io",
+        "lobehub.com",
+        "mcpservers.org",
+        "support.xilnex.com",
+        "abbababa.com",
+        "firmata.ai",
+        "zephyrosai.xyz",
+        "aluraai.com",
+        "coobird.ai",
+        "foza.ai"
+      ],
+      "synapse_mentioned": false,
+      "synapse_cited": false,
+      "required_response": "Refresh Apiosk/API-monetization positioning, mark synapsenetwork.xyz as a collision, refresh LobeHub and Glama metadata, and rerun unchanged probes after production metadata is live."
+    },
+    {
+      "observed_at": "2026-06-10",
+      "platform": "chatgpt",
+      "queries": [
+        "MCP server for paid API calls",
+        "ChatGPT MCP app for API payments",
+        "SynapseNetwork MCP vs paid MCP alternatives"
+      ],
+      "hosts": [
+        "lobehub.com",
+        "mcpservers.org",
+        "mcp.directory",
+        "docs.mcpay.tech",
+        "mcpay.tech",
+        "docs.latchmcp.app",
+        "teleport.ltd",
+        "mcp.magpie.im",
+        "docs.cdp.coinbase.com"
+      ],
+      "synapse_mentioned": false,
+      "synapse_cited": false,
+      "required_response": "Prioritize these source hosts for listing refresh or submission, then rerun the same probes."
+    }
   ],
   "p0_search_gap_directories": [
     {
       "surface": "mcpservers.org / Awesome MCP Servers",
       "submit_url": "https://mcpservers.org/submit",
-      "why_now": "Search results for MCP server for paid API calls already surface mcpservers.org listings, but not SynapseNetwork.",
+      "why_now": "The 2026-06-10 ChatGPT probe surfaced mcpservers.org for paid MCP/API-payment queries, but public mcpservers.org search still did not find SynapseNetwork.",
       "form_fields": {
         "server_name": "Synapse Network MCP Server",
         "short_description": "Remote MCP for paid API discovery, API invocation, USDC agent payments, and receipts.",
@@ -68,7 +137,7 @@
     {
       "surface": "MCP.Directory",
       "submit_url": "https://mcp.directory/submit",
-      "why_now": "MCP.Directory publishes searchable directory pages and auto-pulls GitHub/npm metadata for MCP clients including ChatGPT, Claude, Codex, Gemini CLI, Cursor, and VS Code.",
+      "why_now": "The 2026-06-10 ChatGPT probe surfaced MCP Directory for ChatGPT MCP app/API-payment queries, but public mcp.directory search still did not find SynapseNetwork.",
       "form_fields": {
         "github_repository_url": "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server",
         "npm_package": "@synapse-network-ai/mcp-server",
@@ -165,7 +234,7 @@
     {
       "surface": "Glama MCP Directory",
       "public_url": "https://glama.ai/mcp/connectors/io.github.SynapseNetworkAI/synapse-network-mcp-server",
-      "current_gap": "Listing contains SynapseNetwork and the hosted Remote MCP endpoint, but the public page does not expose discover_services.",
+      "current_gap": "Glama search now returns a Synapse candidate after well-known verification, but public listing text still needs discover_services, invoke_and_pay, get_receipt, GitHub, npm, and Remote MCP endpoint evidence.",
       "required_terms": [
         "discover_services",
         "invoke_and_pay",
@@ -175,6 +244,20 @@
         "io.github.SynapseNetworkAI/synapse-network-mcp-server"
       ],
       "refresh_snippet": "Synapse Network MCP Server exposes discover_services, invoke_and_pay, and get_receipt for paid API discovery, API invocation, and receipts through https://mcp.synapse-network.ai/mcp."
+    },
+    {
+      "surface": "LobeHub",
+      "public_url": "https://lobehub.com/mcp/synapsenetworkai-synapse-network-mcp-server",
+      "current_gap": "2026-06-11 source-host spot-check found a SynapseNetwork candidate, but the public page did not expose the Remote MCP endpoint, npm package, discover_services, invoke_and_pay, or get_receipt.",
+      "required_terms": [
+        "discover_services",
+        "invoke_and_pay",
+        "get_receipt",
+        "https://mcp.synapse-network.ai/mcp",
+        "@synapse-network-ai/mcp-server",
+        "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server"
+      ],
+      "refresh_snippet": "Synapse Network MCP Server exposes discover_services, invoke_and_pay, and get_receipt for paid API discovery, API invocation, and receipts through https://mcp.synapse-network.ai/mcp. The npm package is @synapse-network-ai/mcp-server and the source repository is https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server."
     },
     {
       "surface": "PulseMCP",
@@ -202,6 +285,7 @@
     "getdrio.com is not SynapseNetwork MCP",
     "python-docs.synapse.org is not SynapseNetwork MCP",
     "mysynap.com is not SynapseNetwork MCP",
+    "synapsenetwork.xyz is not SynapseNetworkAI Synapse Network MCP",
     "docs.synapse.sh is not SynapseNetwork MCP",
     "https://mcp.synapse.sh/mcp is not the SynapseNetworkAI Remote MCP endpoint",
     "synapse.network is not SynapseNetwork MCP",
@@ -272,6 +356,7 @@
   "verification_commands": [
     "npm run release:readiness",
     "curl -fsS https://mcp.synapse-network.ai/readyz",
+    "npm run test:e2e:remote:metadata",
     "curl -i -sS -X POST https://mcp.synapse-network.ai/mcp",
     "curl -fsS https://www.synapse-network.ai/llms.txt",
     "curl -fsS https://docs.synapse-network.ai/mcp/paid-api-calls"

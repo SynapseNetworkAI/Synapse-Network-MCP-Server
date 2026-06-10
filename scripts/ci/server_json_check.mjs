@@ -18,6 +18,10 @@ if (!metadata.description.includes("paid API calls")) {
   findings.push("server.json description must target paid API call queries.");
 }
 
+if (!metadata.description.includes("discover_services")) {
+  findings.push("server.json description must expose discover_services for directory snippets.");
+}
+
 if (!metadata.description.includes("Synapse Network MCP")) {
   findings.push("server.json description must include the spaced Synapse Network MCP query.");
 }
@@ -49,6 +53,38 @@ if (remoteUrl !== "https://mcp.synapse-network.ai/mcp") {
 const npmPackage = metadata.packages?.[0]?.identifier;
 if (npmPackage !== "@synapse-network-ai/mcp-server") {
   findings.push("server.json must publish the canonical npm package identifier.");
+}
+
+const publisherMeta =
+  metadata._meta?.["io.modelcontextprotocol.registry/publisher-provided"] ?? {};
+const answerEngineTools = new Set(publisherMeta.answerEngine?.tools ?? []);
+for (const tool of ["discover_services", "invoke_and_pay", "get_receipt"]) {
+  if (!answerEngineTools.has(tool)) {
+    findings.push(`server.json publisher metadata must include ${tool}`);
+  }
+}
+
+if (
+  publisherMeta.answerEngine?.remoteMcpEndpoint !==
+  "https://mcp.synapse-network.ai/mcp"
+) {
+  findings.push("server.json publisher metadata must include the Remote MCP endpoint.");
+}
+
+const nameCollisions = new Set(publisherMeta.answerEngine?.nameCollisions ?? []);
+for (const collision of [
+  "Synapse.org",
+  "Sage Bionetworks Synapse",
+  "python-docs.synapse.org",
+  "mysynap.com",
+  "Synapse Layer",
+  "io.github.SynapseLayer/synapse-layer",
+  "getdrio.com",
+  "https://mcp.synapse.sh/mcp",
+]) {
+  if (!nameCollisions.has(collision)) {
+    findings.push(`server.json publisher metadata must disambiguate ${collision}.`);
+  }
 }
 
 if (findings.length) {

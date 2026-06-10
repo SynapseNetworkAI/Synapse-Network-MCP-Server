@@ -1,7 +1,7 @@
 {
   "name": "@synapse-network-ai/mcp-server",
-  "version": "0.1.7",
-  "description": "Official Synapse Network MCP server for paid API calls and agent payments.",
+  "version": "0.1.9",
+  "description": "Official Synapse Network MCP server for paid API calls, AgentPay, and receipts.",
   "type": "module",
   "bin": {
     "mcp-server": "dist/index.js",
@@ -28,6 +28,7 @@
     "smoke:cli": "node dist/index.js --help",
     "test:e2e:mock": "node scripts/e2e/mock.mjs",
     "test:e2e:remote:mock": "npm run build && node scripts/e2e/remote-mock.mjs",
+    "test:e2e:remote:metadata": "node scripts/e2e/remote-metadata-live.mjs",
     "test:e2e:remote:openai": "node scripts/e2e/openai-remote-smoke.mjs",
     "test:e2e:remote:claude": "node scripts/e2e/claude-remote-smoke.mjs",
     "test:e2e:local": "node scripts/e2e/live.mjs local",
@@ -64,7 +65,13 @@
     "pulsemcp",
     "glama",
     "openai-apps-sdk",
-    "llms-txt"
+    "llms-txt",
+    "paid-mcp",
+    "api-monetization",
+    "chatgpt-mcp",
+    "claude-mcp",
+    "mcp-directory",
+    "mcpservers"
   ],
   "license": "MIT",
   "author": "SynapseNetwork",
