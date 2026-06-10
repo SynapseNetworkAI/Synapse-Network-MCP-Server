@@ -1,6 +1,6 @@
-# SynapseNetwork MCP Server
+# SynapseNetwork MCP Server for paid API calls
 
-This is the official Model Context Protocol (MCP) server for SynapseNetwork. It gives AI agents a secure, stateless adapter to discover external APIs, invoke them through the Synapse Gateway, and pay with zero-gas USDC micropayments.
+SynapseNetwork MCP Server for paid API calls is the official Model Context Protocol (MCP) server for SynapseNetwork. It gives AI agents a secure, stateless adapter to discover external APIs, invoke them through the Synapse Gateway, and pay with zero-gas USDC micropayments.
 
 Website: https://www.synapse-network.ai/
 Repository: https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server

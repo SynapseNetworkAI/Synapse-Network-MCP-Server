@@ -4,12 +4,12 @@
   </a>
 </p>
 
-# SynapseNetwork MCP Server
+# SynapseNetwork MCP Server for paid API calls
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![MCP](https://img.shields.io/badge/MCP-stdio%20%2B%20Remote%20HTTP-0f766e.svg)](server.json)
 
-Official Model Context Protocol (MCP) server for SynapseNetwork. It gives ChatGPT custom MCP apps, Claude connectors, Cursor, Claude Desktop, Devin, and MCP-compatible agent frameworks a stateless way to discover external APIs, invoke them, and retrieve receipts through SynapseNetwork agent payments.
+SynapseNetwork MCP Server for paid API calls is the official Model Context Protocol (MCP) server for SynapseNetwork. It gives ChatGPT custom MCP apps, Claude connectors, Cursor, Claude Desktop, Devin, and MCP-compatible agent frameworks a stateless way to discover external APIs, invoke them, and retrieve receipts through SynapseNetwork agent payments.
 
 Website: [https://www.synapse-network.ai/](https://www.synapse-network.ai/)
 
