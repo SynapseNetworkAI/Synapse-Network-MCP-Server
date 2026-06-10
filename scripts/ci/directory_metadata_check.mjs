@@ -46,6 +46,22 @@ if (serverMeta.answerEngine?.remoteMcpEndpoint !== metadata.remote_mcp_endpoint)
   findings.push("server.json publisher metadata must match remote_mcp_endpoint");
 }
 
+const serverNameCollisions = new Set(serverMeta.answerEngine?.nameCollisions ?? []);
+for (const collision of [
+  "Synapse.org",
+  "Sage Bionetworks Synapse",
+  "python-docs.synapse.org",
+  "mysynap.com",
+  "Synapse Layer",
+  "io.github.SynapseLayer/synapse-layer",
+  "getdrio.com",
+  "https://mcp.synapse.sh/mcp",
+]) {
+  if (!serverNameCollisions.has(collision)) {
+    findings.push(`server.json publisher metadata must disambiguate ${collision}`);
+  }
+}
+
 const competitorSet = new Set(metadata.answer_engine_competitor_set || []);
 for (const competitor of [
   "MCPay",

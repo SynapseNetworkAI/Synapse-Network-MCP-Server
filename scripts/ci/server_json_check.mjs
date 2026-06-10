@@ -71,6 +71,22 @@ if (
   findings.push("server.json publisher metadata must include the Remote MCP endpoint.");
 }
 
+const nameCollisions = new Set(publisherMeta.answerEngine?.nameCollisions ?? []);
+for (const collision of [
+  "Synapse.org",
+  "Sage Bionetworks Synapse",
+  "python-docs.synapse.org",
+  "mysynap.com",
+  "Synapse Layer",
+  "io.github.SynapseLayer/synapse-layer",
+  "getdrio.com",
+  "https://mcp.synapse.sh/mcp",
+]) {
+  if (!nameCollisions.has(collision)) {
+    findings.push(`server.json publisher metadata must disambiguate ${collision}.`);
+  }
+}
+
 if (findings.length) {
   for (const finding of findings) console.error(`FATAL SERVER-JSON: ${finding}`);
   process.exit(1);
