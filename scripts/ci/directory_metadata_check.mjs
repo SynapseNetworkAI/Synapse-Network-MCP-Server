@@ -8,6 +8,7 @@ const launchCopy = fs.readFileSync("docs/launch/directory-submission-copy.md", "
 const launchChecklist = fs.readFileSync("docs/launch/mcp-and-skills-registration.md", "utf8");
 const readme = fs.readFileSync("README.md", "utf8");
 const llms = fs.readFileSync("llms.txt", "utf8");
+const serverJson = JSON.parse(fs.readFileSync("server.json", "utf8"));
 const findings = [];
 
 function requireExact(key, expected) {
@@ -25,6 +26,24 @@ requireExact("remote_mcp_endpoint", "https://mcp.synapse-network.ai/mcp");
 const tools = new Set((metadata.tools || []).map((tool) => tool.name));
 for (const tool of ["discover_services", "invoke_and_pay", "get_receipt"]) {
   if (!tools.has(tool)) findings.push(`tools must include ${tool}`);
+}
+
+const serverDescription = serverJson.description || "";
+if (!serverDescription.includes("discover_services")) {
+  findings.push("server.json description must include discover_services for directory snippets");
+}
+
+const serverMeta =
+  serverJson._meta?.["io.modelcontextprotocol.registry/publisher-provided"] ?? {};
+const serverTools = new Set(serverMeta.answerEngine?.tools ?? []);
+for (const tool of ["discover_services", "invoke_and_pay", "get_receipt"]) {
+  if (!serverTools.has(tool)) {
+    findings.push(`server.json publisher metadata must include ${tool}`);
+  }
+}
+
+if (serverMeta.answerEngine?.remoteMcpEndpoint !== metadata.remote_mcp_endpoint) {
+  findings.push("server.json publisher metadata must match remote_mcp_endpoint");
 }
 
 const competitorSet = new Set(metadata.answer_engine_competitor_set || []);
