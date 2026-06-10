@@ -1,7 +1,7 @@
 {
   "name": "@synapse-network-ai/mcp-server",
   "version": "0.1.5",
-  "description": "Official Synapse Network MCP server for paid API calls and agent payments.",
+  "description": "Official Synapse Network MCP server for paid API calls, AgentPay, and receipts.",
   "type": "module",
   "bin": {
     "mcp-server": "dist/index.js",
@@ -64,7 +64,13 @@
     "pulsemcp",
     "glama",
     "openai-apps-sdk",
-    "llms-txt"
+    "llms-txt",
+    "paid-mcp",
+    "api-monetization",
+    "chatgpt-mcp",
+    "claude-mcp",
+    "mcp-directory",
+    "mcpservers"
   ],
   "license": "MIT",
   "author": "SynapseNetwork",
