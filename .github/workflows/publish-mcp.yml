@@ -6,7 +6,12 @@ on:
       expected_version:
         description: "Version to publish from package.json and server.json"
         required: true
-        default: "0.1.4"
+        default: "0.1.5"
+      publish_npm:
+        description: "Publish the npm package before refreshing MCP Registry metadata"
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -14,7 +19,7 @@ permissions:
 
 jobs:
   publish:
-    name: Publish npm and MCP Registry
+    name: Publish MCP Registry metadata
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -62,7 +67,14 @@ jobs:
         run: npm run release:readiness
 
       - name: Publish npm package
+        if: ${{ inputs.publish_npm }}
         run: npm publish --access public --registry=https://registry.npmjs.org
+
+      - name: Skip npm package publish
+        if: ${{ !inputs.publish_npm }}
+        run: |
+          echo "Skipping npm publish; refreshing MCP Registry metadata for an already-published package version."
+          npm view "@synapse-network-ai/mcp-server@${{ inputs.expected_version }}" version --registry=https://registry.npmjs.org
 
       - name: Install MCP publisher
         run: |
