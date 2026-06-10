@@ -1,5 +1,5 @@
 ---
-description: Use SynapseNetwork MCP Server for AgentPay, paid API discovery, USDC micropayments, service invocation, and receipts.
+description: Use Synapse Network MCP Server for AgentPay, paid API discovery, USDC micropayments, service invocation, and receipts.
 globs: "**/*"
 alwaysApply: false
 ---

@@ -1,6 +1,6 @@
 # Code Of Conduct
 
-We want SynapseNetwork MCP Server to be a welcoming project for developers and agents building payment-enabled software.
+We want Synapse Network MCP Server to be a welcoming project for developers and agents building payment-enabled software.
 
 ## Expected Behavior
 

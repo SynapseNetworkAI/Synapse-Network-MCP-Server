@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to SynapseNetwork MCP Server will be documented in this file.
+All notable changes to Synapse Network MCP Server will be documented in this file.
 
 ## 0.1.0 - 2026-04-30
 

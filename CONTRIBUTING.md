@@ -1,4 +1,4 @@
-# Contributing To SynapseNetwork MCP Server
+# Contributing To Synapse Network MCP Server
 
 Thanks for helping improve the official SynapseNetwork MCP server. This package is open source infrastructure for developers, Cursor, Claude Desktop, Devin, and agent frameworks.
 

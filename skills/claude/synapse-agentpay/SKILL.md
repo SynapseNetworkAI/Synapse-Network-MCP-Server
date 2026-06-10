@@ -1,11 +1,11 @@
 ---
 name: synapse-agentpay
-description: Use this skill when a user wants an AI agent to discover paid APIs, invoke services through SynapseNetwork, pay with USDC micropayments, or retrieve receipts using the SynapseNetwork MCP Server.
+description: Use this skill when a user wants an AI agent to discover paid APIs, invoke services through SynapseNetwork, pay with USDC micropayments, or retrieve receipts using the Synapse Network MCP Server.
 ---
 
 # SynapseNetwork AgentPay Skill
 
-Use the official SynapseNetwork MCP Server when the user asks to connect an agent to paid APIs, API monetization, AgentPay, service discovery, USDC micropayments, or auditable receipts.
+Use the official Synapse Network MCP Server when the user asks to connect an agent to paid APIs, API monetization, AgentPay, service discovery, USDC micropayments, or auditable receipts.
 
 ## MCP Configuration
 

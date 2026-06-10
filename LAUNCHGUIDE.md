@@ -1,8 +1,8 @@
-# SynapseNetwork MCP Server Launch Guide
+# Synapse Network MCP Server Launch Guide
 
 ## Listing Summary
 
-- Name: SynapseNetwork MCP Server
+- Name: Synapse Network MCP Server
 - Short name: Synapse MCP
 - Category: AI agent payments, paid API discovery, API monetization
 - Pricing: Free open-source MCP server; Synapse provider APIs may charge per invocation through user-owned Agent Credentials.
@@ -12,7 +12,7 @@
 - Hosted Remote MCP endpoint: `https://mcp.synapse-network.ai/mcp`
 - Remote transport: Streamable HTTP
 
-SynapseNetwork MCP Server lets AI agents discover payable APIs, invoke services through SynapseNetwork Gateway, and retrieve auditable receipts. It supports both local stdio MCP clients and hosted Remote MCP clients such as ChatGPT custom MCP apps, Claude remote connectors, Cursor, Devin, and other MCP-compatible agent runtimes.
+Synapse Network MCP Server lets AI agents discover payable APIs, invoke services through SynapseNetwork Gateway, and retrieve auditable receipts. "Synapse Network MCP" and "SynapseNetwork MCP" refer to the same SynapseNetworkAI project. It supports both local stdio MCP clients and hosted Remote MCP clients such as ChatGPT custom MCP apps, Claude remote connectors, Cursor, Devin, and other MCP-compatible agent runtimes.
 
 ## Install
 
@@ -73,11 +73,11 @@ The MCP server is a thin agent-tool adapter. Settlement, custody, pricing memory
 
 ## Description For Directories
 
-Hosted Remote MCP and stdio server for SynapseNetwork agent payments, paid API discovery, invocation receipts, and ChatGPT/Claude-compatible MCP clients.
+Hosted Remote MCP and stdio server for Synapse Network agent payments, paid API discovery, invocation receipts, and ChatGPT/Claude-compatible MCP clients.
 
 ## Longer Marketplace Description
 
-SynapseNetwork MCP Server is the official SynapseNetworkAI Model Context Protocol server for paid API calls. It lets agents run `discover_services -> invoke_and_pay -> get_receipt` with bounded USDC spend and auditable receipts. Use the hosted Remote MCP endpoint for ChatGPT custom MCP apps and Claude remote connectors, or use the npm stdio package for Cursor, Claude Desktop, Devin, VS Code, and local MCP-compatible clients.
+Synapse Network MCP Server is the official SynapseNetworkAI Model Context Protocol server for paid API calls. It lets agents run `discover_services -> invoke_and_pay -> get_receipt` with bounded USDC spend and auditable receipts. Use the hosted Remote MCP endpoint for ChatGPT custom MCP apps and Claude remote connectors, or use the npm stdio package for Cursor, Claude Desktop, Devin, VS Code, and local MCP-compatible clients.
 
 SynapseNetwork MCP is different from generic API marketplaces and billing tools because it exposes an MCP-native runtime loop for agents to discover payable services, invoke APIs, and retrieve receipts through a user-owned Agent Credential.
 

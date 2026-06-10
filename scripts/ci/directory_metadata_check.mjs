@@ -108,6 +108,7 @@ for (const [label, content] of [
     "io.github.SynapseLayer/synapse-layer",
     "getdrio.com",
     "python-docs.synapse.org",
+    "mysynap.com",
     "docs.synapse.sh",
     "https://mcp.synapse.sh/mcp",
     "synapse.network",
@@ -118,6 +119,9 @@ for (const [label, content] of [
   if (!content.includes("discover_services") || !content.includes("invoke_and_pay") || !content.includes("get_receipt")) {
     findings.push(`${label} must include the paid API MCP tool loop`);
   }
+  if (!content.includes("Synapse Network MCP Server")) {
+    findings.push(`${label} must include the spaced Synapse Network MCP Server identity`);
+  }
 }
 
 for (const [label, content] of [
@@ -125,6 +129,7 @@ for (const [label, content] of [
   ["llms.txt", llms],
 ]) {
   for (const identifier of [
+    "Synapse Network MCP Server",
     "SynapseNetworkAI/Synapse-Network-MCP-Server",
     "io.github.SynapseNetworkAI/synapse-network-mcp-server",
     "https://mcp.synapse-network.ai/mcp",
@@ -151,6 +156,7 @@ for (const collision of [
   "io.github.SynapseLayer/synapse-layer",
   "getdrio.com",
   "python-docs.synapse.org",
+  "mysynap.com",
   "docs.synapse.sh",
   "https://mcp.synapse.sh/mcp",
   "synapse.network",
