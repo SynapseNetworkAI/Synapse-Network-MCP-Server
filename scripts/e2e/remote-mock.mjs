@@ -168,6 +168,12 @@ async function assertGlamaMetadata(url) {
   const payload = await response.json();
   assert(payload["$schema"] === "https://glama.ai/mcp/schemas/connector.json", "Glama metadata must use the connector schema.");
   assert(payload.maintainers?.[0]?.email === "support@synapse-network.ai", "Glama metadata must expose the Synapse support maintainer email.");
+  assert(payload.name === "Synapse Network MCP Server", "Glama metadata must expose the Synapse connector name.");
+  assert(payload.serverUrl?.endsWith("/mcp"), "Glama metadata must expose the Remote MCP endpoint.");
+  const toolNames = new Set((payload.tools ?? []).map((tool) => tool.name));
+  for (const toolName of ["discover_services", "invoke_and_pay", "get_receipt"]) {
+    assert(toolNames.has(toolName), `Glama metadata must expose ${toolName}.`);
+  }
 }
 
 async function assertUnauthorizedMcp(url) {

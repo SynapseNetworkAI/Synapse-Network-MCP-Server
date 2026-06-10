@@ -84,7 +84,7 @@ async function handlePublicGet(req: IncomingMessage, res: ServerResponse, config
     return true;
   }
   if (url.pathname === "/.well-known/glama.json") {
-    sendJson(res, 200, glamaConnectorMetadata());
+    sendJson(res, 200, glamaConnectorMetadata(config));
     return true;
   }
   return false;
@@ -285,9 +285,28 @@ function protectedResourceMetadata(config: RemoteServerConfig): unknown {
   };
 }
 
-function glamaConnectorMetadata(): unknown {
+function glamaConnectorMetadata(config: RemoteServerConfig): unknown {
   return {
     "$schema": "https://glama.ai/mcp/schemas/connector.json",
+    name: "Synapse Network MCP Server",
+    description:
+      "Remote MCP for paid API discovery, bounded paid API invocation, and receipts with discover_services, invoke_and_pay, and get_receipt.",
+    serverUrl: `${config.publicBaseUrl}${MCP_PATH}`,
+    repository: "https://github.com/SynapseNetworkAI/Synapse-Network-MCP-Server",
+    tools: [
+      {
+        name: "discover_services",
+        description: "Read-only service discovery and pricing inspection for SynapseNetwork agent-callable APIs."
+      },
+      {
+        name: "invoke_and_pay",
+        description: "Paid API invocation through SynapseNetwork Gateway; clients should require human approval."
+      },
+      {
+        name: "get_receipt",
+        description: "Read-only invocation status, result, charge, and receipt lookup."
+      }
+    ],
     maintainers: [{ email: "support@synapse-network.ai" }]
   };
 }
