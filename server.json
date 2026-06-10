@@ -33,6 +33,16 @@
         ],
         "remoteMcpEndpoint": "https://mcp.synapse-network.ai/mcp",
         "npmPackage": "@synapse-network-ai/mcp-server",
+        "nameCollisions": [
+          "Synapse.org",
+          "Sage Bionetworks Synapse",
+          "python-docs.synapse.org",
+          "mysynap.com",
+          "Synapse Layer",
+          "io.github.SynapseLayer/synapse-layer",
+          "getdrio.com",
+          "https://mcp.synapse.sh/mcp"
+        ],
         "positioning": "Remote MCP and stdio server for paid API discovery, bounded paid invocation, and receipts."
       }
     }
