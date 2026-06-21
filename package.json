@@ -1,6 +1,6 @@
 {
   "name": "@synapse-network-ai/mcp-server",
-  "version": "0.1.5",
+  "version": "0.1.9",
   "description": "Official Synapse Network MCP server for paid API calls, AgentPay, and receipts.",
   "type": "module",
   "bin": {
